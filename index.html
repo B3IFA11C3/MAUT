@@ -4,20 +4,80 @@
 		
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/maut.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
 	
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		
+		<script>
+			function myAccFunc() {
+				var x = document.getElementById("demoAcc");
+				if (x.className.indexOf("w3-show") == -1) {
+					x.className += " w3-show";
+					x.previousElementSibling.className += " w3-green";
+				} else { 
+					x.className = x.className.replace(" w3-show", "");
+					x.previousElementSibling.className = 
+					x.previousElementSibling.className.replace(" w3-green", "");
+				}
+			}
+		</script>
 	</head>
 	
-	<body>
-		<div class="row">
-			<div class="col-md-4">
-				spalte1
-			</div>
-			
-			<div class="col-md-8">
-				spalte2
-			</div>
-		</div>
-	</body>
+<body>
+
+<!-- Sidebar -->
+<div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%;">
+  <h3 class="w3-bar-item" style="line-height: 50px; vertical-align: center; font-size: 40px;"><img src="img/logo.png" height="50" /><span style="margin-left:10px; margin-bottom:20px">Men&uuml;</span></h3>
+  <a href="#" class="w3-bar-item w3-button">Komponenten</a>
+  <a href="#" class="w3-bar-item w3-button w3-active-item">R&auml;ume</a>
+  <!--<button class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
+  R&auml;ume <i class="fa fa-caret-down"></i>
+  </button>
+  <div id="demoAcc" class="w3-hide w3-white w3-card-2">
+    <a href="#" class="w3-bar-item w3-button">Link</a>
+    <a href="#" class="w3-bar-item w3-button">Link</a>
+  </div>-->
+  <a href="#" class="w3-bar-item w3-button">Lieferanten</a>
+</div>
+
+<!-- Page Content -->
+<div style="margin-left:15%">
+
+<div class="w3-container w3-teal">
+  <h1>R&auml;ume</h1>
+</div>
+
+<div class="w3-container">
+ <table class="table">
+	<thead>
+	  <tr>
+		<th>Firstname</th>
+		<th>Lastname</th>
+		<th>Email</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr>
+		<td>John</td>
+		<td>Doe</td>
+		<td>john@example.com</td>
+	  </tr>
+	  <tr>
+		<td>Mary</td>
+		<td>Moe</td>
+		<td>mary@example.com</td>
+	  </tr>
+	  <tr>
+		<td>July</td>
+		<td>Dooley</td>
+		<td>july@example.com</td>
+	  </tr>
+	</tbody>
+  </table>
+</div>
+
+</div>
+      
+</body>
 </html>
