@@ -15,5 +15,47 @@
   </head>
   <body>
 	<h1>Komponenten</h1>
+	
+	<div id="tablewrapper" class="table-responsive">
+		<div id="filterwrapper">
+			<label id="filterlabel" for="filter">Filter:</label>
+			<input id="filter" type="text"/>
+		</div>
+
+		<table id="table" class="table table-striped">
+			<thead>
+				<tr><th>Name</th><th>Art</th></tr>
+			<thead>
+			<tbody>
+				<tr class="clickable"><td>Etwas</td><td>ASDF</td></tr>
+				<tr style="width: 0px"></tr>
+				<tr class="accordion hidden"><td colspan="2"><div class="acontent hidden">Etwas ASDF</div></td></tr>
+				<tr class="clickable"><td>Etwas anderes</td><td>JKLÖ</td></tr>
+				<tr style="width: 0px"></tr>
+				<tr class="accordion hidden"><td colspan="2"><div class="acontent hidden">Etwas ASDF</div></td></tr>
+			</tbody>
+		</table>
+	</div>
   </body>
+
+  <script>
+	function addClickHandlers(tableID)
+	{
+	    var table = document.getElementById(tableID);
+		for(var i = 0; i < table.rows.length; ++i)
+		{
+			if(!table.rows[i].classList.contains("clickable"))
+				continue;
+
+			let nextRow = i + 2;
+
+			table.rows[i].onclick = function() {
+				table.rows[nextRow].classList.toggle("hidden");
+				table.rows[nextRow].cells[0].children[0].classList.toggle("hidden");
+			};
+		}
+	}
+
+	addClickHandlers("table");
+  </script>
 </html>
