@@ -3,8 +3,8 @@ h1 {
 }
 
 #tablewrapper {
-	text-align: center;
 	width: 90%;
+	margin: 0px auto;
 }
 
 #filterlabel {
@@ -22,40 +22,77 @@ h1 {
 	width: 100%;
 }
 
-#table {
-	width: 100%;
+table {
+	border-left: 2px solid #eceeef;
+	border-right: 2px solid #eceeef;
 }
 
 td {
 	text-align: left;
 }
 
-tr.clickable {
+.clickable {
 	cursor: pointer;
+	user-select: none;
 }
 
 label {
 	padding: 12px;
+	padding-left: 0px;
 }
 
-.acontent.hidden {
-	height: 0px !important;
+.tbodytable-striped thead, .tbodytable-striped tbody:nth-of-type(even) {
+	background: #f0f0f0;
 }
 
-tr td {
-	border-top: 0px !important;
+tr.clickable:hover {
+	background: #f8f8f8;
 }
 
-.accordion.hidden td {
+.tbodytable * tr:last-of-type td {
 	padding: 0px !important;
 }
 
-.accordion td {
-	padding: 12px !important;
-}
-
-.acontent {
+.tbodytable * tr:last-of-type td div {
+	transition: max-height 0.5s linear;
+	atransition: padding 0.5s linear;
+	max-height: 200px;
+	padding-left: 10.5px;
 	overflow: hidden;
-	transition: height 1s;
 }
 
+.tbodytable *.accordion tr:last-of-type td div {
+	max-height: 0px;
+}
+
+.sort-indicator {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	position: relative;
+	top:-3px;
+	border-top: 4px solid black;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	border-bottom: 0;
+}
+.sort-desc {
+	border-top: 0;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	border-bottom: 4px solid black;
+}
+
+.sort-asc {
+	border-top: 4px solid black;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	border-bottom: 0;
+}
+
+.formbox form input[type=submit], .formbox form input[type=reset] {
+	float: right;
+	position: relative;
+	bottom: 10px;
+	margin: 10px;
+}

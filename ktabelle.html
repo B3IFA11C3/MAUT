@@ -8,54 +8,195 @@
 
     <title>Komponentenverwaltung</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/prefixfree.min.js"></script>
 
-    <!-- Custom styles for this template -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/w3.css" rel="stylesheet">
     <link href="css/maut.css" rel="stylesheet">
   </head>
   <body>
-	<h1>Komponenten</h1>
+	<div class="w3-container w3-teal"><h1>Komponenten</h1></div>
 	
-	<div id="tablewrapper" class="table-responsive">
+	<div id="tablewrapper">
 		<div id="filterwrapper">
 			<label id="filterlabel" for="filter">Filter:</label>
 			<input id="filter" type="text"/>
 		</div>
 
-		<table id="table" class="table table-striped">
-			<thead>
-				<tr><th>Name</th><th>Art</th></tr>
-			<thead>
-			<tbody>
-				<tr class="clickable"><td>Etwas</td><td>ASDF</td></tr>
-				<tr style="width: 0px"></tr>
-				<tr class="accordion hidden"><td colspan="2"><div class="acontent hidden">Etwas ASDF</div></td></tr>
-				<tr class="clickable"><td>Etwas anderes</td><td>JKLÖ</td></tr>
-				<tr style="width: 0px"></tr>
-				<tr class="accordion hidden"><td colspan="2"><div class="acontent hidden">Etwas ASDF</div></td></tr>
+		<table id="table" class="table tbodytable tbodytable-striped tbodytable-sortable">
+			<thead class="accordion">
+				<tr>
+		            <th class="clickable" data-sort="string">Name <i class="sort-indicator" aria-hidden="true"></i></th>
+					<th class="clickable" data-sort="string">Art <i class="sort-indicator" aria-hidden="true"></i></th>
+				</tr>
+				<tr class="clickable">
+					<td colspan="2">
+						<div style="text-align: center">Neue Komponente hinzufügen</div>
+					</td>
+				</tr>
+				<tr><td colspan="2">
+					<div class="formbox">
+						<form method="POST">
+						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+						<label>Garantie: <input type="date" name="guar"/></label>
+
+						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+						<br>
+						<input type="submit"/>
+						<input type="reset"/>
+						</form>
+					</div>
+				</td></tr>
+			</thead>
+
+			<tbody class="accordion">
+				<tr class="clickable"><td>ASDF</td><td>1</td></tr>
+				<tr><td colspan="2">
+					<div>
+						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+						<label>Garantie: <input type="date" name="guar"/></label>
+
+						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+					</div>
+				</td></tr>
+			</tbody>
+
+			<tbody class="accordion">
+				<tr class="clickable"><td>BSDF</td><td>0</td></tr>
+				<tr><td colspan="2">
+					<div>
+						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+						<label>Garantie: <input type="date" name="guar"/></label>
+
+						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+					</div>
+				</td></tr>
+			</tbody>
+
+			<tbody class="accordion">
+				<tr class="clickable"><td>CSDF</td><td>4</td></tr>
+				<tr><td colspan="2">
+					<div>
+						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+						<label>Garantie: <input type="date" name="guar"/></label>
+
+						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+					</div>
+				</td></tr>
+			</tbody>
+
+			<tbody class="accordion">
+				<tr class="clickable"><td>DSDF</td><td>3</td></tr>
+				<tr><td colspan="2">
+					<div>
+						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+						<label>Garantie: <input type="date" name="guar"/></label>
+
+						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+					</div>
+				</td></tr>
 			</tbody>
 		</table>
 	</div>
-  </body>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 
   <script>
-	function addClickHandlers(tableID)
+	function makeAccordions()
 	{
-	    var table = document.getElementById(tableID);
-		for(var i = 0; i < table.rows.length; ++i)
+		var clickables = $(".tbodytable * tr.clickable");
+		for(var i = 0; i < clickables.length; ++i)
 		{
-			if(!table.rows[i].classList.contains("clickable"))
-				continue;
+			clickables[i].onclick = function() {
+				if(this.parentNode.classList.contains("accordion"))
+				{
+					// Hide other accordions
+					$(".tbodytable * tr.clickable").each(function(i,e) {
+						e.parentNode.classList.add("accordion");
+					});
 
-			let nextRow = i + 2;
-
-			table.rows[i].onclick = function() {
-				table.rows[nextRow].classList.toggle("hidden");
-				table.rows[nextRow].cells[0].children[0].classList.toggle("hidden");
+					this.parentNode.classList.remove("accordion");
+				}
+				else
+					this.parentNode.classList.add("accordion");
 			};
 		}
 	}
 
-	addClickHandlers("table");
+	makeAccordions();
+
+	function makeSorttable(tableID)
+	{
+		var table = $(document.getElementById(tableID)),
+			tbody = table.find('tbody'),
+			th_index = 0,
+			th_sortType = "string";
+
+		table.find('th').data("sort-direction","ASC");
+
+		function getSortList(i, elem)
+		{
+			var txt = $("td", elem).eq(th_index).text();
+			$(elem).attr("data-sortval", txt);
+		}
+
+		function sortAsc(a, b)
+		{
+			var aData = $(a).attr("data-sortval"),
+				bData = $(b).attr("data-sortval");
+
+			if(th_sortType==="int")
+				return +bData < +aData ? 1 : -1; // Integer
+			else
+				return  bData <  aData ? 1 : -1; // String or else
+		}
+
+		function sortDesc(a, b)
+		{
+			var aData = $(a).attr("data-sortval"),
+				bData = $(b).attr("data-sortval");
+
+			if(th_sortType==="int")
+				return +bData > +aData ? 1 : -1; // Integer
+			else
+				return  bData >  aData ? 1 : -1; // String or else
+		}
+
+		//header sort
+		$("th", table).on("click", function() {
+			//toggle the sorting direction
+			$(this).data('sort-direction', ( $(this).data('sort-direction') == 'ASC' ? 'DESC' : 'ASC'));
+			var dir = $(this).data('sort-direction');
+
+			th_sortType = $(this).data('sort'); //get "int" or "string" from data-sort on th
+			th_index = $(this).index();
+
+			tbody = table.find('tbody').each(getSortList);
+
+			table.find('.sort-indicator').removeClass('sort-desc').removeClass('sort-asc');
+
+			if ( dir == "ASC") {
+				$(this).find('.sort-indicator').addClass('sort-asc'); //css class for ASC arrow
+				tbody.sort(sortAsc).detach().appendTo(table); //sort table
+			} else {
+				$(this).find('.sort-indicator').addClass('sort-desc'); //css class for DESC arrow
+				tbody.sort(sortDesc).detach().appendTo(table);  //sort table
+			}
+		});
+	}
+
+	makeSorttable("table");
   </script>
+  </body>
 </html>
