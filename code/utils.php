@@ -14,8 +14,8 @@
             return "Bitte altes Passwort, neues Passwort und neues Passwort wiederholen füllen!";
         if ($newpw !== $newpwwdh)
             return "Das neue Passwort stimmt nicht mit der Wiederholung überein!";
-        $result = sqldoit("SELECT U_Passwort FROM User WHERE U_Benutzername = '".sqlmask($user)."'");
-        if ($result && mysqli_fetch_assoc($result)[0] !== $oldpw)
+        $result = sqldoitarr("SELECT U_Passwort FROM User WHERE U_Benutzername = '".sqlmask($user)."'");
+        if ($result && $result[0][0] !== $oldpw)
             return "Das eingegebene Passwort ist nicht korrekt!";
         if (sqldoit("UPDATE User SET U_Passwort = '".sqlmask($newpw)."' WHERE U_Benutzername = '".sqlmask($user)."'"))
             return "Passwort geändert!";
@@ -42,6 +42,19 @@
         mysqli_close($connect);
 
         return $result;
+    }
+
+    function sqldoitarr ($sqlstr) {
+        $result = sqldoit($sqlstr);
+        if (!$result)
+            return false;
+        if (is_bool($result))
+            return $result;
+        $arr = array();
+        while ($row = mysqli_fetch_assoc($result)){
+            $arr[] = $row;
+        }
+        return $arr;
     }
 
     function sqlmask ($sqlstring) {
