@@ -41,7 +41,7 @@
             return false;
         
         $connect = mysqli_connect($CONFIG["SQLConn"], $CONFIG["SQLUser"], $CONFIG["SQLPass"]);
-        mysqli_select_db($sqldb);
+        mysqli_select_db($connect, $sqldb);
 
         $result = mysqli_query($connect, $sqlstr);
         mysqli_close($connect);
