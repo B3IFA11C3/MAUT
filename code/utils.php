@@ -4,7 +4,7 @@
         if (!isset($user) || !isset($passw))
             return false;
         $result = sqldoitarr("SELECT U_Passwort FROM User WHERE U_Benutzername = '".sqlmask($user)."'");
-        if ($result && $result[0][0] !== $passw)
+        if ($result && $result[0][0] !== crypt($passw))
             return false;
         return true;
     }
@@ -15,9 +15,9 @@
         if ($newpw !== $newpwwdh)
             return "Das neue Passwort stimmt nicht mit der Wiederholung überein!";
         $result = sqldoitarr("SELECT U_Passwort FROM User WHERE U_Benutzername = '".sqlmask($user)."'");
-        if ($result && $result[0][0] !== $oldpw)
+        if ($result && $result[0][0] !== crypt($oldpw))
             return "Das eingegebene Passwort ist nicht korrekt!";
-        if (sqldoit("UPDATE User SET U_Passwort = '".sqlmask($newpw)."' WHERE U_Benutzername = '".sqlmask($user)."'"))
+        if (sqldoit("UPDATE User SET U_Passwort = '".crypt($newpw)."' WHERE U_Benutzername = '".sqlmask($user)."'"))
             return "Passwort geändert!";
         return "Interner Fehler bei der Datenbankkommunikation";
     }
