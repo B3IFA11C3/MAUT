@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Test</title>
+        <script src='../js/jquery.min.js' type='text/javascript'></script>
+        <script src='../js/chosen/chosen.jquery.min.js' type='text/javascript'></script>
+        <link rel='stylesheet' href='../js/chosen/chosen.css'>
+    </head>
+    
+    <body>
+    <div style='width: 200px'>
+        <!-- wie ein normales select, das multiple Attribut sorgt dafür, dass man mehrere Elemente uswählen kann. -->
+        <!-- die klasse chosen-select markiert es als chosen auswahl -->
+        <select data-placeholder='test placeholder' class='chosen-select' style='width: 100%;' multiple>
+            <option value='1'>Select 1</option>
+            <option value='2'>Select 2</option>
+            <option value='3'>Select 3</option>
+            <option value='4'>Select 4</option>
+            <option value='5'>Select 5</option>
+            <option value='6'>Select 6</option>
+            <option value='7'>Select 7</option>
+            <option value='8'>Select 8</option>
+            <option value='9'>Select 9</option>
+        </select>
+    </div>
+    </body>
+    <!-- zum initialisieren der chosen selects muss $('.chosen-select').chosen(); aufgerfen werden -->
+    <script type='text/javascript'>
+        $('.chosen-select').chosen();
+    </script>
+</html>
