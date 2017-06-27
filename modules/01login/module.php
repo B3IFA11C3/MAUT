@@ -21,7 +21,7 @@ function render_main_block($state="", $redirect_path="")
                                 </div>';
 
 	if($redirect_path != "")
-		$content .= '<input type="hidden" name="path" value="' . htmlentities($path) . '"/>';
+		$content .= '<input type="hidden" name="path" value="' . htmlentities($redirect_path) . '"/>';
 
 	$content .= '<input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Anmelden">    
                             </form>';
