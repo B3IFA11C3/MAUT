@@ -20,7 +20,7 @@
 	<div id="tablewrapper">
 		<div id="filterwrapper">
 			<label id="filterlabel" for="filter">Filter:</label>
-			<input id="filter" type="text"/>
+			<input id="filter" type="text" onkeyup="filterTable(document.getElementById('table'), this.value);"/>
 		</div>
 
 		<table id="table" class="table tbodytable tbodytable-striped tbodytable-sortable">
@@ -113,6 +113,33 @@
   <script src="js/bootstrap.min.js"></script>
 
   <script>
+    function filterTable(table, filter)
+    {
+		var words = filter.toLowerCase().split(" ");
+
+        for(var i = 0; i < table.tBodies.length; ++i)
+        {
+				var tbody = table.tBodies[i];
+				var row = tbody.rows[0];
+
+                var found = false;
+                if(words.length == 1 && words[0].length == 0)
+					found = true;
+				else
+				{
+					for(var w = 0; w < words.length && !found; ++w)
+						for(var c = 0; words[w].length > 0 && c < row.cells.length && !found; ++c)
+						{
+							var text = row.cells[c].innerText.toLowerCase();
+							if(text.indexOf(words[w]) !== -1)
+								found = true;
+						}
+				}
+
+				tbody.style.display = found ? "" : "none";
+        }
+    }
+
 	function makeAccordions()
 	{
 		var clickables = $(".tbodytable * tr.clickable");
