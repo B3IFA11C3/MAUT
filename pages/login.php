@@ -1,3 +1,43 @@
+<?php
+    session_start();
+    $user_logged_in = (isset($_SESSION['username']) ? true : false);
+
+    if ($user_logged_in == false) {
+        include '../code/utils.php';
+        
+        if (isset($_POST['username']) && isset($_POST['password'])) {
+            $username=$_POST['username'];
+            $password=$_POST['password'];
+            
+            if (checklogin($username, $password) == true) {
+                $_SESSION['username'] = $username;
+                
+                ?>
+            
+                    <html>
+                        <head>
+                            <meta http-equiv="refresh" content="0; URL=../index.php" />
+                        </head>
+                    </html>
+
+                <?php
+            } else {
+                $state = 'mistake';
+            }
+        } else {
+            $state = 'missing';
+        }
+        
+        if ($state == 'missing') {
+            if (isset($_GET['logout'])) {
+                $state = 'logout';
+            } else {
+                $state = 'mistake';
+            }
+        }
+        
+?>
+
 <!doctype HTML>
 <html>
     <head>
@@ -103,11 +143,34 @@
                                 <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Anmelden">    
                             </form>
                             
-                            <!--<div class="alert alert-success" role="alert"><center>Erfolgreich abgemeldet.</center></div>-->
-                            <!--<div class="alert alert-danger" role="alert"><center><b>Fehler!</b> Anmeldedaten sind nicht korrekt.</center></div>-->
+                            <?php
+                                if ($state == 'logout') {
+                            ?>
+        <div class="alert alert-success" role="alert"><center>Erfolgreich abgemeldet.</center></div>
+                            <?php
+                                } else if ($state == 'mistake') {
+                            ?>
+                            <div class="alert alert-danger" role="alert"><center><b>Fehler!</b> Anmeldedaten sind nicht korrekt.</center></div>
+                            <?php
+                                }
+                            ?>
                         </div>
                 </div> <!-- /.row -->
             </div> <!-- /.container -->
         </section>
     </body>
 </html>
+
+<?php
+    } else {
+        ?>
+            
+            <html>
+                <head>
+                    <meta http-equiv="refresh" content="0; URL=../index.php" />
+                </head>
+            </html>
+
+        <?php
+    }
+?>
