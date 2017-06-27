@@ -2,7 +2,7 @@
 
 function komponenten_show()
 {
-	$content .= '<div class="w3-container w3-teal"><h1>Komponenten</h1></div>
+	$content = '<div class="w3-container w3-teal"><h1>Komponenten</h1></div>
 	
 	<div id="tablewrapper">
 		<div id="filterwrapper">
