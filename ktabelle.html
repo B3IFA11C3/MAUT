@@ -23,7 +23,7 @@
 		</div>
 
 		<table id="table" class="table tbodytable tbodytable-striped tbodytable-sortable">
-			<thead>
+			<thead class="accordion">
 				<tr>
 		            <th class="clickable" data-sort="string">Name <i class="sort-indicator" aria-hidden="true"></i></th>
 					<th class="clickable" data-sort="string">Art <i class="sort-indicator" aria-hidden="true"></i></th>
@@ -50,7 +50,7 @@
 				</td></tr>
 			</thead>
 
-			<tbody>
+			<tbody class="accordion">
 				<tr class="clickable"><td>ASDF</td><td>1</td></tr>
 				<tr><td colspan="2">
 					<div>
@@ -64,7 +64,7 @@
 				</td></tr>
 			</tbody>
 
-			<tbody>
+			<tbody class="accordion">
 				<tr class="clickable"><td>BSDF</td><td>0</td></tr>
 				<tr><td colspan="2">
 					<div>
@@ -78,7 +78,7 @@
 				</td></tr>
 			</tbody>
 
-			<tbody>
+			<tbody class="accordion">
 				<tr class="clickable"><td>CSDF</td><td>4</td></tr>
 				<tr><td colspan="2">
 					<div>
@@ -92,7 +92,7 @@
 				</td></tr>
 			</tbody>
 
-			<tbody>
+			<tbody class="accordion">
 				<tr class="clickable"><td>DSDF</td><td>3</td></tr>
 				<tr><td colspan="2">
 					<div>
@@ -130,9 +130,6 @@
 				else
 					this.parentNode.classList.add("accordion");
 			};
-
-			// Hide by default
-			clickables[i].parentNode.classList.add("accordion");
 		}
 	}
 
