@@ -1,3 +1,7 @@
+<?php
+function page_render($maincontent, $full=true)
+{
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,23 +13,12 @@
 	
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
-		
-		<script>
-			function myAccFunc() {
-				var x = document.getElementById("demoAcc");
-				if (x.className.indexOf("w3-show") == -1) {
-					x.className += " w3-show";
-					x.previousElementSibling.className += " w3-green";
-				} else { 
-					x.className = x.className.replace(" w3-show", "");
-					x.previousElementSibling.className = 
-					x.previousElementSibling.className.replace(" w3-green", "");
-				}
-			}
-		</script>
+		<script src="js/maut.js"></script>
 	</head>
 <body>
-
+<?php
+if($full) {
+?>
 <!-- Sidebar --> 
 <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%;">
   <h3 class="w3-bar-item" style="font-size: 40px">
@@ -53,9 +46,15 @@
 
 <!-- Page Content -->
 <div style="margin-left:15%">
-
-<iframe src="ktabelle.html" style="width: 100%; height: 100%"/>
-
-</div>
+<?php
+}
+	echo $maincontent;
+	if($full) echo "</div>";
+?>
 </body>
 </html>
+<?php
+}
+
+return true;
+?>
