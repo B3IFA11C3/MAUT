@@ -1,4 +1,6 @@
 <?php
+require_once("code/utils.php");
+
 
 function login_get_data()
 {
@@ -49,15 +51,16 @@ function login_show_login($path)
 
 function login_login($path)
 {
-	$username = $_POST["username"];
-	$password = $_POST["password"];
-	
-	$_SESSION["user"] = array("asdf");
+    if(!isset($_POST["username"]))
+        return login_show_login("/");
+        
+	if(checkLogin($_POST["username"], $_POST["password"])){
+        echo checkLogin($_POST["username"], $_POST["password"]);
+        $_SESSION["user"] = $_POST["username"];
+    }
 
 	if(login_get_data() !== false)
-	{
 		render_path($_POST["path"]);
-	}
 	else
 		page_render(render_main_block("error", $_POST["path"]), false);
 
