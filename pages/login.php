@@ -8,7 +8,7 @@
         if (isset($_POST['username']) && isset($_POST['password'])) {
             $username=$_POST['username'];
             $password=$_POST['password'];
-            
+            $state=null;
             if (checklogin($username, $password) == true) {
                 $_SESSION['username'] = $username;
                 
@@ -31,8 +31,6 @@
         if ($state == 'missing') {
             if (isset($_GET['logout'])) {
                 $state = 'logout';
-            } else {
-                $state = 'mistake';
             }
         }
         
@@ -138,12 +136,14 @@
                                     <input type="text" name="username" id="username" class="form-control" placeholder="Benutzername">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="key" id="key" class="form-control" placeholder="Passwort">
+                                    <input type="password" name="password" id="key" class="form-control" placeholder="Passwort">
                                 </div>
                                 <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Anmelden">    
                             </form>
                             
                             <?php
+                                echo $state;    
+        
                                 if ($state == 'logout') {
                             ?>
         <div class="alert alert-success" role="alert"><center>Erfolgreich abgemeldet.</center></div>
