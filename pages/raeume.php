@@ -2,13 +2,13 @@
 	<head>
 		<title>MAUT - R&auml;ume</title>
 		
-		<?php include '\code\head.html'; ?>
+		<?php include '..\code\head.html'; ?>
 	</head>
 	
 <body>
 
 <!-- Sidebar -->
-<?php include '\code\body.html'; ?>
+<?php include '..\code\body.php'; ?>
 
 <!-- Page Content -->
 <div style="margin-left:15%">
