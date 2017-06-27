@@ -2,11 +2,11 @@
     require("config.inc.php");
     function checklogin ($user, $passw) {
         if (!isset($user) || !isset($passw))
-            return array(false, "Bitte Benutzername und Passwort angeben!");
+            return false;
         $result = sqldoit("SELECT U_Passwort FROM User WHERE U_Benutzername = '".sqlmask($user)."'");
         if ($result && mysqli_fetch_assoc($result)[0] !== $passw)
-            return array(false, "Benutzername oder Passwort falsch!");
-        return array(true, $user);
+            return false;
+        return true;
     }
 
     function changepw ($user, $oldpw, $newpw, $newpwwdh) {
