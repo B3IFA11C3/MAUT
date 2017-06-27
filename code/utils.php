@@ -3,7 +3,7 @@
         if (!isset($user) || !isset($passw))
             return Array(false, "Bitte Benutzername und Passwort angeben!");
         $result = sqldoit($sqlconn, $sqluser, $sqlpass, $sqldaba, "SELECT password FROM benutzer WHERE user = '".sqlmask($user)."'");
-        if ($result && mysqli_fetch_assoc($result)[0] !== $oldpw)
+        if ($result && mysqli_fetch_assoc($result)[0] !== $passw)
             return Array(false, "Benutzername oder Passwort falsch!");
         return Array(true, $user);
     }
