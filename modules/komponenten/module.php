@@ -31,7 +31,7 @@ function komponenten_show()
 						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
 						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
 						<br>
-						<input type="submit"/>
+						<input type="submit" value="Speichern"/>
 						<input type="reset"/>
 						</form>
 					</div>
@@ -41,13 +41,29 @@ function komponenten_show()
 			<tbody class="accordion">
 				<tr class="clickable"><td>Lenowo SinkPad</td><td>Laptop</td></tr>
 				<tr><td colspan="2">
-					<div>
-						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
-						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
-						<label>Garantie: <input type="date" name="guar"/></label>
+					<div class="divslider">
+						<div>
+							<label>Hersteller: Wahwei</label>
+							<label>Beschreibung: Ändreud</label>
+							<label>Garantie: 34.15.1337</label>
+							<br>
+							<label>Hersteller: Wahwei</label>
+							<label>Beschreibung: Ändreud</label>
+							<label>Garantie: 34.15.1337</label>
+							<button class="switch" onClick="divSliderShowRight(this.parentNode.parentNode)">Bearbeiten</button>
+						</div>
+						<div>
+							<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+							<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+							<label>Garantie: <input type="date" name="guar"/></label>
+							<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+							<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+							<label>Garantie: <input type="date" name="guar"/></label>
 
-						<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
-						<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+							<label>Hersteller: <input type="text" name="make" value="Wahwei"/></label>
+							<label>Beschreibung: <input type="text" name="desc" value="Ändreud"/></label>
+							<button class="switch" onClick="divSliderShowLeft(this.parentNode.parentNode)">Zurück</button>
+						</div>
 					</div>
 				</td></tr>
 			</tbody>

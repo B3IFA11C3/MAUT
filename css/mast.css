@@ -55,14 +55,28 @@ tr.clickable:hover {
 }
 
 .tbodytable * tr:last-of-type td div {
-	transition: max-height 0.5s linear;
-	atransition: padding 0.5s linear;
+	transition: max-height 0.2s ease-out;
 	max-height: 200px;
 	padding-left: 10.5px;
 	overflow: hidden;
 }
 
 .tbodytable *.accordion tr:last-of-type td div {
+	max-height: 0px;
+}
+
+.divslider div {
+	width: 100%;
+	position: relative;
+}
+
+.divslider div .switch {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+}
+
+.tbodytable * tr:last-of-type td div.divslider div:last-of-type {
 	max-height: 0px;
 }
 
