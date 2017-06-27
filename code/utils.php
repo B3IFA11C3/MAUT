@@ -6,7 +6,7 @@
         if (!isset($user) || !isset($passw))
             return false;
         $result = sqldoitarr($CONFIG["SQLUserDB"], "SELECT U_Passwort FROM User WHERE U_Benutzername = '".sqlmask($user)."'");
-        if ($result && $result[0][0] !== crypt($passw, $result[0][0]))
+        if (!$result || $result[0][0] !== crypt($passw, $result[0][0]))
             return false;
         return true;
     }
