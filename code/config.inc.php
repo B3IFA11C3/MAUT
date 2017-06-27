@@ -1,8 +1,8 @@
 <?php
     $CONFIG = array(
-        "SQLConn" => "",
-        "SQLUser" => "",
+        "SQLConn" => "127.0.0.1",
+        "SQLUser" => "root",
         "SQLPass" => "",
-        "SQLDaBa" => "",
+        "SQLDaBa" => "maut",
     );
 ?>

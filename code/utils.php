@@ -3,7 +3,7 @@
     function checklogin ($user, $passw) {
         if (!isset($user) || !isset($passw))
             return array(false, "Bitte Benutzername und Passwort angeben!");
-        $result = sqldoit("SELECT password FROM benutzer WHERE user = '".sqlmask($user)."'");
+        $result = sqldoit("SELECT U_Passwort FROM User WHERE U_Benutzername = '".sqlmask($user)."'");
         if ($result && mysqli_fetch_assoc($result)[0] !== $passw)
             return array(false, "Benutzername oder Passwort falsch!");
         return array(true, $user);
@@ -14,10 +14,10 @@
             return "Bitte altes Passwort, neues Passwort und neues Passwort wiederholen füllen!";
         if ($newpw !== $newpwwdh)
             return "Das neue Passwort stimmt nicht mit der Wiederholung überein!";
-        $result = sqldoit("SELECT password FROM benutzer WHERE user = '".sqlmask($user)."'");
+        $result = sqldoit("SELECT U_Passwort FROM User WHERE U_Benutzername = '".sqlmask($user)."'");
         if ($result && mysqli_fetch_assoc($result)[0] !== $oldpw)
             return "Das eingegebene Passwort ist nicht korrekt!";
-        if (sqldoit("UPDATE benutzer SET password = '".sqlmask($newpw)."' WHERE user = '".sqlmask($user)."'"))
+        if (sqldoit("UPDATE User SET U_Passwort = '".sqlmask($newpw)."' WHERE U_Benutzername = '".sqlmask($user)."'"))
             return "Passwort geändert!";
         return "Interner Fehler bei der Datenbankkommunikation";
     }
