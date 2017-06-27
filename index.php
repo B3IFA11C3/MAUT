@@ -44,6 +44,10 @@ function not_found()
 function render_path($path)
 {
 	global $paths;
+	
+	if($path == "/")
+		$path = "";
+
 	foreach($paths as $pathp)
 	{
 		if(preg_match($pathp[0], $path))

@@ -1,4 +1,13 @@
 <?php
+
+$menus = array();
+
+function page_add_menu($text, $menu)
+{
+	global $menus;
+	$menus[$text] = $menu;
+}
+
 function page_render($maincontent, $full=true)
 {
 ?>
@@ -6,11 +15,11 @@ function page_render($maincontent, $full=true)
 <html>
 	<head>
 		<title>MAUT</title>
-		
+
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/maut.css" />
 		<link rel="stylesheet" type="text/css" href="css/w3.css" />
-	
+
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/maut.js"></script>
@@ -18,30 +27,40 @@ function page_render($maincontent, $full=true)
 <body>
 <?php
 if($full) {
+	global $menus;
+	
+	$menus["Abmelden"] = "/logout";
 ?>
+
 <!-- Sidebar --> 
 <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%;">
-  <h3 class="w3-bar-item" style="font-size: 40px">
+  <h3 class="w3-bar-item" style="font-size: 40px"><nobr>
 	<img src="img/logo.png" style="vertical-align: middle; height: 50px"/>
-        <span style="margin-left:10px; vertical-align: middle;">Men&uuml;</span>
+	<span style="margin-left:10px; vertical-align: middle;">Men&uuml;</span>
+	</nobr>
   </h3>
-  <a href="#" class="w3-bar-item w3-button w3-active-item">Komponenten</a>
-  <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
-  R&auml;ume <i class="fa fa-caret-down"></i>
-  </button>
-  <div id="demoAcc" class="w3-hide w3-white w3-card-2">
-    <a href="#" class="w3-bar-item w3-button">Link</a>
-    <a href="#" class="w3-bar-item w3-button">Link</a>
-  </div>
-  <a href="#" class="w3-bar-item w3-button">Lieferanten</a>
-  <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
-  Reporting <i class="fa fa-caret-down"></i>
-  </button>
-  <div id="demoAcc" class="w3-hide w3-white w3-card-2">
-    <a href="#" class="w3-bar-item w3-button">R&auml;ume</a>
-    <a href="#" class="w3-bar-item w3-button">Komponenten</a>
-	<a href="#" class="w3-bar-item w3-button">Bestellungen</a>
-  </div>
+<?php
+	foreach($menus as $text => $submenu)
+	{
+		if(is_array($submenu))
+		{
+			echo '<button class="w3-button w3-block w3-left-align" onclick="myAccFunc(this)">';
+			echo htmlentities($text);
+			echo '<i class="fa fa-caret-down"></i></button>';
+			
+			echo '<div class="w3-hide w3-white w3-card-2">';
+
+			foreach($submenu as $subtext => $link)
+				echo '<a href="' . htmlentities($link) . '" class="w3-bar-item w3-button">' . htmlentities($subtext) . '</a>';
+			
+			echo '</div>';
+		}
+		else
+		{
+			echo '<a href="' . htmlentities($submenu) . '" class="w3-bar-item w3-button">' . htmlentities($text) . '</a>';
+		}
+	}
+?>
 </div>
 
 <!-- Page Content -->
