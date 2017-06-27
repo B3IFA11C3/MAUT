@@ -22,6 +22,7 @@ function page_render($maincontent, $full=true)
 
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<script src="js/prefixfree.min.js"></script>
 		<script src="js/mast.js"></script>
 	</head>
 <body>
