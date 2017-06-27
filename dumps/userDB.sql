@@ -6,8 +6,6 @@
 -- Erstellungszeit: 27. Jun 2017 um 11:51
 -- Server-Version: 10.1.19-MariaDB
 -- PHP-Version: 7.0.13
-CREATE DATABASE `user`;
-USE `user`;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
