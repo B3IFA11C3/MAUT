@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 27. Jun 2017 um 11:39
+-- Erstellungszeit: 27. Jun 2017 um 11:51
 -- Server-Version: 10.1.19-MariaDB
 -- PHP-Version: 7.0.13
 
@@ -17,8 +17,37 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `User`
+-- Datenbank: `user`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `gruppe`
+--
+
+CREATE TABLE `gruppe` (
+  `G_ID` int(11) NOT NULL,
+  `G_Name` varchar(50) COLLATE utf8_bin NOT NULL,
+  `G_Komp` int(1) NOT NULL DEFAULT '0',
+  `G_Raum` int(1) NOT NULL DEFAULT '0',
+  `G_Lief` int(1) NOT NULL DEFAULT '0',
+  `G_Rep_Komp` int(1) NOT NULL DEFAULT '0',
+  `G_Rep_Raum` int(1) NOT NULL DEFAULT '0',
+  `G_Rep_Lief` int(1) DEFAULT '0',
+  `G_User` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Daten für Tabelle `gruppe`
+--
+
+INSERT INTO `gruppe` (`G_ID`, `G_Name`, `G_Komp`, `G_Raum`, `G_Lief`, `G_Rep_Komp`, `G_Rep_Raum`, `G_Rep_Lief`, `G_User`) VALUES
+(0, 'Admin', 1, 1, 1, 1, 1, 1, 1),
+(1, 'Systembetreuer', 1, 1, 1, 1, 1, 1, 1),
+(2, 'Azubis', 1, 1, 1, 1, 1, 1, 0),
+(3, 'Verwaltung', 0, 0, 0, 1, 1, 1, 0),
+(4, 'Lehrer', 0, 0, 0, 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -48,6 +77,12 @@ INSERT INTO `user` (`U_ID`, `U_Nachname`, `U_Vorname`, `U_Benutzername`, `U_Pass
 --
 -- Indizes der exportierten Tabellen
 --
+
+--
+-- Indizes für die Tabelle `gruppe`
+--
+ALTER TABLE `gruppe`
+  ADD PRIMARY KEY (`G_ID`);
 
 --
 -- Indizes für die Tabelle `user`
