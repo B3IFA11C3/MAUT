@@ -11,4 +11,5 @@
     <a href="#" class="w3-bar-item w3-button">Link</a>
   </div>-->
   <a href="../pages/lieferanten.php" class="w3-bar-item w3-button <?php if ($_SERVER['PHP_SELF'] == '/Git/MAUT/pages/lieferanten.php') echo 'w3-active-item'; ?>">Lieferanten</a>
+    <a href="../pages/logout.php" class="w3-bar-item w3-button">Abmelden</a>
 </div>
