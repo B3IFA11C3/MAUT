@@ -1,21 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Erstellungszeit: 27. Jun 2017 um 11:51
--- Server-Version: 10.1.19-MariaDB
--- PHP-Version: 7.0.13
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Datenbank: `user`
 --
@@ -69,10 +51,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`U_ID`, `U_Nachname`, `U_Vorname`, `U_Benutzername`, `U_Passwort`, `U_Gruppe_id`) VALUES
-(1, 'Barun', 'Günter', 'Baron', 'baron', 4),
-(2, 'Riddler', 'Der Großartige', 'Little', 'little', 2),
-(3, 'Tester', 'Test', 'Test', 'test', 1),
-(4, 'Verwalter', 'Walter', 'Walter', 'walter', 3);
+(1, 'Barun', 'Günter', 'Baron', '$1$fe2.6I/.$ECQ/153UjuB/IUnVHx8ON.', 4),
+(2, 'Riddler', 'Der Großartige', 'Little', '$1$uC1.f74.$GszKtOcEUyN0uc2dCfrfB1', 2),
+(3, 'Tester', 'Test', 'Test', '$1$li2.KW3.$zaGH6cjEf3Quedk2Lnyoq/', 1),
+(4, 'Verwalter', 'Walter', 'Walter', '$1$l.5.KA4.$rbBwNeMmZ/chjnHvXwAe51', 3);
 
 --
 -- Indizes der exportierten Tabellen

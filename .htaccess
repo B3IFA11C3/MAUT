@@ -5,3 +5,5 @@ RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ^([a-zA-Z0-9/]+) /index.php?%{QUERY_STRING}&path=$1
 
 ErrorDocument 404 /404.html
+
+DirectoryIndex index.php
