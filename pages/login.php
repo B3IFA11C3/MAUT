@@ -95,15 +95,17 @@
                         <h1><img src="../img/logo.png" width="150px" /></h1>
                             <form role="form" action="<?= $_SERVER['PHP_SELF'];?>" method="post" id="login-form" autocomplete="off">
                                 <div class="form-group">
-                                    <input type="email" name="email" id="email" class="form-control" placeholder="Benutzername">
+                                    <input type="text" name="username" id="username" class="form-control" placeholder="Benutzername">
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="key" id="key" class="form-control" placeholder="Passwort">
                                 </div>
-                                <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Anmelden">
+                                <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Anmelden">    
                             </form>
+                            
+                            <!--<div class="alert alert-success" role="alert"><center>Erfolgreich abgemeldet.</center></div>-->
+                            <!--<div class="alert alert-danger" role="alert"><center><b>Fehler!</b> Anmeldedaten sind nicht korrekt.</center></div>-->
                         </div>
-                    
                 </div> <!-- /.row -->
             </div> <!-- /.container -->
         </section>
