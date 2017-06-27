@@ -1,6 +1,8 @@
 <?php
     require("config.inc.php");
+
     function checklogin ($user, $passw) {
+        global $CONFIG;
         if (!isset($user) || !isset($passw))
             return false;
         $result = sqldoitarr($CONFIG["SQLUserDB"], "SELECT U_Passwort FROM User WHERE U_Benutzername = '".sqlmask($user)."'");
@@ -10,6 +12,7 @@
     }
 
     function changepw ($user, $oldpw, $newpw, $newpwwdh) {
+        global $CONFIG;
         if (!isset($oldpw) || !isset($newpw) || !isset($newpwwdh))
             return "Bitte altes Passwort, neues Passwort und neues Passwort wiederholen füllen!";
         if ($newpw !== $newpwwdh)
@@ -23,6 +26,7 @@
     }
 
     function sqlinsert ($sqltable, $sqlfields, $sqlvalues) {
+        global $CONFIG;
         if (count($sqlfields) != count($sqlvalues))
             return "Interner Fehler (".count($sqlvalues)." Values für ".count($sqlfields)." Felder)";
         $sqlstr = "INSERT INTO ".$sqltable."('".join("', '", array_map("sqlmask", $sqlfields))."') VALUES ('".join("', '", array_map("sqlmask", $sqlvalues))."')";
@@ -32,6 +36,7 @@
     }
 
     function sqldoit ($sqldb, $sqlstr) {
+        global $CONFIG;
         if (!isset($sqlstr) || !$sqlstr)
             return false;
         
