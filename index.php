@@ -15,7 +15,7 @@ function load_module($module_name)
 
 $paths = array();
 
-function maut_register_path($pattern, $callback)
+function mast_register_path($pattern, $callback)
 {
 	global $paths;
 	

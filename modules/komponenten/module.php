@@ -107,8 +107,8 @@ function komponenten_show()
 
 page_add_menu("Komponenten", "/komponenten");
 
-maut_register_path("#komponenten$#", "komponenten_show");
-maut_register_path("#^\$#", "komponenten_show");
+mast_register_path("#komponenten$#", "komponenten_show");
+mast_register_path("#^\$#", "komponenten_show");
 
 return true;
 ?>

@@ -14,15 +14,15 @@ function page_render($maincontent, $full=true)
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>MAUT</title>
+		<title>MAST</title>
 
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/maut.css" />
+		<link rel="stylesheet" type="text/css" href="css/mast.css" />
 		<link rel="stylesheet" type="text/css" href="css/w3.css" />
 
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
-		<script src="js/maut.js"></script>
+		<script src="js/mast.js"></script>
 	</head>
 <body>
 <?php

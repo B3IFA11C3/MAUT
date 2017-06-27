@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>MAUT - R&auml;ume</title>
+		<title>MAST - R&auml;ume</title>
 		
 		<?php include '..\code\head.html'; ?>
 	</head>

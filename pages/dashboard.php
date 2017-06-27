@@ -1,7 +1,7 @@
 <!doctype HTML>
 <html>
 	<head>
-		<title>MAUT - Dashboard</title>
+		<title>MAST - Dashboard</title>
 		
 		<?php include '..\code\head.html'; ?>
 	</head>
@@ -17,7 +17,7 @@
             </div>
 
             <div class="w3-container">
-                <h2>Willkommen im MAUT</h2>
+                <h2>Willkommen im MAST</h2>
             </div>
         </div>
     </body>

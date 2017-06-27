@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>MAUT - Komponenten</title>
+		<title>MAST - Komponenten</title>
 		
 		<?php include '..\code\head.html'; ?>
 	</head>

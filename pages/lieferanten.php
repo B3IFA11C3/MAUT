@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>MAUT - Lieferanten</title>
+		<title>MAST - Lieferanten</title>
 		
 		<?php include '..\code\head.html'; ?>
 	</head>

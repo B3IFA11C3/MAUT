@@ -1,2 +1,2 @@
-# MAUT
-Multifunktionales Anwenderfreundliches Unternehmensverwaltungs Tool!
+# MAST
+Multifunktionales Anwenderfreundliches Schulmaterialienverwaltungs Tool!
