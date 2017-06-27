@@ -1,4 +1,13 @@
 <?php
+    function sqlinsert ($sqlconn, $sqluser, $sqlpass, $sqldaba, $sqltable, $sqlfields, $sqlvalues) {
+        if (count($sqlfields) != count($sqlvalues))
+            return "Interner Fehler (".count($sqlvalues)." Values für ".count($sqlfields)." Felder)";
+        $sqlstr = "INSERT INTO ".$sqltable."(".join(", ", $sqlfields).") VALUES (".join(", ", $sqlvalues).")";
+        if (sqldoit($sqlconn, $sqluser, $sqlpass, $sqldaba, sqlmask($sqlstr)))
+            return "Eintrag eingefügt!";
+        return "Interner Fehler bei der Datenbankkommunikation";
+    }
+
     function sqldoit ($sqlconn, $sqluser, $sqlpass, $sqldaba, $sqlstr) {
         if (!isset($sqlstr) || !$sqlstr)
             return false;
@@ -25,6 +34,7 @@
         if (mysqli_fetch_assoc($result)[0] !== $oldpw)
             return "Das eingegebene Passwort ist nicht korrekt!";
         if (sqldoit($sqlconn, $sqluser, $sqlpass, $sqldaba, "UPDATE benutzer SET password = ".sqlmask($newpw)." WHERE user = '".$user."'"))
-            return "Passwort geändert!"
+            return "Passwort geändert!";
+        return "Interner Fehler bei der Datenbankkommunikation";
     }
 ?>
