@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <title>Test</title>
+        <script src='../js/jquery.min.js' type='text/javascript'></script>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<link rel="stylesheet" href='../css/JQuery-ui.css'>
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		  
+		
+		<script src='../js/chosen/chosen.jquery.min.js' type='text/javascript'></script>
+		<script src='../js/bootstrap.min.js' type='text/javascript'></script>
+        <link rel='stylesheet' href='../js/chosen/chosen.css'>
+		<link rel='stylesheet' href='../css/style.css'>		
+		<link rel='stylesheet' href='../css/bootstrap.min.css'>
+
+		
+    </head>
+    
+    <body>
+	<br/>
+	<div class="row">
+		<div class="col-md-2">
+		</div>	
+		<div class="card card-block" id="card-shadow">
+			<div class="card-title"><input type="text" value="Name" disabled/>
+			</div>
+			<div class="card-text">
+				<br/>
+				<div class="vboxLeft">
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-4">						
+							<label>Seriennummer:</label>
+							<input  type="text" value="Seriennummer" disabled/>
+						</div>	
+						<div class="col-md-1">
+						</div>	
+							<div class="col-md-4">
+								<label>Lieferant:</label>
+								<select data-placeholder='test placeholder' class='chosen-select' >
+									<option value='1'>Select 1</option>
+									<option value='2'>Select 2</option>
+									<option value='3'>Select 3</option>
+									<option value='4'>Select 4</option>
+									<option value='5'>Select 5</option>
+									<option value='6'>Select 6</option>
+									<option value='7'>Select 7</option>
+									<option value='8'>Select 8</option>
+									<option value='9'>Select 9</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+						<div class="col-md-1">
+						</div>	
+						<div class="col-md-4">	
+							<label>Einkaufsdatum:</label>
+							<input type="text" id="datepicker"/>
+							</div>	
+						<div class="col-md-1">
+						</div>	
+							<div class="col-md-4">
+							<label>Gewaehrleistungsdauer:</label>
+							<input type="text" value="Gewaehrleistungsdauer" disabled/>
+							</div>
+						</div>
+						<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-4">	
+							<label>Komponentenart:</label>
+							<select data-placeholder='test placeholder' class='chosen-select' >
+								<option value='1'>Select 1</option>
+								<option value='2'>Select 2</option>
+								<option value='3'>Select 3</option>
+								<option value='4'>Select 4</option>
+								<option value='5'>Select 5</option>
+								<option value='6'>Select 6</option>
+								<option value='7'>Select 7</option>
+								<option value='8'>Select 8</option>
+								<option value='9'>Select 9</option>
+							</select>
+							</div>
+							<div class="col-md-1">
+							</div>	
+							<div class="col-md-4">
+							<label>Hersteller:</label>
+							<input type="text" value="Hersteller" disabled/>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+    </body>
+    <!-- zum initialisieren der chosen selects muss $('.chosen-select').chosen(); aufgerfen werden -->
+    <script type='text/javascript'>
+        $('.chosen-select').chosen();
+		
+			$( function() {
+				$( "#datepicker" ).datepicker();
+			} );
+	
+	
+		
+    </script>
+</html>
