@@ -78,9 +78,9 @@ function login_logout($path)
 	return true;
 }
 
-maut_register_path("#^login\$#", login_login);
-maut_register_path("#.*#", login_show_login);
-maut_register_path("#^logout\$#", login_logout);
+maut_register_path("#^login\$#", "login_login");
+maut_register_path("#.*#", "login_show_login");
+maut_register_path("#^logout\$#", "login_logout");
 
 return true;
 ?>
