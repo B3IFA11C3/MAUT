@@ -105,7 +105,19 @@ class MastDB {
 
 			self::$mysqli_connected = true;
 
+			register_shutdown_function(function() { MastDB::mysqliDisconnect(); });
+
 			return true;
+        }
+
+        public static function mysqliDisconnect()
+        {
+			if(!self::$mysqli_connected)
+				return;
+
+			mysqli_close(self::$mysqli_link);
+
+			self::$mysqli_connected = false;
         }
 
         public static function mysqliQuery($str)
@@ -141,6 +153,7 @@ class MastDB {
 }
 
     function checklogin ($user, $passw) {
+    var_dump(MastDB::mysqliCurry("SELECT 1")->execute()->fetch());
         global $CONFIG;
         if (!isset($user) || !isset($passw))
             return false;
