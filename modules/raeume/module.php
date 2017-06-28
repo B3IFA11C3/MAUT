@@ -13,8 +13,8 @@ function raeume_show()
 		<table id="table" class="table tbodytable tbodytable-striped tbodytable-sortable">
 			<thead class="accordion">
 				<tr>
-		            <th class="clickable" data-sort="string">Name <i class="sort-indicator" aria-hidden="true"></i></th>
-					<th class="clickable" data-sort="string">Art <i class="sort-indicator" aria-hidden="true"></i></th>
+		            <th class="clickable" data-sort="string">Raum-Nr. <i class="sort-indicator" aria-hidden="true"></i></th>
+					<th class="clickable" data-sort="string">Bezeichnung <i class="sort-indicator" aria-hidden="true"></i></th>
 				</tr>
 				<tr class="clickable">
 					<td colspan="2">
