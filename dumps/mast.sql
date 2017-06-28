@@ -27,7 +27,7 @@ CREATE TABLE `komponente_hat_attribute` (
   `kat_id` int(11) NOT NULL,
   `khkat_wert` varchar(45) DEFAULT NULL,
   `khkat_erstellt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `khkat_geaendert` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `khkat_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `khkat_geloescht` tinyint(1) NOT NULL,
   PRIMARY KEY (`k_id`,`kat_id`),
   KEY `fk_komponenten_has_komponentenattribute_komponentenattribute1` (`kat_id`),
@@ -89,7 +89,7 @@ CREATE TABLE `komponenten` (
   `k_hersteller` varchar(45) DEFAULT NULL,
   `ka_id` int(11) NOT NULL,
   `k_erstellt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `k_geaendert` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `k_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `k_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`k_id`),
   KEY `fk_komponenten_haendler` (`l_id`),
@@ -119,6 +119,9 @@ CREATE TABLE `komponentenarten` (
   `ka_id` int(11) NOT NULL AUTO_INCREMENT,
   `ka_komponentenart` varchar(45) DEFAULT NULL,
   `ka_einmalig` tinyint(1) NOT NULL DEFAULT '1',
+  `ka_erstellt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ka_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ka_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ka_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -129,7 +132,7 @@ CREATE TABLE `komponentenarten` (
 
 LOCK TABLES `komponentenarten` WRITE;
 /*!40000 ALTER TABLE `komponentenarten` DISABLE KEYS */;
-INSERT INTO `komponentenarten` VALUES (1,'PC',1),(2,'Switch',1),(3,'Router',1),(4,'Accesspoint',1),(5,'Drucker',1),(6,'Beamer',1),(7,'Visualizer',1),(8,'Software',0);
+INSERT INTO `komponentenarten` VALUES (1,'PC',1,'2017-06-28 08:58:38','2017-06-28 08:58:38',0),(2,'Switch',1,'2017-06-28 08:58:38','2017-06-28 08:58:38',0),(3,'Router',1,'2017-06-28 08:58:38','2017-06-28 08:58:38',0),(4,'Accesspoint',1,'2017-06-28 08:58:38','2017-06-28 08:58:38',0),(5,'Drucker',1,'2017-06-28 08:58:38','2017-06-28 08:58:38',0),(6,'Beamer',1,'2017-06-28 08:58:38','2017-06-28 08:58:38',0),(7,'Visualizer',1,'2017-06-28 08:58:38','2017-06-28 08:58:38',0),(8,'Software',0,'2017-06-28 08:58:38','2017-06-28 08:58:38',0);
 /*!40000 ALTER TABLE `komponentenarten` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +181,7 @@ CREATE TABLE `lieferanten` (
   `l_fax` varchar(20) DEFAULT NULL,
   `l_email` varchar(45) DEFAULT NULL,
   `l_erstellt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `l_geaendert` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `l_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `l_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`l_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -207,7 +210,7 @@ CREATE TABLE `raeume` (
   `r_bezeichnung` varchar(45) DEFAULT NULL COMMENT 'z.B. Werkstatt, Lager,...',
   `r_notiz` varchar(1024) DEFAULT NULL,
   `r_erstellt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `r_geaendert` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `r_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `r_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`r_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
@@ -260,4 +263,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-28  9:32:31
+-- Dump completed on 2017-06-28 11:05:16
