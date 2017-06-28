@@ -142,14 +142,11 @@ class MastDB {
 
 function checklogin($user, $passw) {
     global $CONFIG;
-
-	$qryres = MastDB::mysqliCurry("SELECT `U_Passwort` FROM user WHERE `U_Benutzername` = ?", $CONFIG["SQLUserDB"])->str($user)->execute();
-	if(!$qryres)
+	$resp = MastDB::mysqliCurry("SELECT `U_Passwort` FROM `user` WHERE `U_Benutzername` = ?", $CONFIG["SQLUserDB"])->str($user)->execute();
+	if(!$resp)
 		return false;
-
-	$user = $qryres->fetch();
-    return $user && $user["U_Passwort"] === crypt($passw, $user["U_Passwort"]);
-        return false;
+	$resprow = $resp->fetch();
+    return $resprow && $resprow["U_Passwort"] === crypt($passw, $resprow["U_Passwort"]);
 }
 
 function changepw($user, $oldpw, $newpw, $newpwwdh) {
@@ -158,63 +155,34 @@ function changepw($user, $oldpw, $newpw, $newpwwdh) {
         return false;
     if ($newpw !== $newpwwdh)
         return false;
-    $result = sqldoitarr($CONFIG["SQLUserDB"], "SELECT `U_Passwort` FROM `user` WHERE `U_Benutzername` = '".sqlmask($user)."'");
-    if ($result && $result[0][0] !== crypt($oldpw, $result[0][0]))
+	$resp = MastDB::mysqliCurry("SELECT `U_Passwort` FROM `user` WHERE `U_Benutzername` = ?", $CONFIG["SQLUserDB"])->str($user)->execute();
+	if(!$resp)
+		return false;
+	$resprow = $resp->fetch();
+    if (!$resprow || $resprow["U_Passwort"] !== crypt($oldpw, $resprow["U_Passwort"]))
         return false;
-    if (sqldoit($CONFIG["SQLUserDB"], "UPDATE `user` SET `U_Passwort` = '".crypt($newpw)."' WHERE `U_Benutzername` = '".sqlmask($user)."'"))
-        return true;
-    return false;
+	return !!MastDB::mysqliCurry("UPDATE `user` SET `U_Passwort` = '".crypt($newpw)."' WHERE `U_Benutzername` = ?", $CONFIG["SQLUserDB"])->str($user)->execute();
 }
 
 function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
     global $CONFIG;
-    if (count($sqlfields) != count($sqlvalues))
+    $anz = count($sqlfields);
+    if ($anz < 1 || $anz != count($sqlvalues))
         return false;
-    $sqlstr = "INSERT INTO `".$sqltable."`('".join("', '", array_map("sqlmask", $sqlfields))."') VALUES ('".join("', '", array_map("sqlmask", $sqlvalues))."')";
-    if (sqldoit($CONFIG["SQLMautDB"], $sqlstr))
-        return true;
-    return false;
+    $curr = MastDB::mysqliCurry("INSERT INTO `".$sqltable."`(`".join("`, `", $sqlfields)."`) VALUES (?".str_repeat(", ?", $anz-1).")", $CONFIG["SQLMautDB"]);
+    foreach ($sqlvalues as $value)
+        $curr = is_int($value) ? $curr->int($value) : $curr->str($value);
+    return $curr->execute();
 }
 
 function sqldelete($sqltable, $sqlfilter) {
     global $CONFIG;
     $sqlwhere = join(" AND ", array_map(function($vergleich){
-        return "`".$vergleich[0]."` = '".$vergleich[1]."'";
+        return "`".$vergleich[0]."` = ?";
     }, $sqlfilter));
-    $sqlstr = "DELETE FROM '".$sqltable."' WHERE ".$sqlwhere;
-    if (sqldoit($CONFIG["SQLMautDB"], $sqlstr))
-        return true;
-    return false;
-}
-
-function sqldoit($sqldb, $sqlstr) {
-    global $CONFIG;
-    if (!isset($sqlstr) || !$sqlstr)
-        return false;
-    
-    $connect = mysqli_connect($CONFIG["SQLConn"], $CONFIG["SQLUser"], $CONFIG["SQLPass"]);
-    mysqli_select_db($connect, $sqldb);
-    
-    $result = mysqli_query($connect, $sqlstr);
-    mysqli_close($connect);
-    
-    return $result;
-}
-
-function sqldoitarr($sqldb, $sqlstr) {
-    $result = sqldoit($sqldb, $sqlstr);
-    if (!$result)
-        return false;
-    if (is_bool($result))
-        return $result;
-    $arr = array();
-    while ($row = mysqli_fetch_row($result)) {
-        $arr[] = $row;
-    }
-    return $arr;
-}
-
-function sqlmask($sqlstring) {
-    return str_replace("'", "\\'", str_replace("\\", "\\\\", $sqlstring));
+    $curr = MastDB::mysqliCurry("DELETE FROM `".$sqltable."` WHERE ".$sqlwhere, $CONFIG["SQLMautDB"]);
+    foreach ($sqlfilter as $filter)
+        $curr = is_int($filter[1]) ? $curr->int($filter[1]) : $curr->str($filter[1]);
+    return $curr->execute();
 }
 ?>
