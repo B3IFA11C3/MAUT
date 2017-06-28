@@ -1,5 +1,144 @@
 <?php
     require("code/config.inc.php");
+    
+    class MySQLiCurry {
+        public function __construct($str)
+        {
+			$this->str = $str;
+			$this->typestr = "";
+			$this->vars = array();
+			$this->stmt = NULL;
+			$this->res = NULL;
+        }
+
+        public function __destruct()
+        {
+			if($this->stmt != NULL)
+				mysqli_stmt_close($this->stmt);
+        }
+
+        public function int(&$var)
+        {
+			return $this->set("i", $var);
+        }
+
+        public function str(&$var)
+        {
+			return $this->set("s", $var);
+        }
+
+        public function set($type, &$var)
+        {
+			$this->typestr .= $type;
+			$this->vars[] = &$var;
+
+			return $this;
+        }
+
+        public function execute()
+        {
+			$this->stmt = MastDB::mysqliPrepare($this->str);
+			if($this->stmt === FALSE)
+				return false;
+
+			if(count($this->vars) != 0)
+			{
+				array_unshift($this->vars, $this->stmt, $this->typestr);
+
+				$method = new ReflectionFunction("mysqli_stmt_bind_param");
+				$method->invokeArgs($this->vars);
+			}
+
+			if(mysqli_stmt_execute($this->stmt) === FALSE)
+			{
+				$this->stmt = NULL;
+				return false;
+			}
+			else
+				return $this;
+        }
+
+        //Darf erst nach fetch() aufgerufen werden!
+        public function numRows()
+        {
+			return $this->stmt->num_rows;
+        }
+
+        public function fetch()
+        {
+			if($this->stmt === NULL)
+					return false;
+
+			mysqli_stmt_store_result($this->stmt);
+			$meta = mysqli_stmt_result_metadata($this->stmt);
+			$vars = array($this->stmt);
+			$results = array();
+
+			while($column = mysqli_fetch_field($meta))
+					$vars[] = &$results[$column->name];
+
+			$method = new ReflectionFunction("mysqli_stmt_bind_result");
+			$method->invokeArgs($vars);
+
+			if(mysqli_stmt_fetch($this->stmt) !== TRUE)
+					return false;
+
+			return $results;
+        }
+}
+
+
+class MastDB {
+        private static $mysqli_connected = false;
+        private static $mysqli_link = NULL;
+
+        public static function mysqliConnect()
+        {
+			if(self::$mysqli_connected)
+				return true;
+
+			global $CONFIG;
+
+			self::$mysqli_link = mysqli_connect($CONFIG["SQLConn"], $CONFIG["SQLUser"], $CONFIG["SQLPass"]);
+			if(mysqli_connect_errno() != 0)
+				return false;
+
+			self::$mysqli_connected = true;
+
+			return true;
+        }
+
+        public static function mysqliQuery($str)
+        {
+                if(!self::$mysqli_connected && !self::mysqliConnect())
+                        return false;
+
+                return mysqli_query(self::$mysqli_link, $str);
+        }
+
+        public static function mysqliPrepare($str)
+        {
+                if(!self::$mysqli_connected && !self::mysqliConnect())
+                        return false;
+
+                return mysqli_prepare(self::$mysqli_link, $str);
+        }
+
+        public static function mysqliCurry($str)
+        {
+                return new MySQLiCurry($str);
+        }
+
+        public static function mysqliError()
+        {
+                return mysqli_error(self::$mysqli_link);
+        }
+
+        public static function mysqliLink()
+        {
+                return self::$mysqli_link;
+        }
+}
 
     function checklogin ($user, $passw) {
         global $CONFIG;
