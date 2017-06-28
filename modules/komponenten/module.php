@@ -6,10 +6,9 @@ function komponenten_show()
 {
 	$content = '<div class="w3-container w3-teal"><h1>Komponenten</h1></div>';
 
-	$rows = array();
+	$rows = array();	
 	$komponentenEdit = '<div><div class="row">
-		<div class="col-md-1">
-		</div>	
+		
 		<div class="card card-block" id="card-shadow">
 			<div class="card-title"><input type="text" value="Name" id="Name" disabled class="feldAktivieren"/>
 			</div>
@@ -23,7 +22,7 @@ function komponenten_show()
 							<label>Komponentenart:</label>
 						</div>	
 						<div class="col-md-2">	
-							<select class="chosen-select feldAktivieren" disabled id="kompArt" >
+							<select class="chosen-select feldAktivieren kompArt" disabled id="kompArt" >
 								<option value="1">Select 1</option>
 								<option value="2">Select 2</option>
 								<option value="3">Select 3</option>
@@ -41,7 +40,7 @@ function komponenten_show()
 							<label>Gew&auml;hrleistungsdauer:</label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" value="Gewaehrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/>
+							<input type="text" value="Gew&auml;hrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/>
 						</div> 
 					</div>
 					<div class="row">
@@ -89,7 +88,7 @@ function komponenten_show()
 								<input  type="text" value="Seriennummer" id="Seriennummer" disabled class="feldAktivieren"/>
 							</div>
 							<div class="short-div">
-								<select class="chosen-select feldAktivieren" disabled id="Lieferant">
+								<select class="chosen-select feldAktivieren Lieferant" disabled id="Lieferant">
 									<option value="1">Select 1</option>
 									<option value="2">Select 2</option>
 									<option value="3">Select 3</option>
@@ -121,8 +120,7 @@ function komponenten_show()
 				</div>
 			</div>
 		</div>
-		<div class="col-md-1">
-		</div>
+		
 	</div></div>';
 	
 	$rows[] = array("cols" => array("BigMacBook", 0), "content" => $komponentenEdit);
@@ -133,8 +131,7 @@ function komponenten_show()
 	$content .= table_render(array("Name" => "string", "ID" => "int"),
 			$rows,
 			array("header" => "HINZUFÜGEN", "content" => '<div><div class="row">
-		<div class="col-md-1">
-		</div>	
+		
 		<div class="card card-block" id="card-shadow">
 			<div class="card-title"><input type="text" placeholder="Name" id="Name"  class="feldAktivieren"/>
 			</div>
@@ -148,7 +145,7 @@ function komponenten_show()
 							<label>Komponentenart:</label>
 						</div>	
 						<div class="col-md-2">	
-							<select class="chosen-select" id="kompArt"  >
+							<select class="chosen-select feldAktivieren kompArt" id="kompArt"  >
 								<option value="1">Select 1</option>
 								<option value="2">Select 2</option>
 								<option value="3">Select 3</option>
@@ -166,7 +163,7 @@ function komponenten_show()
 							<label>Gew&auml;hrleistungsdauer:</label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" placeholder="Gewaehrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/>
+							<input type="text" placeholder="Gew&auml;hrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/>
 						</div> 
 					</div>
 					<div class="row">
@@ -214,7 +211,7 @@ function komponenten_show()
 								<input  type="text" placeholder="Seriennummer" id="Seriennummer"  class="feldAktivieren"/>
 							</div>
 							<div class="short-div">
-								<select class="chosen-select" id="Lieferant"  >
+								<select class="chosen-select feldAktivieren Lieferant" id="Lieferant"  >
 									<option value="1">Select 1</option>
 									<option value="2">Select 2</option>
 									<option value="3">Select 3</option>
@@ -251,7 +248,7 @@ function komponenten_show()
 										<td><input type="text" placeholder="Hersteller"/></td>
 										<td><input type="text" placeholder="Gewaehrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/></td>
 										<td>
-											<select class="chosen-select" id="Lieferant"  >
+											<select class="chosen-select feldAktivieren Lieferant" id="Lieferant"  >
 												<option value="1">Select 1</option>
 												<option value="2">Select 2</option>
 												<option value="3">Select 3</option>
@@ -289,9 +286,15 @@ function komponenten_show()
 				</div>
 			</div>
 		</div>
-		<div class="col-md-1">
-		</div>
 	</div></div>'));
+	
+	$content .= '<!-- zum initialisieren der chosen selects muss $(".chosen-select").chosen(); aufgerfen werden -->
+    <script type="text/javascript">
+        $(".chosen-select").chosen();		
+			$( function() {
+				$( "#datepicker" ).datepicker();
+			} );			
+	</script>';
 
 	page_render($content);
 	return true;

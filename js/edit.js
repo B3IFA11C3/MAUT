@@ -8,8 +8,8 @@ function clickBearbeiten() {
    document.getElementById("kompArt_chosen").className.replace(/\bchosen-disabled\b/,'');
 			document.getElementById("Lieferant_chosen").className =
     document.getElementById("Lieferant_chosen").className.replace(/\bchosen-disabled\b/,''); */
-	$(document.getElementById("Lieferant")).trigger("chosen:updated");
-	$(document.getElementById("kompArt")).trigger("chosen:updated");
+	$(document.getElementsByClassName("Lieferant")).trigger("chosen:updated");
+	$(document.getElementsByClassName("kompArt")).trigger("chosen:updated");
 	
 	document.getElementById("bearbeiten").setAttribute("disabled","");
 	document.getElementById("speichern").removeAttribute("disabled");
@@ -25,6 +25,6 @@ function clickBearbeiten() {
 			document.getElementById("bearbeiten").removeAttribute("disabled");
 	document.getElementById("speichern").setAttribute("disabled","");
 	
-		$(document.getElementById("Lieferant")).trigger("chosen:updated");
-	$(document.getElementById("kompArt")).trigger("chosen:updated");
+		$(document.getElementsByClassName("Lieferant")).trigger("chosen:updated");
+	$(document.getElementsByClassName("kompArt")).trigger("chosen:updated");
 		}
