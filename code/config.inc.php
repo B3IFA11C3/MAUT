@@ -4,6 +4,6 @@
         "SQLUser" => "root",
         "SQLPass" => "",
         "SQLUserDB" => "user",
-        "SQLMautDB" => "maut"
+        "SQLMastDB" => "mast"
     );
 ?>

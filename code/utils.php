@@ -92,7 +92,7 @@ class MastDB {
         if (mysqli_connect_errno() != 0)
             return false;
 
-		mysqli_select_db(self::$mysqli_link, $CONFIG["SQLMautDB"]);
+		mysqli_select_db(self::$mysqli_link, $CONFIG["SQLMastDB"]);
         
         self::$mysqli_connected = true;
         
@@ -140,6 +140,30 @@ class MastDB {
     }
 }
 
+function sqlselect($sqltable, $sqlfields, $sqlfilter = null) {
+    global $CONFIG;
+    if (count($sqlfields) < 1)
+        return false;
+    $sqlselc = join(", ", $sqlfields);
+    $where = isset($sqlfilter);
+    if ($where)
+        $sqlwhere = join(" AND ", array_map(function($vergleich){
+            return "`".$vergleich[0]."` = ?";
+        }, $sqlfilter));
+    $curr = MastDB::mysqliCurry("SELECT ".$sqlselc." FROM `".$sqltable.($where ? ("` WHERE ".$sqlwhere) : "`"), $CONFIG["SQLMastDB"]);
+    if ($where)
+        foreach ($sqlfilter as $filter)
+            $curr = is_int($filter[1]) ? $curr->int($filter[1]) : $curr->str($filter[1]);
+    $curr = $curr->execute();
+    if (!$curr)
+        return false;
+    $resu = array();
+	while ($row = $curr->fetch()){
+        $resu[] = $row;
+	}
+    return $resu;
+}
+
 function checklogin($user, $passw) {
     global $CONFIG;
 	$resp = MastDB::mysqliCurry("SELECT `U_Passwort` FROM `user` WHERE `U_Benutzername` = ?", $CONFIG["SQLUserDB"])->str($user)->execute();
@@ -169,7 +193,7 @@ function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
     $anz = count($sqlfields);
     if ($anz < 1 || $anz != count($sqlvalues))
         return false;
-    $curr = MastDB::mysqliCurry("INSERT INTO `".$sqltable."`(`".join("`, `", $sqlfields)."`) VALUES (?".str_repeat(", ?", $anz-1).")", $CONFIG["SQLMautDB"]);
+    $curr = MastDB::mysqliCurry("INSERT INTO `".$sqltable."`(`".join("`, `", $sqlfields)."`) VALUES (?".str_repeat(", ?", $anz-1).")", $CONFIG["SQLMastDB"]);
     foreach ($sqlvalues as $value)
         $curr = is_int($value) ? $curr->int($value) : $curr->str($value);
     return $curr->execute();
@@ -180,7 +204,7 @@ function sqldelete($sqltable, $sqlfilter) {
     $sqlwhere = join(" AND ", array_map(function($vergleich){
         return "`".$vergleich[0]."` = ?";
     }, $sqlfilter));
-    $curr = MastDB::mysqliCurry("DELETE FROM `".$sqltable."` WHERE ".$sqlwhere, $CONFIG["SQLMautDB"]);
+    $curr = MastDB::mysqliCurry("DELETE FROM `".$sqltable."` WHERE ".$sqlwhere, $CONFIG["SQLMastDB"]);
     foreach ($sqlfilter as $filter)
         $curr = is_int($filter[1]) ? $curr->int($filter[1]) : $curr->str($filter[1]);
     return $curr->execute();
