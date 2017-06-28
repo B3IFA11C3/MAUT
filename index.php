@@ -29,6 +29,7 @@ foreach($modules as $module_name)
 function not_found()
 {
 	readfile("404.html");
+	return true;
 }
 
 function render_path($path)

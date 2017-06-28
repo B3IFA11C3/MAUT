@@ -51,17 +51,19 @@ function login_show_login($path)
 
 function login_login($path)
 {
-    if(!isset($_POST["username"]))
-        return login_show_login("/");
+	if(login_get_data() === false)
+	{
+		if(!isset($_POST["username"]))
+			return login_show_login("/");
 
-	if(checkLogin($_POST["username"], $_POST["password"])){
-        $_SESSION["user"] = $_POST["username"];
+		if(checkLogin($_POST["username"], $_POST["password"]))
+			$_SESSION["user"] = $_POST["username"];
     }
 
 	if(login_get_data() !== false)
 		render_path(isset($_POST["path"]) ? $_POST["path"] : "/");
 	else
-		page_render(render_main_block("error", $_POST["path"]), false);
+		page_render(render_main_block("error", isset($_POST["path"]) ? $_POST["path"] : "/"), false);
 
 	return true;
 }
