@@ -12,7 +12,7 @@ function page_render($maincontent, $full=true)
 {
 ?>
 <!DOCTYPE html>
-<html>
+<html style="overflow-y: scroll">
 	<head>
 		<title>MAST</title>
 
@@ -65,7 +65,7 @@ if($full) {
 </div>
 
 <!-- Page Content -->
-<div style="margin-left:15%">
+<div style="margin-left:15%; height: 100%">
 <?php
 }
 	echo $maincontent;
