@@ -13,7 +13,7 @@ function render_main_block($state="", $redirect_path="")
             <div class="container" style="width: 400px">
                 <div class="row">
                         <div class="form-wrap">
-                        <h1><img src="/img/logo.png" width="150" /></h1>
+                        <h1 style="height: 150px"><img src="/img/logo.png" width="150"/></h1>
                             <form role="form" method="post" action="/login" id="login-form" autocomplete="off">
                                 <div class="form-group">
                                     <input type="text" name="username" id="username" class="form-control" placeholder="Benutzername">
