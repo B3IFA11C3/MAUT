@@ -71,6 +71,7 @@ if($full) {
 	echo $maincontent;
 	if($full) echo "</div>";
 ?>
+
 </body>
 </html>
 <?php
