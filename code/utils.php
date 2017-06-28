@@ -140,13 +140,13 @@ class MastDB {
     }
 }
 
-function sqlJUSTDOIT($wresult, $sqlquary, $sqlparam = array(), $sqldb = "SQLMastDB") {
+function sqldoit($wresult, $sqlquary, $sqlparam = array(), $sqldb = "SQLMastDB") {
     global $CONFIG;
     $curr = MastDB::mysqliCurry($sqlquary, $CONFIG[$sqldb]);
     foreach ($sqlparam as $param)
         $curr = is_int($param) ? $curr->int($param) : $curr->str($param);
     if (!$wresult)
-        return !!$curr->execute();
+        return $curr->execute();
     $curr = $curr->execute();
     if (!$curr)
         return false;
@@ -213,7 +213,7 @@ function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
     $curr = MastDB::mysqliCurry("INSERT INTO `".$sqltable."`(`".join("`, `", $sqlfields)."`) VALUES (?".str_repeat(", ?", $anz-1).")", $CONFIG["SQLMastDB"]);
     foreach ($sqlvalues as $value)
         $curr = is_int($value) ? $curr->int($value) : $curr->str($value);
-    return !!$curr->execute();
+    return $curr->execute();
 }
 
 function sqldelete($sqltable, $sqlfilter) {
