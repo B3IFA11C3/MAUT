@@ -75,16 +75,14 @@ function login_logout($path)
 		unset($_SESSION["user"]);
 		$state = "success";
 	}
-	else
-		$state = "error";
 
 	page_render(render_main_block($state, "/"), false);
 	return true;
 }
 
+mast_register_path("#^logout\$#", "login_logout");
 mast_register_path("#^login\$#", "login_login");
 mast_register_path("#.*#", "login_show_login");
-mast_register_path("#^logout\$#", "login_logout");
 
 return true;
 ?>
