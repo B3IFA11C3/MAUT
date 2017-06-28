@@ -76,7 +76,7 @@ function login_logout($path)
 	else
 		$state = "error";
 
-	page_render(render_main_block($state), false);
+	page_render(render_main_block($state, "/"), false);
 	return true;
 }
 
