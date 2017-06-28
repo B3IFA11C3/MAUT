@@ -11,7 +11,6 @@
 		
 		<script src='../js/chosen/chosen.jquery.min.js' type='text/javascript'></script>
 		<script src='../js/bootstrap.min.js' type='text/javascript'></script>
-		<script src="../js/edit.js" type='text/javascript'></script>
         <link rel='stylesheet' href='../js/chosen/chosen.css'>
 		<link rel='stylesheet' href='../css/style.css'>		
 		<link rel='stylesheet' href='../css/bootstrap.min.css'>
@@ -25,7 +24,7 @@
 		<div class="col-md-2">
 		</div>	
 		<div class="card card-block" id="card-shadow">
-			<div class="card-title"><input type="text" value="Name" id="Name" disabled class="feldAktivieren"/>
+			<div class="card-title"><input type="text" value="Name" disabled/>
 			</div>
 			<div class="card-text">
 				<br/>
@@ -33,11 +32,9 @@
 					<div class="row">
 						<div class="col-md-1">
 						</div>	
-						<div class="col-md-2">	
-							<label>Komponentenart:</label>
-						</div>	
-						<div class="col-md-2">	
-							<select class='chosen-select feldAktivieren' id="kompArt" disabled >
+						<div class="col-md-4">	
+							<label>Komponentenart: </label>
+							<select data-placeholder='test placeholder' class='chosen-select' >
 								<option value='1'>Select 1</option>
 								<option value='2'>Select 2</option>
 								<option value='3'>Select 3</option>
@@ -55,24 +52,24 @@
 							<label>Gewaehrleistungsdauer:</label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" value="Gewaehrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/>
-						</div> 
+							<input type="text" value="Gewaehrleistungsdauer" disabled/>
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-1">
 						</div>
 						<div class="col-md-4">	
-							<table class="table table-hover" >
+							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th>Attribut</th>
 										<th>Wert</th>
 									</tr>
 								</thead>
-								<tbody >
+								<tbody>
 									<tr>
-										<td>Beispiel</td>
-										<td><input name="beispiel1wert" value="15" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
+										<td><input name="beispiel1" type="checkbox" /> Beispiel</td>
+										<td><input name="beispiel1wert" value="15" disabled="" size="10px"/></td>
 									</tr>
 								</tbody>
 							</table>
@@ -95,13 +92,13 @@
 						</div>
 						<div class="col-md-2">
 							<div class="short-div">
-								<input type="text" value="Hersteller" id="Hersteller" disabled class="feldAktivieren"/>
+								<input type="text" value="Hersteller" disabled/>
 							</div>
 							<div class="short-div">
-								<input  type="text" value="Seriennummer" id="Seriennummer" disabled class="feldAktivieren"/>
+								<input  type="text" value="Seriennummer" disabled/>
 							</div>
 							<div class="short-div">
-								<select class='chosen-select feldAktivieren' id="Lieferant" disabled >
+								<select data-placeholder='test placeholder' class='chosen-select' >
 									<option value='1'>Select 1</option>
 									<option value='2'>Select 2</option>
 									<option value='3'>Select 3</option>
@@ -114,7 +111,7 @@
 								</select>
 							</div>
 							<div class="short-div">
-								<input type="text" class="feldAktivieren" id="datepicker" id="Einkaufsdatum" disabled />
+								<input type="text" id="datepicker" disabled=""/>
 							</div>
 						</div>
 					</div>	
@@ -122,10 +119,10 @@
 						<div class="col-md-1">
 						</div>						
 						<div class="col-md-2">
-							<input name="btnBearb" type="button" class="btn btn-primary" value="Bearbeiten" onclick="clickBearbeiten();" id="bearbeiten"/>
+							<input name="btnBearb" type="button" class="btn btn-primary" value="Bearbeiten"/>
 						</div>
 						<div class="col-md-2">
-							<input name="btnSave" type="button" class="btn btn-primary" value="Speichern" onclick="clickSpeichern();" disabled id="speichern"/>
+							<input name="btnSave" type="button" class="btn btn-primary" value="Speichern"/>
 						</div>
 						<div class="col-md-1">
 						</div>
@@ -144,9 +141,10 @@
 			$( function() {
 				$( "#datepicker" ).datepicker();
 			} );
-			
-			
-	</script>
+	
+	
+		
+    </script>
 <!-- Für irgendwann wegen Domi:
 <div class="col-md-1">
 							<input name="txtAnzahl" type="text"  value="55" size="10px" disabled=""/>
@@ -156,7 +154,3 @@
 							</div>
 							-->
 </html>
-
-
-
-
