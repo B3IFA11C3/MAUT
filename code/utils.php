@@ -5,7 +5,7 @@
         global $CONFIG;
         if (!isset($user) || !isset($passw))
             return false;
-        $result = sqldoitarr($CONFIG["SQLUserDB"], "SELECT `U_Passwort` FROM `User` WHERE `U_Benutzername` = '".sqlmask($user)."'");
+        $result = sqldoitarr($CONFIG["SQLUserDB"], "SELECT `U_Passwort` FROM `user` WHERE `U_Benutzername` = '".sqlmask($user)."'");
         if (!$result || $result[0][0] !== crypt($passw, $result[0][0]))
             return false;
         return true;
@@ -17,10 +17,10 @@
             return false;
         if ($newpw !== $newpwwdh)
             return false;
-        $result = sqldoitarr($CONFIG["SQLUserDB"], "SELECT `U_Passwort` FROM `User` WHERE `U_Benutzername` = '".sqlmask($user)."'");
+        $result = sqldoitarr($CONFIG["SQLUserDB"], "SELECT `U_Passwort` FROM `user` WHERE `U_Benutzername` = '".sqlmask($user)."'");
         if ($result && $result[0][0] !== crypt($oldpw, $result[0][0]))
             return false;
-        if (sqldoit($CONFIG["SQLUserDB"], "UPDATE `User` SET `U_Passwort` = '".crypt($newpw)."' WHERE `U_Benutzername` = '".sqlmask($user)."'"))
+        if (sqldoit($CONFIG["SQLUserDB"], "UPDATE `user` SET `U_Passwort` = '".crypt($newpw)."' WHERE `U_Benutzername` = '".sqlmask($user)."'"))
             return true;
         return false;
     }
