@@ -2,8 +2,9 @@
 require("code/config.inc.php");
 
 class MySQLiCurry {
-    public function __construct($str) {
+    public function __construct($str, $db) {
         $this->str = $str;
+        $this->db = $db;
         $this->typestr = "";
         $this->vars = array();
         $this->stmt = NULL;
@@ -31,10 +32,10 @@ class MySQLiCurry {
     }
     
     public function execute() {
-        $this->stmt = MastDB::mysqliPrepare($this->str);
+        $this->stmt = MastDB::mysqliPrepare($this->str, $this->db);
         if ($this->stmt === FALSE)
             return false;
-        
+
         if (count($this->vars) != 0) {
             array_unshift($this->vars, $this->stmt, $this->typestr);
             
@@ -90,6 +91,8 @@ class MastDB {
         self::$mysqli_link = mysqli_connect($CONFIG["SQLConn"], $CONFIG["SQLUser"], $CONFIG["SQLPass"]);
         if (mysqli_connect_errno() != 0)
             return false;
+
+		mysqli_select_db(self::$mysqli_link, $CONFIG["SQLMautDB"]);
         
         self::$mysqli_connected = true;
         
@@ -109,22 +112,23 @@ class MastDB {
         self::$mysqli_connected = false;
     }
     
-    public static function mysqliQuery($str) {
+    public static function mysqliQuery($str, $db) {
         if (!self::$mysqli_connected && !self::mysqliConnect())
             return false;
         
         return mysqli_query(self::$mysqli_link, $str);
     }
     
-    public static function mysqliPrepare($str) {
+    public static function mysqliPrepare($str, $db) {
         if (!self::$mysqli_connected && !self::mysqliConnect())
             return false;
-        
+
+		mysqli_select_db(self::$mysqli_link, $db);
         return mysqli_prepare(self::$mysqli_link, $str);
     }
     
-    public static function mysqliCurry($str) {
-        return new MySQLiCurry($str);
+    public static function mysqliCurry($str, $db) {
+        return new MySQLiCurry($str, $db);
     }
     
     public static function mysqliError() {
@@ -138,12 +142,14 @@ class MastDB {
 
 function checklogin($user, $passw) {
     global $CONFIG;
-    if (!isset($user) || !isset($passw))
+
+	$qryres = MastDB::mysqliCurry("SELECT `U_Passwort` FROM user WHERE `U_Benutzername` = ?", $CONFIG["SQLUserDB"])->str($user)->execute();
+	if(!$qryres)
+		return false;
+
+	$user = $qryres->fetch();
+    return $user && $user["U_Passwort"] === crypt($passw, $user["U_Passwort"]);
         return false;
-    $result = sqldoitarr($CONFIG["SQLUserDB"], "SELECT `U_Passwort` FROM `user` WHERE `U_Benutzername` = '".sqlmask($user)."'");
-    if (!$result || $result[0][0] !== crypt($passw, $result[0][0]))
-        return false;
-    return true;
 }
 
 function changepw($user, $oldpw, $newpw, $newpwwdh) {
