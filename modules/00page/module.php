@@ -37,7 +37,7 @@ if($full) {
 <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%;">
   <h3 class="w3-bar-item" style="font-size: 40px"><nobr>
 	<img src="img/logo.png" style="vertical-align: middle; height: 50px"/>
-	<span style="margin-left:10px; vertical-align: middle;">Men&uuml;</span>
+	<!--<span style="margin-left:10px; vertical-align: middle;">Men&uuml;</span>-->
 	</nobr>
   </h3>
 <?php
