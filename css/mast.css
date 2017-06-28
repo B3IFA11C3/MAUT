@@ -54,7 +54,7 @@ tr.clickable:hover {
 	padding: 0px !important;
 }
 
-.tbodytable * tr:last-of-type td div {
+.tbodytable * tr:last-of-type td > div {
 	transition: max-height 0.2s ease-out;
 	
 	overflow: hidden;
