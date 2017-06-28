@@ -14,21 +14,21 @@
     function changepw ($user, $oldpw, $newpw, $newpwwdh) {
         global $CONFIG;
         if (!isset($oldpw) || !isset($newpw) || !isset($newpwwdh))
-            return "Bitte altes Passwort, neues Passwort und neues Passwort wiederholen füllen!";
+            return false;
         if ($newpw !== $newpwwdh)
-            return "Das neue Passwort stimmt nicht mit der Wiederholung überein!";
+            return false;
         $result = sqldoitarr($CONFIG["SQLUserDB"], "SELECT `U_Passwort` FROM `User` WHERE `U_Benutzername` = '".sqlmask($user)."'");
         if ($result && $result[0][0] !== crypt($oldpw, $result[0][0]))
-            return "Das eingegebene Passwort ist nicht korrekt!";
+            return false;
         if (sqldoit($CONFIG["SQLUserDB"], "UPDATE `User` SET `U_Passwort` = '".crypt($newpw)."' WHERE `U_Benutzername` = '".sqlmask($user)."'"))
-            return "Passwort geändert!";
-        return "Interner Fehler bei der Datenbankkommunikation";
+            return true;
+        return false;
     }
 
     function sqlinsert ($sqltable, $sqlfields, $sqlvalues) {
         global $CONFIG;
         if (count($sqlfields) != count($sqlvalues))
-            return "Interner Fehler (".count($sqlvalues)." Values für ".count($sqlfields)." Felder)";
+            return false;
         $sqlstr = "INSERT INTO `".$sqltable."`('".join("', '", array_map("sqlmask", $sqlfields))."') VALUES ('".join("', '", array_map("sqlmask", $sqlvalues))."')";
         if (sqldoit($CONFIG["SQLMautDB"], $sqlstr))
             return true;
@@ -68,7 +68,7 @@
         if (is_bool($result))
             return $result;
         $arr = array();
-        while ($row = mysqli_fetch_assoc($result)){
+        while ($row = mysqli_fetch_row($result)){
             $arr[] = $row;
         }
         return $arr;
