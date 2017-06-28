@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Test</title>
+        <title>Edit</title>
         <script src='../js/jquery.min.js' type='text/javascript'></script>
           <meta name="viewport" content="width=device-width, initial-scale=1">
 		
@@ -37,7 +37,7 @@
 							<label>Komponentenart:</label>
 						</div>	
 						<div class="col-md-2">	
-							<select class='chosen-select feldAktivieren' id="kompArt" disabled >
+							<select class='chosen-select feldAktivieren' disabled id="kompArt" >
 								<option value='1'>Select 1</option>
 								<option value='2'>Select 2</option>
 								<option value='3'>Select 3</option>
@@ -52,7 +52,7 @@
 						<div class="col-md-1">
 						</div>	
 						<div class="col-md-2">
-							<label>Gewaehrleistungsdauer:</label>
+							<label>Gew&auml;hrleistungsdauer:</label>
 						</div>
 						<div class="col-md-2">
 							<input type="text" value="Gewaehrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/>
@@ -67,12 +67,14 @@
 									<tr>
 										<th>Attribut</th>
 										<th>Wert</th>
+										<th>Einheit</th>
 									</tr>
 								</thead>
 								<tbody >
 									<tr>
 										<td>Beispiel</td>
 										<td><input name="beispiel1wert" value="15" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
+										<td>GB</td>
 									</tr>
 								</tbody>
 							</table>
@@ -101,7 +103,7 @@
 								<input  type="text" value="Seriennummer" id="Seriennummer" disabled class="feldAktivieren"/>
 							</div>
 							<div class="short-div">
-								<select class='chosen-select feldAktivieren' id="Lieferant" disabled >
+								<select class='chosen-select feldAktivieren' disabled id="Lieferant">
 									<option value='1'>Select 1</option>
 									<option value='2'>Select 2</option>
 									<option value='3'>Select 3</option>

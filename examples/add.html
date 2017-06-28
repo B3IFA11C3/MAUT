@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Test</title>
+        <title>Add</title>
         <script src='../js/jquery.min.js' type='text/javascript'></script>
           <meta name="viewport" content="width=device-width, initial-scale=1">
 		
@@ -11,6 +11,7 @@
 		
 		<script src='../js/chosen/chosen.jquery.min.js' type='text/javascript'></script>
 		<script src='../js/bootstrap.min.js' type='text/javascript'></script>
+		<!--script src="../js/edit.js" type='text/javascript'></script-->
         <link rel='stylesheet' href='../js/chosen/chosen.css'>
 		<link rel='stylesheet' href='../css/style.css'>		
 		<link rel='stylesheet' href='../css/bootstrap.min.css'>
@@ -24,7 +25,7 @@
 		<div class="col-md-2">
 		</div>	
 		<div class="card card-block" id="card-shadow">
-			<div class="card-title"><input type="text" value="Name" disabled/>
+			<div class="card-title"><input type="text" placeholder="Name" id="Name"  class="feldAktivieren"/>
 			</div>
 			<div class="card-text">
 				<br/>
@@ -32,9 +33,11 @@
 					<div class="row">
 						<div class="col-md-1">
 						</div>	
-						<div class="col-md-4">	
-							<label>Komponentenart: </label>
-							<select data-placeholder='test placeholder' class='chosen-select' >
+						<div class="col-md-2">	
+							<label>Komponentenart:</label>
+						</div>	
+						<div class="col-md-2">	
+							<select class='chosen-select' id="kompArt"  >
 								<option value='1'>Select 1</option>
 								<option value='2'>Select 2</option>
 								<option value='3'>Select 3</option>
@@ -49,27 +52,29 @@
 						<div class="col-md-1">
 						</div>	
 						<div class="col-md-2">
-							<label>Gewaehrleistungsdauer:</label>
+							<label>Gew&auml;hrleistungsdauer:</label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" value="Gewaehrleistungsdauer" disabled/>
-						</div>
+							<input type="text" placeholder="Gewaehrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/>
+						</div> 
 					</div>
 					<div class="row">
 						<div class="col-md-1">
 						</div>
 						<div class="col-md-4">	
-							<table class="table table-hover">
+							<table class="table table-hover" >
 								<thead>
 									<tr>
 										<th>Attribut</th>
 										<th>Wert</th>
+										<th>Einheit</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody >
 									<tr>
-										<td><input name="beispiel1" type="checkbox" /> Beispiel</td>
-										<td><input name="beispiel1wert" value="15" disabled="" size="10px"/></td>
+										<td>Beispiel</td>
+										<td><input name="beispiel1wert" placeholder="15" size="10px" id="durchnummerieren" class="feldAktivieren"  /></td>
+										<td>GB</td>
 									</tr>
 								</tbody>
 							</table>
@@ -92,13 +97,13 @@
 						</div>
 						<div class="col-md-2">
 							<div class="short-div">
-								<input type="text" value="Hersteller" disabled/>
+								<input type="text" placeholder="Hersteller" id="Hersteller"  class="feldAktivieren"/>
 							</div>
 							<div class="short-div">
-								<input  type="text" value="Seriennummer" disabled/>
+								<input  type="text" placeholder="Seriennummer" id="Seriennummer"  class="feldAktivieren"/>
 							</div>
 							<div class="short-div">
-								<select data-placeholder='test placeholder' class='chosen-select' >
+								<select class='chosen-select' id="Lieferant"  >
 									<option value='1'>Select 1</option>
 									<option value='2'>Select 2</option>
 									<option value='3'>Select 3</option>
@@ -111,19 +116,62 @@
 								</select>
 							</div>
 							<div class="short-div">
-								<input type="text" id="datepicker" disabled=""/>
+								<input type="text" class="feldAktivieren" id="datepicker" id="Einkaufsdatum"  />
 							</div>
 						</div>
-					</div>	
+					</div>
+					<div class="row" id="popUpTable" style="display:none">
+						<div class="col-md-1">
+						</div>						
+						<div class="col-md-6">
+							<table class="table table-hover" >
+								<thead>
+									<tr>
+										<th>Seriennummer</th>
+										<th>Hersteller</th>
+										<th>Gew&auml;hrleistungsdauer</th>
+										<th>Lieferant</th>
+										<th>Einkaufsdatum</th>
+									</tr>
+								</thead>
+								<tbody >
+									<tr>
+										<td><input  type="text" placeholder="Seriennummer"/></td>
+										<td><input type="text" placeholder="Hersteller"/></td>
+										<td><input type="text" placeholder="Gewaehrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/></td>
+										<td>
+											<select class='chosen-select' id="Lieferant"  >
+												<option value='1'>Select 1</option>
+												<option value='2'>Select 2</option>
+												<option value='3'>Select 3</option>
+												<option value='4'>Select 4</option>
+												<option value='5'>Select 5</option>
+												<option value='6'>Select 6</option>
+												<option value='7'>Select 7</option>
+												<option value='8'>Select 8</option>
+												<option value='9'>Select 9</option>
+											</select>
+										</td>	
+										<td><input type="text" class="feldAktivieren" id="datepicker" id="Einkaufsdatum"  /></td>											
+									</tr>
+									<tr>
+										<td rowspan="5"><input type="button" class="btn btn-primary" ></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-md-1">
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-md-1">
 						</div>						
 						<div class="col-md-2">
-							<input name="btnBearb" type="button" class="btn btn-primary" value="Bearbeiten"/>
+							<input name="btnHinzu" type="button" class="btn btn-primary" value="Registrieren" onclick="clickRegistrieren();" id="registrieren"/>
 						</div>
-						<div class="col-md-2">
-							<input name="btnSave" type="button" class="btn btn-primary" value="Speichern"/>
-						</div>
+						<!--div class="col-md-2">
+							<input name="btnSave" type="button" class="btn btn-primary" value="Gruppen regestrieren" onclick="clickGrRegestrieren();"  id="gruppenregestrieren"/>
+						</div-->
 						<div class="col-md-1">
 						</div>
 					</div>
@@ -141,16 +189,13 @@
 			$( function() {
 				$( "#datepicker" ).datepicker();
 			} );
-	
-	
-		
-    </script>
-<!-- Für irgendwann wegen Domi:
-<div class="col-md-1">
-							<input name="txtAnzahl" type="text"  value="55" size="10px" disabled=""/>
-						</div>
-						<div class="col-md-2">
-							<input name="btnAdd" type="button" class="btn btn-primary" value="Add" disabled=""/>
-							</div>
-							-->
+			
+		function clickGrRegestrieren() {
+			document.getElementById("popUpTable").style = "disply:block";
+		}
+	</script>
 </html>
+
+
+
+
