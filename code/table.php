@@ -2,13 +2,19 @@
 
 function table_render($columns, $contents, $addcontent=NULL)
 {
-	$content = '<div id="tablewrapper">
-		<div id="filterwrapper">
-			<label id="filterlabel" for="filter">Filter:</label>
-			<input id="filter" type="text" onkeyup="filterTable(document.getElementById(\'table\'), this.value);"/>
+	global $tableid;
+	if(!isset($tableid))
+		$tableid = 0;
+	else
+		++$tableid;
+
+	$content = '<div class="tablewrapper">
+		<div class="filterwrapper">
+			<label class="filterlabel" for="filter">Filter:</label>
+			<input class="filter" type="text" onkeyup="filterTable(document.getElementById(\'table' . $tableid . '\'), this.value);"/>
 		</div>';
 
-	$content .= '<table id="table" class="table tbodytable tbodytable-striped tbodytable-sortable">
+	$content .= '<table id="table' . $tableid . '" class="table tbodytable tbodytable-striped tbodytable-sortable">
 			<thead class="accordion">
 				<tr>';
 
@@ -54,7 +60,7 @@ function table_render($columns, $contents, $addcontent=NULL)
 	
 	$content .= '<script>
 		makeAccordions();
-		makeSorttable("table");
+		makeSorttable("table' . $tableid . '");
 	</script>';
 	
 	return $content;

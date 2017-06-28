@@ -3,22 +3,22 @@ h1 {
 }
 
 /* Table stuff */
-#tablewrapper {
+.tablewrapper {
 	width: 90%;
 	margin: 0px auto;
 }
 
-#filterlabel {
+.filterlabel {
 	display:table-cell;
 	width:1px;
 }
 
-#filter {
+.filter {
 	display:table-cell;
 	width:100%
 }
 
-#filterwrapper {
+.filterwrapper {
 	display: table;
 	width: 100%;
 }
