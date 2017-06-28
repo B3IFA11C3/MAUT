@@ -30,6 +30,7 @@ function page_render($maincontent, $full=true)
 		<script src='/js/chosen/chosen.jquery.min.js' type='text/javascript'></script>
 		<script src='/js/bootstrap.min.js' type='text/javascript'></script>
 		<script src="/js/edit.js" type='text/javascript'></script>
+        <script src="/js/editRaum.js" type='text/javascript'></script>
         <link rel='stylesheet' href='/js/chosen/chosen.css'>
 		<link rel='stylesheet' href='/css/style.css'>		
 		<link rel='stylesheet' href='/css/bootstrap.min.css'>
