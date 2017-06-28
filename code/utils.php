@@ -161,7 +161,7 @@ function changepw($user, $oldpw, $newpw, $newpwwdh) {
 	$resprow = $resp->fetch();
     if (!$resprow || $resprow["U_Passwort"] !== crypt($oldpw, $resprow["U_Passwort"]))
         return false;
-	return !!MastDB::mysqliCurry("UPDATE `user` SET `U_Passwort` = '".crypt($newpw)."' WHERE `U_Benutzername` = ?", $CONFIG["SQLUserDB"])->str($user)->execute();
+	return !!MastDB::mysqliCurry("UPDATE `user` SET `U_Passwort` = '".crypt($newpw, "$2y$10$".uniqid(mt_rand(), true))."' WHERE `U_Benutzername` = ?", $CONFIG["SQLUserDB"])->str($user)->execute();
 }
 
 function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
