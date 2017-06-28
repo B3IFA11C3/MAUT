@@ -3,16 +3,6 @@ isset($_SESSION) || session_start();
 
 isset($_GET["path"]) || $_GET["path"] = "/";
 
-function load_module($module_name)
-{
-	if(!file_exists(__DIR__ . "/modules/" . $module_name . "/module.php"))
-		return false;
-
-	include_once(__DIR__ . "/modules/" . $module_name . "/module.php");
-
-	return true;
-}
-
 $paths = array();
 
 function mast_register_path($pattern, $callback)
@@ -29,7 +19,7 @@ foreach($modules as $module_name)
         if(filetype("modules/" . $module_name) != "dir")
                 continue;
 
-        if(!load_module($module_name))
+        if(!include_once(__DIR__ . "/modules/" . $module_name . "/module.php"))
         {
                 echo "Modul " . $module_name . " konnte nicht geladen werden!";
                 continue;

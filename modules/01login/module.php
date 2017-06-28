@@ -53,9 +53,8 @@ function login_login($path)
 {
     if(!isset($_POST["username"]))
         return login_show_login("/");
-        
-	if(true || checkLogin($_POST["username"], $_POST["password"])){
-        echo checkLogin($_POST["username"], $_POST["password"]);
+
+	if(checkLogin($_POST["username"], $_POST["password"])){
         $_SESSION["user"] = $_POST["username"];
     }
 
