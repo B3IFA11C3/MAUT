@@ -70,6 +70,8 @@ function login_login($path)
 
 function login_logout($path)
 {
+	$state = "";
+
 	if(login_get_data() !== false)
 	{
 		unset($_SESSION["user"]);
