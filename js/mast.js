@@ -60,8 +60,6 @@ function makeAccordions()
 	}
 }
 
-makeAccordions();
-
 function makeSorttable(tableID)
 {
 	var table = $(document.getElementById(tableID)),
