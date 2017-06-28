@@ -1,0 +1,39 @@
+Attribut (komponentenattribute)
+    Attribute auflisten ()
+        params: none
+        returns: array(kat_id=>kat_bezeichnung)
+    Attribut löschen ()
+        params: kat_id
+        returns: success
+    Attribut ändern ()
+        params: kat_id, array(spalte=>wert)
+        returns: erfolg
+    Attribut einfügen ()
+        params: array(spalte=>wert)
+        returns: kat_id
+Komponenten Arten (komponentenarten)
+    Komponentenarten auflisten ()
+        params: array(spalten)
+        returns: array(komponentenarten.*, array(komponentenattribute) )
+    Komponentenart hinzufügen
+        params: array(spalte=>wert), array(kat_id)=null
+        returns: ka_id
+    Komponentenart ändern
+        params: ka_id, array(spalte=>wert)
+        returns: success
+    Komponentenart löschen
+        params: ka_id
+        returns: success
+        Note: 
+            alle zugehörigen Komponenten löschen -> alle zu den Komponenten gehörigen khkats löschen
+            nur als Admin ausführbar
+    Attribut hinzufügen
+        params: ka_id, kat_id
+        returns: success
+    Attribut entfernen: 
+        params ka_id, kat_id
+        returns: success
+Komponenten (komponenten)
+    Komponenten auflisten
+        params
+    
