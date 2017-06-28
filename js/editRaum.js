@@ -1,4 +1,4 @@
-function clickBearbeiten() {
+function clickEditRoom() {
 			var elemente = document.getElementsByClassName("changeEditStatus");
 			for(var i = 0; i < elemente.length; i++) {
 				elemente[i].removeAttribute("disabled");
@@ -20,7 +20,7 @@ function clickBearbeiten() {
 
 }
 		
-		function clickSpeichern() {
+		function clickSaveRoom() {
 			var elemente = document.getElementsByClassName("feldAktivieren");
 			for(var i = 0; i < elemente.length; i++) {
 				elemente[i].setAttribute("disabled", "");
