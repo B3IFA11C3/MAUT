@@ -18,6 +18,7 @@
 --
 -- Table structure for table `komponente_hat_attribute`
 --
+USE mast;
 
 DROP TABLE IF EXISTS `komponente_hat_attribute`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
