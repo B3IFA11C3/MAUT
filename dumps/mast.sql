@@ -38,6 +38,15 @@ CREATE TABLE `komponente_hat_attribute` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `komponente_hat_attribute`
+--
+
+LOCK TABLES `komponente_hat_attribute` WRITE;
+/*!40000 ALTER TABLE `komponente_hat_attribute` DISABLE KEYS */;
+/*!40000 ALTER TABLE `komponente_hat_attribute` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `komponente_in_raum`
 --
 
@@ -53,6 +62,15 @@ CREATE TABLE `komponente_in_raum` (
   CONSTRAINT `komponente_in_raum_ibfk_2` FOREIGN KEY (`k_id`) REFERENCES `komponenten` (`k_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `komponente_in_raum`
+--
+
+LOCK TABLES `komponente_in_raum` WRITE;
+/*!40000 ALTER TABLE `komponente_in_raum` DISABLE KEYS */;
+/*!40000 ALTER TABLE `komponente_in_raum` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `komponenten`
@@ -82,6 +100,15 @@ CREATE TABLE `komponenten` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `komponenten`
+--
+
+LOCK TABLES `komponenten` WRITE;
+/*!40000 ALTER TABLE `komponenten` DISABLE KEYS */;
+/*!40000 ALTER TABLE `komponenten` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `komponentenarten`
 --
 
@@ -95,6 +122,16 @@ CREATE TABLE `komponentenarten` (
   PRIMARY KEY (`ka_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `komponentenarten`
+--
+
+LOCK TABLES `komponentenarten` WRITE;
+/*!40000 ALTER TABLE `komponentenarten` DISABLE KEYS */;
+INSERT INTO `komponentenarten` VALUES (1,'PC',1),(2,'Switch',1),(3,'Router',1),(4,'Accesspoint',1),(5,'Drucker',1),(6,'Beamer',1),(7,'Visualizer',1),(8,'Software',0);
+/*!40000 ALTER TABLE `komponentenarten` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `komponentenattribute`
@@ -112,6 +149,16 @@ CREATE TABLE `komponentenattribute` (
   PRIMARY KEY (`kat_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `komponentenattribute`
+--
+
+LOCK TABLES `komponentenattribute` WRITE;
+/*!40000 ALTER TABLE `komponentenattribute` DISABLE KEYS */;
+INSERT INTO `komponentenattribute` VALUES (1,'string',NULL,1,'Seriennummer'),(2,'int','MB',0,'RAM Größe'),(3,'string',NULL,0,'CPU Bezeichnung'),(4,'float','GHz',0,'CPU Takt'),(5,'int','GB',0,'Festplatte Gröse'),(6,'string',NULL,0,'Festplattenart'),(7,'string',NULL,0,'Videoanschlüsse'),(8,'int',NULL,0,'Anzahl Ports'),(9,'string',NULL,0,'Uplink Typ'),(10,'string',NULL,0,'IPs'),(11,'string',NULL,0,'WLAN Standard'),(12,'string',NULL,0,'Druckertyp'),(13,'bool',NULL,0,'Farbdrucker'),(14,'string',NULL,0,'Druckerformat'),(15,'bool',NULL,0,'Beidseitig'),(16,'int','Lumen',0,'Helligkeit'),(17,'bool',NULL,0,'Lautsprecher'),(18,'string',NULL,0,'Versionsnummer'),(19,'string',NULL,0,'Lizenztyp'),(20,'date',NULL,0,'Lizenzende'),(21,'string',NULL,0,'Lizeninformationen'),(22,'string',NULL,0,'Installationshinweise'),(23,'int',NULL,0,'Lizenzanzahl');
+/*!40000 ALTER TABLE `komponentenattribute` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `lieferanten`
@@ -138,6 +185,16 @@ CREATE TABLE `lieferanten` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `lieferanten`
+--
+
+LOCK TABLES `lieferanten` WRITE;
+/*!40000 ALTER TABLE `lieferanten` DISABLE KEYS */;
+INSERT INTO `lieferanten` VALUES (1,'Dl More Ram. GmbH','Münchner Str. 123','90471','Nürnberg','09111235864','01575896485','0911235865','support@dlmoreram.de','2017-06-28 07:04:47','2017-06-28 07:04:47',0),(2,'Spinn Netz werk AG','Bodenbacher Str. 43','90766','Fürth','09116546783','01774558648','09116546784','spiderman@web.de','2017-06-28 07:04:47','2017-06-28 07:04:47',0),(3,'Skynet software LTD','17th D Main Road 2','12345','Bangalore, Indien','+91576894884',NULL,NULL,'t800@sky.net','2017-06-28 07:09:16','2017-06-28 07:09:16',0);
+/*!40000 ALTER TABLE `lieferanten` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `raeume`
 --
 
@@ -157,6 +214,16 @@ CREATE TABLE `raeume` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `raeume`
+--
+
+LOCK TABLES `raeume` WRITE;
+/*!40000 ALTER TABLE `raeume` DISABLE KEYS */;
+INSERT INTO `raeume` VALUES (1,'15','Computerraum 1',NULL,'2017-06-28 07:13:24','2017-06-28 07:13:24',0),(2,'17','Computerraum 2',NULL,'2017-06-28 07:13:24','2017-06-28 07:13:24',0),(3,'101',NULL,NULL,'2017-06-28 07:13:24','2017-06-28 07:13:24',0),(4,'207',NULL,NULL,'2017-06-28 07:13:24','2017-06-28 07:13:24',0);
+/*!40000 ALTER TABLE `raeume` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `wird_beschrieben_durch`
 --
 
@@ -173,6 +240,16 @@ CREATE TABLE `wird_beschrieben_durch` (
   CONSTRAINT `fk_komponentenarten_has_komponentenattribute_komponentenattri1` FOREIGN KEY (`kat_id`) REFERENCES `komponentenattribute` (`kat_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wird_beschrieben_durch`
+--
+
+LOCK TABLES `wird_beschrieben_durch` WRITE;
+/*!40000 ALTER TABLE `wird_beschrieben_durch` DISABLE KEYS */;
+INSERT INTO `wird_beschrieben_durch` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,17),(2,1),(2,8),(2,9),(3,1),(3,8),(3,10),(4,1),(4,11),(5,1),(5,12),(5,13),(5,14),(5,15),(6,1),(6,7),(6,16),(6,17),(7,1),(7,7),(8,18),(8,19),(8,20),(8,21),(8,23);
+/*!40000 ALTER TABLE `wird_beschrieben_durch` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -183,4 +260,4 @@ CREATE TABLE `wird_beschrieben_durch` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-28  9:32:11
+-- Dump completed on 2017-06-28  9:32:31

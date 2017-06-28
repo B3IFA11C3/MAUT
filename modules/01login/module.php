@@ -59,7 +59,7 @@ function login_login($path)
     }
 
 	if(login_get_data() !== false)
-		render_path($_POST["path"]);
+		render_path(isset($_POST["path"]) ? $_POST["path"] : "/");
 	else
 		page_render(render_main_block("error", $_POST["path"]), false);
 
@@ -76,7 +76,7 @@ function login_logout($path)
 	else
 		$state = "error";
 
-	page_render(render_main_block($state), false);
+	page_render(render_main_block($state, "/"), false);
 	return true;
 }
 
