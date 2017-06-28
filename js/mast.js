@@ -41,14 +41,14 @@ function filterTableBySelect(table, filter)
 
 function makeAccordions()
 {
-	var clickables = $(".tbodytable * tr.clickable");
+	var clickables = $(".tbodytable > * > tr.clickable");
 	for(var i = 0; i < clickables.length; ++i)
 	{
 		clickables[i].onclick = function() {
 			if(this.parentNode.classList.contains("accordion"))
 			{
 				// Hide other accordions
-				$(".tbodytable * tr.clickable").each(function(i,e) {
+				$(".tbodytable > * > tr.clickable").each(function(i,e) {
 					e.parentNode.classList.add("accordion");
 				});
 				
@@ -65,15 +65,15 @@ makeAccordions();
 function makeSorttable(tableID)
 {
 	var table = $(document.getElementById(tableID)),
-	tbody = table.find('tbody'),
+	tbody = $("> tbody", table),
 	th_index = 0,
 	th_sortType = "string";
 	
-	table.find('th').data("sort-direction","ASC");
+	$("> thead > tr > th", table).data("sort-direction","ASC");
 	
 	function getSortList(i, elem)
 	{
-		var txt = $("td", elem).eq(th_index).text();
+		var txt = $("> tr > td", elem).eq(th_index).text();
 		$(elem).attr("data-sortval", txt);
 	}
 	
@@ -100,7 +100,7 @@ function makeSorttable(tableID)
 	}
 	
 	//header sort
-	$("th", table).on("click", function() {
+	$("> thead > tr > th", table).on("click", function() {
 		//toggle the sorting direction
 		$(this).data('sort-direction', ( $(this).data('sort-direction') == 'ASC' ? 'DESC' : 'ASC'));
 		var dir = $(this).data('sort-direction');
@@ -108,7 +108,7 @@ function makeSorttable(tableID)
 		th_sortType = $(this).data('sort'); //get "int" or "string" from data-sort on th
 		th_index = $(this).index();
 		
-		tbody = table.find('tbody').each(getSortList);
+		tbody = $("> tbody", table).each(getSortList);
 		
 		table.find('.sort-indicator').removeClass('sort-desc').removeClass('sort-asc');
 		
