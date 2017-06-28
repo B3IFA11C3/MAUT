@@ -29,45 +29,9 @@
 			<div class="card-text">
 				<br/>
 				<div class="vboxLeft">
-					<div class="row">
-						<div class="col-md-1"></div>
-						<div class="col-md-4">						
-							<label>Seriennummer:</label>
-							<input  type="text" value="Seriennummer" disabled/>
-						</div>	
-						<div class="col-md-1">
-						</div>	
-							<div class="col-md-4">
-								<label>Lieferant:</label>
-								<select data-placeholder='test placeholder' class='chosen-select' >
-									<option value='1'>Select 1</option>
-									<option value='2'>Select 2</option>
-									<option value='3'>Select 3</option>
-									<option value='4'>Select 4</option>
-									<option value='5'>Select 5</option>
-									<option value='6'>Select 6</option>
-									<option value='7'>Select 7</option>
-									<option value='8'>Select 8</option>
-									<option value='9'>Select 9</option>
-								</select>
-							</div>
-						</div>
 						<div class="row">
 						<div class="col-md-1">
 						</div>	
-						<div class="col-md-4">	
-							<label>Einkaufsdatum:</label>
-							<input type="text" id="datepicker"/>
-							</div>	
-						<div class="col-md-1">
-						</div>	
-							<div class="col-md-4">
-							<label>Gewaehrleistungsdauer:</label>
-							<input type="text" value="Gewaehrleistungsdauer" disabled/>
-							</div>
-						</div>
-						<div class="row">
-						<div class="col-md-1"></div>
 						<div class="col-md-4">	
 							<label>Komponentenart:</label>
 							<select data-placeholder='test placeholder' class='chosen-select' >
@@ -81,12 +45,76 @@
 								<option value='8'>Select 8</option>
 								<option value='9'>Select 9</option>
 							</select>
+							</div>	
+						<div class="col-md-1">
+						</div>	
+							<div class="col-md-4">
+							<label>Gewaehrleistungsdauer:</label>
+							<input type="text" value="Gewaehrleistungsdauer" disabled/>
+							</div>
+						</div>
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-4">	
+							<table class="table table-hover">
+								<thead>
+								<tr>
+									<th>Attribute</th>
+									<th>Wert</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td><input name="beispiel1" type="checkbox" /> Beispiel</td>
+									<td><input name="beispiel1wert" value="15" disabled=""/></td>
+								</tr>
+								</tbody>
+							</table>
 							</div>
 							<div class="col-md-1">
 							</div>	
 							<div class="col-md-4">
-							<label>Hersteller:</label>
-							<input type="text" value="Hersteller" disabled/>
+								<div class="short-div">
+									<label>Hersteller:</label>
+									<input type="text" value="Hersteller" disabled/>
+								</div>
+								<div class="short-div">
+									<label>Seriennummer:</label>
+									<input  type="text" value="Seriennummer" disabled/>
+								</div>
+								<div class="short-div">
+								<label>Lieferant:</label>
+								<select data-placeholder='test placeholder' class='chosen-select' >
+									<option value='1'>Select 1</option>
+									<option value='2'>Select 2</option>
+									<option value='3'>Select 3</option>
+									<option value='4'>Select 4</option>
+									<option value='5'>Select 5</option>
+									<option value='6'>Select 6</option>
+									<option value='7'>Select 7</option>
+									<option value='8'>Select 8</option>
+									<option value='9'>Select 9</option>
+								</select>
+								</div>
+								<div class="short-div">
+									<label>Einkaufsdatum:</label>
+									<input type="text" id="datepicker"/>
+								</div>
+							</div>
+					</div>	
+					<div class="row">
+						<div class="col-md-6"></div>
+						<div class="col-md-1">
+							<input name="btnBearb" type="button" class="btn btn-primary" value="Bearbeiten"/>
+						</div>
+						<div class="col-md-1">
+							<input name="btnSave" type="button" class="btn btn-primary" value="Speichern"/>
+						</div>
+						<div class="col-md-1">
+							<input name="txtAnzahl" type="text"  value="55"/>
+						</div>
+						<div class="col-md-1">
+							<input name="btnAdd" type="button" class="btn btn-primary" value="Add"/>
 						</div>
 					</div>
 				</div>
