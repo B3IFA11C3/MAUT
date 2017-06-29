@@ -1,22 +1,31 @@
 Attribut (komponentenattribute)
     Attribute auflisten ()
-        params: none
-        returns: array(kat_id=>kat_bezeichnung)
+        params: array(spalten) (default alle)
+        returns: array( array(kat_spalten=>kat_werte) )
     Attribut löschen ()
         params: kat_id
         returns: success
     Attribut ändern ()
-        params: kat_id, array(spalte=>wert)
-        returns: erfolg
+        params: kat_id, array(kat_spalten=>wert)
+        returns: success
     Attribut einfügen ()
-        params: array(spalte=>wert)
+        params: array(kat_spalten=>wert)
         returns: kat_id
 Komponenten Arten (komponentenarten)
     Komponentenarten auflisten ()
-        params: array(spalten)
-        returns: array(komponentenarten.*, array(komponentenattribute) )
+        params: array(spalten) (default alle)
+        returns: 
+            array( 
+                array(
+                    ka_spalten=>ka_werte, 
+                    array( 
+                        array(kat_spalten=>values) 
+                    ) 
+                )
+            )
+        Ein array aus komponentenarten (dargestellt in einem assoziativem array aus spaltenname=>wert). Die komponentenarten enthalten zusätzlich ein array aus den komponentenattributen (dargestellt in einem assoziativem array aus spaltenname=>wert)
     Komponentenart hinzufügen
-        params: array(spalte=>wert), array(kat_id)=null
+        params: array(spalte=>wert)
         returns: ka_id
     Komponentenart ändern
         params: ka_id, array(spalte=>wert)
@@ -28,12 +37,60 @@ Komponenten Arten (komponentenarten)
             alle zugehörigen Komponenten löschen -> alle zu den Komponenten gehörigen khkats löschen
             nur als Admin ausführbar
     Attribut hinzufügen
-        params: ka_id, kat_id
+        params: kat_id, ka_id
         returns: success
     Attribut entfernen: 
-        params ka_id, kat_id
+        params kat_id, ka_id
         returns: success
 Komponenten (komponenten)
     Komponenten auflisten
-        params
+        params: array(spalten) (default alle)
+        returns: 
+            array( 
+                array(
+                    k_spalten=>k_werte, 
+                    komponentenart=>array(
+                        ka_spalten=>ka_werte, 
+                        array( 
+                            array(kat_spalten=>values) 
+                        ) 
+                    ),
+                    liefeant=>array(l_spalten=>l_wert), 
+                    raeume=>array( 
+                        array(r_spalten=>r_wert) 
+                    ),
+                    komponentenattribute=>array( 
+                        array(kat_spalte=>kat_wert) 
+                    ) 
+                ) 
+            )
+    Komponente hinzufügen
+        params: array(k_spalten=>k_werte)
+        returns: k_id
+    Komponente ändern
+        params: k_id, array(k_spalten=>k_werte)
+        returns: success
+    Komponente löschen
+        params: k_id
+        returns: success
+    Attribut ändern
+        params: k_id, kat_id, khkat_wert
+        returns: success
+    Komponente in raum
+        params: k_id, r_id
+        returns: success
+Räume (raeume)
+    Räume auflisten
+        params: array(spalten)
+        returns: 
+            array(
+                r_spalten=>r_wert
+                komponenten=>array(
+                    array(
+                        k_spalten=>k_werte
+                    )
+                )
+            )
+        
+        
     
