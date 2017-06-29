@@ -1,5 +1,9 @@
 <?php
 
+
+
+
+
 require_once("code/table.php");
 require_once("code/tablefunctions.php");
 require_once("form_edit.php");
@@ -7,11 +11,22 @@ require_once("form_add.php");
 
 function lieferanten_show()
 {
+
+	var_dump($_POST);
+
+	if(isset($_POST['lief'])){
+		var_dump($_POST['lief']);
+		if(isset($_POST['l_id']))
+			supplier::change($_POST['l_id'],$_POST['lief']);
+		else
+			supplier::add($_POST['lief']);
+	}
+
 	$content = '<div class="w3-container w3-teal"><h1>Lieferanten</h1></div>';
 
-	$rows = supplier::list();
+	$rows = supplier::list_all();
 	
-    $content_header_add = add_lieferant_show();
+    $content_header_add = add_lieferant_show();#add_lieferant_show();
 	
 	
 	
