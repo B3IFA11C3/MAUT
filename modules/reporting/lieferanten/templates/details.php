@@ -6,7 +6,7 @@ function components_by_vendor($vendor_id) {
                                   FROM komponenten k
                                   JOIN komponentenarten ka ON k.ka_id = ka.ka_id
                                   WHERE k.l_id = ". $vendor_id .";");
-  return array_map(array_values, $components);
+  return array_map("array_values", $components);
 }
 
 function render_vendor_details($vendor) {
