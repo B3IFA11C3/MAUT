@@ -56,12 +56,13 @@ tr.clickable:hover {
 
 .tbodytable * tr:last-of-type td > div {
 	transition: max-height 0.2s ease-out;
-	overflow: hidden;
-	max-height: 9000px;
+	overflow: visible;
+	max-height: initial;
 }
 
 .tbodytable *.accordion tr:last-of-type td > div {
 	max-height: 0px;
+	overflow: hidden;
 }
 
 .divslider > div {
