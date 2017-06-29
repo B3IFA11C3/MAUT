@@ -13,8 +13,8 @@ function komponentenattribute_render_row($komponente)
 						<label style="display: table-cell">Einzigartig: ' . ($komponente["kat_einzigartig"] ? "Ja" : "Nein") . '</label>
 						<label style="display: table-cell">Einheit: ' . ($komponente["kat_einheit"] === NULL ? "<i>Keine</i>" : htmlentities($komponente["kat_einheit"])) . '</label>
 						<div class="switch">
-							<button type="submit" name="action" value="delete">L&ouml;schen</button>
-							<button type="button" onClick="divSliderShowRight(this.parentNode.parentNode.parentNode.parentNode.parentNode)">Bearbeiten</button>
+							<button type="submit" class="btn btn-primary" name="action" value="delete">L&ouml;schen</button>
+							<button type="button" class="btn btn-primary" onClick="divSliderShowRight(this.parentNode.parentNode.parentNode.parentNode.parentNode)">Bearbeiten</button>
 						</div>
 					</form>
 					</div>
@@ -26,7 +26,7 @@ function komponentenattribute_render_row($komponente)
 						<label style="display: table-cell">Einzigartig: <input type="checkbox" ' . ($komponente["kat_einzigartig"] ? "checked" : "") . ' name="kat[kat_einzigartig]"/></label
 						<label style="display: table-cell">Name: <input type="text" name="kat[kat_bezeichnung]" value="' . htmlentities($komponente["kat_bezeichnung"]) . '"/></label>
 						<label style="display: table-cell">Einheit: <input type="text" name="kat[kat_einheit]" value="' . ($komponente["kat_einheit"] === NULL ? "" : htmlentities($komponente["kat_einheit"])) . '"/></label>
-						<label style="display: table-cell; padding-right: 10%">Typ: <select name="kat[kat_typ]">
+						<label style="display: table-cell; padding-right: 150px">Typ: <select name="kat[kat_typ]">
 								<option value="int"' . ($komponente["kat_typ"] == "int" ? " selected" : "") . '>int</option>
 								<option value="string"' . ($komponente["kat_typ"] == "string" ? " selected" : "") . '>string</option>
 								<option value="bool"' . ($komponente["kat_typ"] == "bool" ? " selected" : "") . '>bool</option>
@@ -36,8 +36,8 @@ function komponentenattribute_render_row($komponente)
 							</select>
 						</label>
 						<div class="switch">
-							<button type="submit" name="action" value="save">Speichern</button>
-							<button type="button" onClick="divSliderShowLeft(this.parentNode.parentNode.parentNode.parentNode.parentNode)">Zur&uuml;ck</button>
+							<button class="btn btn-primary" type="submit" name="action" value="save">Speichern</button>
+							<button class="btn btn-primary" type="button" onClick="divSliderShowLeft(this.parentNode.parentNode.parentNode.parentNode.parentNode)">Zur&uuml;ck</button>
 						</div>
 					</form>
 					</div>
@@ -80,12 +80,12 @@ function komponentenattribute_show()
 			$content .= '<div class="alert alert-success" role="alert" style="width: 90%; margin: 10px auto;"><center><b>Erfolgreich gespeichert!</b></center></div>';
 	}
 	
-	$insert = '<div>
+	$insert = '<div><div style="padding: 10.5px">
 					<form method="POST" style="display: table; width: 100%;">
 						<label style="display: table-cell">Einzigartig: <input type="checkbox" name="kat[kat_einzigartig]"/></label
 						<label style="display: table-cell">Name: <input type="text" name="kat[kat_bezeichnung]" /></label>
 						<label style="display: table-cell">Einheit: <input type="text" name="kat[kat_einheit]"/></label>
-						<label style="display: table-cell; padding-right: 10%">Typ: <select name="kat[kat_typ]">
+						<label style="display: table-cell; padding-right: 150px">Typ: <select name="kat[kat_typ]">
 								<option value="int">int</option>
 								<option value="string">string</option>
 								<option value="bool">bool</option>
@@ -95,10 +95,10 @@ function komponentenattribute_show()
 							</select>
 						</label>
 						<div class="switch">
-							<button type="submit" name="action" value="insert">Speichern</button>
+							<button type="submit" class="btn btn-primary" name="action" value="insert">Speichern</button>
 						</div>
 					</form>
-				</div>';
+				</div></div>';
 
 	$content .= table_render(array("ID" => "int", "Name" => "string", "Typ" => "string"),
 			array_map("komponentenattribute_render_row", Componentattributes::list()),
