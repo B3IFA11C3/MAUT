@@ -2,7 +2,7 @@
 require_once("code/utils.php");
 
 class Componentattributes {
-    public static function list($cols = ["*"]) {
+    public static function list_all($cols = ["*"]) {
         return sqlselect("komponentenattribute", $cols);
     }
     public static function add($vals) {
@@ -16,7 +16,7 @@ class Componentattributes {
     }
 }
 class Componenttypes {
-    public static function list($cols = ["*"]) {
+    public static function list_all($cols = ["*"]) {
          $result = sqlselect("komponentenarten", $cols);
 		 $result = addtoarray($result,'ka_spalten','select ka.* from wird_beschrieben_durch b, komponentenattribute ka where b.ka_id = ? and b.kat_id = ka.kat_id ','ka_id');
 		 return $result;
@@ -39,7 +39,7 @@ class Componenttypes {
     }
 }
 class Components {
-    public static function list($cols = ["*"]) {
+    public static function list_all($cols = ["*"]) {
         $result = sqlselect("komponenten", $cols);
 		
 		$result = addtoarray($result,'lieferant','select * from lieferanten where l_id = ?','l_id');
@@ -73,7 +73,7 @@ class Components {
     }
 }
 class Rooms {
-    public static function list($cols = ["*"]) {
+    public static function list_all($cols = ["*"]) {
 		$results = sqlselect("raeume", $cols);
 		
 		$result = addtoarray($results,'komponenten','select k.*, a.* from komponentenarten as a , komponenten as k , komponente_in_raum as i where i.r_id = ? and i.k_id = k.k_id and k.ka_id = a.ka_id','r_id');
@@ -112,7 +112,7 @@ class Rooms {
     }
 }
 class Supplier {
-    public static function list($cols = ["*"]) {
+    public static function list_all($cols = ["*"]) {
 		$results = sqlselect("lieferanten", $cols);
 		
 		$result = addtoarray($results,'komponenten','select k.*, a.* from komponentenarten as a , komponenten as k  where k.l_id = ? and k.ka_id = a.ka_id','l_id');
