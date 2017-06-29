@@ -16,11 +16,11 @@ class MySQLiCurry {
             mysqli_stmt_close($this->stmt);
     }
     
-    public function int(&$var) {
+    public function int($var) {
         return $this->set("i", $var);
     }
     
-    public function str(&$var) {
+    public function str($var) {
         return $this->set("s", $var);
     }
     
@@ -324,8 +324,9 @@ function generic_table($columns, $rows) {
 // $column die Spalte(n) die im $array für die Querry benutzt werden
 function addtoarray($array, $name, $curry, $column){
 	global $CONFIG;
+
 	foreach ($array as &$row){
-		$subarray = null;
+		$subarray = array();
 		$resp = MastDB::mysqliCurry($curry, $CONFIG["SQLMastDB"]);
 		if(is_array($column))
 			foreach ($column as $param)
@@ -333,13 +334,10 @@ function addtoarray($array, $name, $curry, $column){
 		else
 			$resp = is_int($row[$column]) ? $resp->int($row[$column]) : $resp->str($row[$column]);
 		$resp = $resp->execute();
-		if($resp){
-			$subarray = $resp->fetch();
-			if($subarray)
-			$row[$name] = $subarray;
-			else 
-			$row[$name] = null;
-		}
+		$row[$name] = array();
+		while($subarray = $resp->fetch()){
+					$row[$name][] = $subarray;
+			}
 	}
 	return $array;
 }

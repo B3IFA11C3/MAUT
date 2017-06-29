@@ -43,8 +43,8 @@ class Components {
         $result = sqlselect("komponenten", $cols);
 		
 		$result = addtoarray($result,'lieferant','select * from lieferanten where l_id = ?','l_id');
-		$result = addtoarray($result,'komponentenattribute','select ka.* , h.* from wird_beschrieben_durch b, komponentenattribute ka (left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ?)where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
-		$result = addtoarray($result,'raeume','select * from raeume r , komponente_in_raum i where r.r_id = i.r_id and i.k_id = ?','k_id');
+		$result = addtoarray($result,'komponentenattribute','select ka.* , h.* from wird_beschrieben_durch as b, komponentenattribute as ka (left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ?)where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
+		$result = addtoarray($result,'raeume','select * from raeume as r , komponente_in_raum as i where r.r_id = i.r_id and i.k_id = ?','k_id');
         return $result;
     }
     public static function add($vals) {
@@ -66,16 +66,17 @@ class Components {
 }
 class Rooms {
     public static function list($cols = ["*"]) {
-		$result = sqlselect("raeume", $cols);
+		$results = sqlselect("raeume", $cols);
 		
-		$result = addtoarray($result,'komponenten','select k.*, a.* from komponentenarten a , komponenten k , komponente_in_raum i where i.r_id = ? and i.k_id = k.k_id and k.ka_id = a.ka_id','r_id');
-		echo '1';
-		foreach ($result['komponenten'] as &$row){
-echo '</br></br>';
-var_dump($row);
-echo '</br></br>';
+		$result = addtoarray($results,'komponenten','select k.*, a.* from komponentenarten as a , komponenten as k , komponente_in_raum as i where i.r_id = ? and i.k_id = k.k_id and k.ka_id = a.ka_id','r_id');
+
+		foreach ($result as &$rows){
+		$row = &$rows['komponenten'];
+
 			$row = addtoarray($row,'lieferant','select * from lieferanten where l_id = ?','l_id');
-			$row = addtoarray($row,'komponentenattribute','select * from wird_beschrieben_durch b, komponentenattribute ka (left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ?)where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
+
+			$row = addtoarray($row,'komponentenattribute','select * from wird_beschrieben_durch as b, komponentenattribute as ka left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ? where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
+
 
 		}
         return $result;
