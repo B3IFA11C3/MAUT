@@ -206,13 +206,13 @@ function changepw($user, $oldpw, $newpw, $newpwwdh) {
 }
 
 function sqlassoinsert($sqltable, $asso) {
-        $keys = array_keys($asso);
-        $sqlfields = array();
-        $sqlvalues = array();
-        foreach ($keys AS $key) {
-            $sqlfields[] = $key;
-            $sqlvalues[] = $asso[$key];
-        }
+    $keys = array_keys($asso);
+    $sqlfields = array();
+    $sqlvalues = array();
+    foreach ($keys AS $key) {
+        $sqlfields[] = $key;
+        $sqlvalues[] = $asso[$key];
+    }
     return sqlinsert($sqltable, $sqlfields, $sqlvalues);
 }
 
@@ -224,15 +224,18 @@ function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
     $curr = MastDB::mysqliCurry("INSERT INTO `".$sqltable."`(`".join("`, `", $sqlfields)."`) VALUES (?".str_repeat(", ?", $anz-1).")", $CONFIG["SQLMastDB"]);
     foreach ($sqlvalues as $value)
         $curr = is_int($value) ? $curr->int($value) : $curr->str($value);
-    return $curr->execute();
+    $curr = $curr->execute();
+    if (!$curr)
+        return false;
+    return $curr->fetch()[0];
 }
 
 function sqlassoupdate($sqltable, $asso, $sqlfilter) {
-        $keys = array_keys($asso);
-        $sqlvals = array();
-        foreach ($keys AS $key) {
-            $sqlvals[] = array($key, $asso[$key]);
-        }
+    $keys = array_keys($asso);
+    $sqlvals = array();
+    foreach ($keys AS $key) {
+        $sqlvals[] = array($key, $asso[$key]);
+    }
     return sqlupdate($sqltable, $sqlvals, $sqlfilter);
 }
 
@@ -248,9 +251,9 @@ function sqlupdate($sqltable, $sqlvals, $sqlfilter) {
     }, $sqlfilter));
     $curr = MastDB::mysqliCurry("UPDATE `".$sqltable."` SET ".$sqlset." WHERE ".$sqlwhere, $CONFIG["SQLMastDB"]);
     foreach ($sqlvals as $val)
-        $curr = is_int($val) ? $curr->int($val) : $curr->str($val);
+        $curr = is_int($val[1]) ? $curr->int($val[1]) : $curr->str($val[1]);
     foreach ($sqlfilter as $filter)
-        $curr = is_int($filter) ? $curr->int($filter) : $curr->str($filter);
+        $curr = is_int($filter[1]) ? $curr->int($filter[1]) : $curr->str($filter[1]);
     return $curr->execute();
 }
 
@@ -263,5 +266,31 @@ function sqldelete($sqltable, $sqlfilter) {
     foreach ($sqlfilter as $filter)
         $curr = is_int($filter[1]) ? $curr->int($filter[1]) : $curr->str($filter[1]);
     return $curr->execute();
+}
+
+// $array ist das Array bei dem Subarrays hinzugefügt werden
+//unter dem Wert $name
+// $curry ist die Querry mit
+// $column die Spalte(n) die im $array für die Querry benutzt werden
+function addtoarray($array, $name, $curry, $column){
+	global $CONFIG;
+	foreach ($array as &$row){
+		$subarray = null;
+		$resp = MastDB::mysqliCurry($curry, $CONFIG["SQLMastDB"]);
+		if(is_array($column))
+			foreach ($column as $param)
+				$resp = is_int($row[$param]) ? $resp->int($row[$param]) : $resp->str($row[$param]);
+		else
+			$resp = is_int($row[$column]) ? $resp->int($row[$column]) : $resp->str($row[$column]);
+		$resp = $resp->execute();
+		if($resp){
+			$subarray = $resp->fetch();
+			if($subarray)
+			$row[$name] = $subarray;
+			else 
+			$row[$name] = null;
+		}
+	}
+	return $array;
 }
 ?>
