@@ -149,7 +149,13 @@ $str3 = "
 							<input name='btnAdd' type='button' class='btn btn-primary' style='margin-left: 5px;' value='hinzufügen'/>
 					</div>
                     <br/>
-                    
+                    <div class='row'>
+                        <div class='col-md-1'></div>
+                        
+                        <div class='col-md-9'>
+                            <textarea name='note' style='width:100%; height: 100px;' rows='2' placeholder='Geben Sie hier Ihre Notiz ein...'></textarea>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		
