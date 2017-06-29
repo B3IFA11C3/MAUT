@@ -1,26 +1,35 @@
 <?php
 
 require_once("code/table.php");
-
-/*class Components {
-	public static function list($spalten=array())
-	{
-		return array(
-				array("k_id" => 0, "k_name" => "asdf", "l_id" => array("0"=>"1", "1"=>"5"), "k_einkaufsdatum"=>"13.06.17", "k_gewaehrleistung_bis"=>"25.10.25", "k_notiz"=>"test", "k_hersteller"=>"bla", "ka_id"=>array("Kackstift"=>array("name"=>"bla"))),
-				array("id" => 1, "name" => "jklö", "komponenten" => array("="=>"2")));
-	}
-}*/
+require_once("code/tablefunctions.php");
 
 function komponenten_show()
 {
 	$content = '<div class="w3-container w3-teal"><h1>Komponenten</h1></div>';
 	
-	//$komponenten = Components::list();
+	$komponenten = Components::list_all();
+	$komponentenArten = Componenttypes::list_all();
+	$raeume = Rooms::list_all();
+	$lieferanten = Supplier::list_all();
+	//echo "<pre>".print_r($komponenten, true)."</pre>";
+	//echo "<pre>".print_r(count($komponenten), true)."</pre>";
+	//echo "<pre>".print_r($komponentenArten, true)."</pre>";
+    //echo "<pre>".print_r($raeume, true)."</pre>";
+	//echo "<pre>".print_r($lieferanten, true)."</pre>";
+	//echo "<pre>".print_r(count($komponenten[0]["raeume"]), true)."</pre>";
+	
+	$rows = array();
+	
+	if(isset($_POST["btnSave"])) {
+		$hinzufuegen = array("k_name"=>"54");
+	}
 
-	$rows = array();	
-	$komponentenEdit = '<div>
+	
+	for($i =0; $i < count($komponenten); $i++) {
 		
-		<div class="card card-block" id="card-shadow">
+		$mask = "<div><form method=\"POST\">";
+		
+		$mask .= '<div class="card card-block" id="card-shadow">
 			<div class="card-title">
 			</div>
 			<div class="card-text">
@@ -31,25 +40,22 @@ function komponenten_show()
 						</div>
 						<div class="col-md-4">
 							<label>Name:</label>
-							<input type="text" value="Name" id="Name" disabled class="feldAktivieren"/>
+							<input type="text" name=name" value="'.$komponenten[$i]["k_name"].'" id="Name" disabled class="feldAktivieren"/>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-1">
 						</div>
 						<div class="col-md-4">	
-						<label>Komponentenart:</label>
-								<select class="chosen-select feldAktivieren kompArt" disabled id="kompArt" >
-								<option value="1">Select 1</option>
-								<option value="2">Select 2</option>
-								<option value="3">Select 3</option>
-								<option value="4">Select 4</option>
-								<option value="5">Select 5</option>
-								<option value="6">Select 6</option>
-								<option value="7">Select 7</option>
-								<option value="8">Select 8</option>
-								<option value="9">Select 9</option>
-							</select>
+						<label>Komponentenart:</label>';
+								
+	for($j =0; $j < count($komponentenArten); $j++) {
+		if($komponentenArten[$j]["ka_id"] == $komponenten[$i]["ka_id"]) {
+			$mask .= $komponentenArten[$j]["ka_komponentenart"];
+		}
+	}
+								
+	$mask .= '
 						</div>
 					</div>
 					<div class="row">
@@ -66,22 +72,18 @@ function komponenten_show()
 									</tr>
 								</thead>
 								<tbody >
-									<tr>
-										<td>Beispiel</td>
-										<td><input name="beispiel1wert" value="15" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
-										<td>GB</td>
-									</tr>
-									<tr>
-										<td>Beispiel</td>
-										<td><input name="beispiel1wert" value="15" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
-										<td>GB</td>
-									</tr>
-									<tr>
-										<td>Beispiel</td>
-										<td><input name="beispiel1wert" value="15" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
-										<td>GB</td>
-									</tr>
-								</tbody>
+									';
+	
+for($j = 0; $j < count($komponenten[$i]["komponentenattribute"]); $j++) {
+	$mask .= '	<tr>
+								<td>'.$komponenten[$i]["komponentenattribute"][$j]["kat_bezeichnung"].'</td>
+								<td><input name="beispiel1wert" value="'.$komponenten[$i]["komponentenattribute"][$j]["khkat_wert"].'" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
+								<td>'.$komponenten[$i]["komponentenattribute"][$j]["kat_einheit"].'</td>
+							</tr>';
+}
+
+
+	$mask .= '</tbody>
 							</table>
 							</div>
 						</div>
@@ -92,48 +94,54 @@ function komponenten_show()
 								<tr>
 									<td><label>R&auml;ume:</label></td>
 									<td>
-										<select multiple class="chosen-select feldAktivieren Raeume" disabled id="Raeume">
-											<option value="1">Select 1</option>
-											<option value="2">Select 2</option>
-											<option value="3">Select 3</option>
-											<option value="4">Select 4</option>
-											<option value="5">Select 5</option>
-											<option value="6">Select 6</option>
-											<option value="7">Select 7</option>
-											<option value="8">Select 8</option>
-											<option value="9">Select 9</option>
-										</select>
+										<select multiple name="raeume" class="chosen-select feldAktivieren Raeume" disabled id="Raeume">';
+for($j =0; $j < count($raeume); $j++) {
+	$vorhanden = false;
+	for($k = 0; $k < count($komponenten[$i]["raeume"]); $k++) {	
+		if($raeume[$j]["r_id"] == $komponenten[$i]["raeume"][$k]["r_id"]) {
+			$vorhanden = true;
+		 }
+	}
+		if($vorhanden) {
+		$mask .= '<option selected value="'.$raeume[$j]["r_nr"].'"> Raum '.$raeume[$j]["r_nr"].'</option>';
+		}
+		else {
+			$mask .= '<option value="'.$raeume[$j]["r_nr"].'"> Raum'.$raeume[$j]["r_nr"].'</option>';
+		}
+}
+	
+	
+	
+		
+	$mask .= '</select>
 									</td>
 								</tr>
 								<tr>
 									<td><label>Lieferant:</label></td>
-									<td><select class="chosen-select feldAktivieren Lieferant" disabled id="Lieferant">
-									<option value="1">Select 1</option>
-									<option value="2">Select 2</option>
-									<option value="3">Select 3</option>
-									<option value="4">Select 4</option>
-									<option value="5">Select 5</option>
-									<option value="6">Select 6</option>
-									<option value="7">Select 7</option>
-									<option value="8">Select 8</option>
-									<option value="9">Select 9</option>
-									</select></td>
+									<td><select class="chosen-select feldAktivieren Lieferant" disabled id="Lieferant">';
+	
+	for($k = 0; $k < count($lieferanten); $k++) {
+		if(	$komponenten[$i]["l_id"] == $lieferanten[$k]["l_id"]) {
+			$mask .= '<option selected value="'.$lieferanten[$k]["l_firmenname"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
+			}
+		else {
+			$mask .= '<option value="'.$lieferanten[$k]["l_firmenname"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
+		}
+	}
+	
+	$mask .= '</select></td>
 								</tr>
 								<tr>
 								<td><label>Gew&auml;hrleistungsdauer:</label></td>
-								<td><input type="text" value="Gew&auml;hrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/></td>
+								<td><input type="text" value="'.$komponenten[$i]["k_gewaehrleistung_bis"].'" id="gewaehrDauer" disabled class="feldAktivieren"/></td>
 								</tr>
 								<tr>
 								<td><label>Hersteller:</label></td>
-								<td><input type="text" value="Hersteller" id="Hersteller" disabled class="feldAktivieren"/></td>
-							</tr>
-							<tr>
-								<td><label>Seriennummer:</label></td>
-								<td><input  type="text" value="Seriennummer" id="Seriennummer" disabled class="feldAktivieren"/></td>
+								<td><input type="text" value="'.$komponenten[$i]["k_hersteller"].'" id="Hersteller" disabled class="feldAktivieren"/></td>
 							</tr>
 							<tr>
 								<td><label>Einkaufsdatum:</label></td>
-								<td><input type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum" disabled /></td>
+								<td><input type="text" class="feldAktivieren datepicker" value="'.$komponenten[$i]["k_einkaufsdatum"].'" id="datepicker" id="Einkaufsdatum" disabled /></td>
 							</tr>
 							</table>
 						</div>
@@ -145,7 +153,12 @@ function komponenten_show()
 							<input name="btnBearb" type="button" class="btn bearbeitenDeaktivieren btn-primary" value="Bearbeiten" onclick="clickBearbeiten();" id="bearbeiten"/>
 						</div>
 						<div class="col-md-2">
-							<input name="btnSave" type="button" class="btn feldAktivieren btn-primary" value="Speichern" onclick="clickSpeichern();" disabled id="speichern"/>
+							<input name="btnSave" type="submit" class="btn feldAktivieren btn-primary" value="Speichern" disabled id="speichern"/>
+						</div>
+						<div class="col-md-1">
+						</div>
+						<div class="col-md-2">
+							<input name="btnLoesch" type="submit" class="btn btn-primary" value="L&ouml;schen" id="loeschen"/>
 						</div>
 						<div class="col-md-1">
 						</div>
@@ -154,18 +167,20 @@ function komponenten_show()
 			</div>
 		</div>
 		
+	</form>
 	</div>';
+
 	
-	$rows[] = array("cols" => array("BigMacBook", 0), "content" => $komponentenEdit);
-	$rows[] = array("cols" => array("Keine Ahnung", 1));
-	$rows[] = array("cols" => array("Bearbeitbar", 0), "content" => $komponentenEdit);
-	$rows[] = array("cols" => array("Apfel iMer", 0), "content" => $komponentenEdit);
 	
-	$content .= table_render(array("Name" => "string", "ID" => "int"),
-			$rows,
-			array("header" => "HINZUFÜGEN", "content" => '<div>
+	$rows[] = array("cols" => array($komponenten[$i]["k_name"], 0), "content" => $mask);
+	}
+	
+	
+	
+	
+		$britney = "<div><form method=\"POST\">";
 		
-		<div class="card card-block" id="card-shadow">
+	$britney .=	'<div class="card card-block" id="card-shadow">
 			<div class="card-title">
 			</div>
 			<div class="card-text">
@@ -176,7 +191,7 @@ function komponenten_show()
 						</div>
 						<div class="col-md-4">
 							<label>Name:</label>
-							<input type="text" value="Name" id="Name" disabled class="feldAktivieren"/>
+							<input type="text" placeholder="Name" id="Name" class="feldAktivieren"/>
 						</div>
 					</div>
 					<div class="row">
@@ -184,29 +199,18 @@ function komponenten_show()
 						</div>
 						<div class="col-md-4">	
 							<label>Komponentenart:</label>
-							<select class="chosen-select feldAktivieren kompArt" id="kompArt"  >
-								<option value="1">Select 1</option>
-								<option value="2">Select 2</option>
-								<option value="3">Select 3</option>
-								<option value="4">Select 4</option>
-								<option value="5">Select 5</option>
-								<option value="6">Select 6</option>
-								<option value="7">Select 7</option>
-								<option value="8">Select 8</option>
-								<option value="9">Select 9</option>
-							</select>
+							<select class="chosen-select feldAktivieren kompArt" id="kompArt"  >';
+							
+	for($j =0; $j < count($komponentenArten); $j++) {
+		$britney .= '<option value="'.$komponentenArten[$j]["ka_komponentenart"].'">'.$komponentenArten[$j]["ka_komponentenart"].'</option>';
+	}
+			$britney .=	'</select>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-1">
 						</div>
 						<div class="col-md-4">	
-						<script>
-						var test = $(document.getElementsByClassName("kompArt"));
-						for(test2 in test) {
-							test2.setMaxHeight(test2.getParent().getParent().getParent().getParent().getParent().getParent().getComputedHeight()-80);
-					}
-					</script>
 						<div class="short-div">
 							<table class="table table-hover">
 								<thead>
@@ -217,12 +221,24 @@ function komponenten_show()
 									</tr>
 								</thead>
 								<tbody >
-									<tr>
-										<td>Beispiel</td>
-										<td><input name="beispiel1wert" placeholder="15" size="10px" id="durchnummerieren" class="feldAktivieren"  /></td>
-										<td>GB</td>
-									</tr>
-								</tbody>
+								';
+	
+
+
+	for($j =0; $j < count($komponentenArten); $j++) {
+		for($k =0; $k < count($komponentenArten[$j]["ka_spalten"]); $k++) {
+		//if($komponentenArten[$j]["ka_komponentenart"] == ) {
+		//	$britney .= $komponentenArten[$j]["ka_komponentenart"];
+//		}
+			$britney .=  '<tr style="display:none;" class="'.$komponentenArten[$j]["ka_komponentenart"].' displayNone">
+							<td>'.$komponentenArten[$j]["ka_spalten"][$k]["kat_bezeichnung"].'</td>
+										 <td><input name="beispiel1wert" size="10px" class="feldAktivieren" /></td>
+										 <td>'.$komponentenArten[$j]["ka_spalten"][$k]["kat_einheit"].'</td>
+									 </tr>';
+									 }
+	}
+									
+						$britney .=		'</tbody>
 							</table>
 							</div>
 						</div>
@@ -232,31 +248,21 @@ function komponenten_show()
 							<table class="table table-hover">
 								<tr>
 								<td><label>R&auml;ume:</label></td>
-								<td><select multiple class="chosen-select feldAktivieren Raeume" id="Raeume"  >
-									<option value="1">Select 1</option>
-									<option value="2">Select 2</option>
-									<option value="3">Select 3</option>
-									<option value="4">Select 4</option>
-									<option value="5">Select 5</option>
-									<option value="6">Select 6</option>
-									<option value="7">Select 7</option>
-									<option value="8">Select 8</option>
-									<option value="9">Select 9</option>
-								</select></td>
+								<td><select multiple class="chosen-select feldAktivieren Raeume" id="Raeume"  >';
+for($j =0; $j < count($raeume); $j++) {
+	$britney .= '<option value="'.$raeume[$j]["r_nr"].'"> Raum'.$raeume[$j]["r_nr"].'</option>';
+}
+				$britney .=				'</select></td>
 							</tr>
 							<tr>
 								<td><label>Lieferant:</label></td>
-								<td><select class="chosen-select feldAktivieren Lieferant" id="Lieferant"  >
-									<option value="1">Select 1</option>
-									<option value="2">Select 2</option>
-									<option value="3">Select 3</option>
-									<option value="4">Select 4</option>
-									<option value="5">Select 5</option>
-									<option value="6">Select 6</option>
-									<option value="7">Select 7</option>
-									<option value="8">Select 8</option>
-									<option value="9">Select 9</option>
-								</select></td>
+								<td><select class="chosen-select feldAktivieren Lieferant" id="Lieferant"  >';
+	
+	for($k = 0; $k < count($lieferanten); $k++) {
+		$britney .= '<option value="'.$lieferanten[$k]["l_firmenname"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
+	}
+	
+	$britney .= '</select></td>
 							</tr>
 							<tr>
 								<td><label>Gew&auml;hrleistungsdauer:</label></td>
@@ -267,18 +273,13 @@ function komponenten_show()
 								<td><input type="text" placeholder="Hersteller" id="Hersteller"  class="feldAktivieren"/></td>
 							</tr>
 							<tr>
-								<td><label>Seriennummer:</label></td>
-								<td><input  type="text" placeholder="Seriennummer" id="Seriennummer"  class="feldAktivieren"/></td>
-							</tr>
-							
-							<tr>
 								<td><label>Einkaufsdatum:</label></td>
 								<td><input type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum"  /></td>
 							</tr>
 						</table>
 					</div>
 					</div>
-					<div class="row" id="popUpTable" style="display:none">
+					<!--div class="row" id="popUpTable" style="display:none">
 						<div class="col-md-1">
 						</div>						
 						<div class="col-md-6">
@@ -320,15 +321,15 @@ function komponenten_show()
 						</div>
 						<div class="col-md-1">
 						</div>
-					</div>
+					</div-->
 					<div class="row">
 						<div class="col-md-1">
 						</div>						
 						<div class="col-md-2">
-							<input name="btnHinzu" type="button" class="btn btn-primary" value="Registrieren" onclick="clickRegistrieren();" id="registrieren"/>
+							<input name="btnHinzu" type="submit" class="btn btn-primary" value="Registrieren" onclick="clickRegistrieren();" id="registrieren"/>
 						</div>
 						<!--div class="col-md-2">
-							<input name="btnSave" type="button" class="btn btn-primary" value="Gruppen regestrieren" onclick="clickGrRegestrieren();"  id="gruppenregestrieren"/>
+							<input name="btnSave" type="submit" class="btn btn-primary" value="Gruppen regestrieren" onclick="clickGrRegestrieren();"  id="gruppenregestrieren"/>
 						</div-->
 						<div class="col-md-1">
 						</div>
@@ -336,7 +337,12 @@ function komponenten_show()
 				</div>
 			</div>
 		</div>
-	</div>'));
+	</form></div>';
+	
+	$content .= table_render(array("Name" => "string", "ID" => "int"),
+			$rows,
+			array("header" => "HINZUFÜGEN", "content" => $britney));
+			
 	
 	$content .= '<!-- zum initialisieren der chosen selects muss $(".chosen-select").chosen(); aufgerfen werden -->
     <script type="text/javascript">
@@ -344,7 +350,25 @@ function komponenten_show()
         $(".chosen-select").chosen();		
 			$( function() {
 				$( ".datepicker" ).datepicker();
-			} );			
+			} );
+			
+		
+		  $("#kompArt_chosen").click(function(){
+			var kompArtAuswahl = $("#kompArt").chosen().val();
+			console.log($("." + kompArtAuswahl));
+			var zuruecksetzen = document.getElementsByClassName("displayNone");
+			for (element in zuruecksetzen) {
+				element.style.display = "none";
+			}
+			var anzeigen = document.getElementsByClassName(kompArtAuswahl);
+			for (element in anzeigen) {
+				element.style.display = "visible";
+			}
+		  });		
+
+		
+	
+		
 	</script>';
 
 	page_render($content);
@@ -358,3 +382,4 @@ mast_register_path("#^\$#", "komponenten_show");
 
 return true;
 ?>
+

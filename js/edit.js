@@ -36,4 +36,5 @@ function clickSpeichern() {
 			$(document.getElementsByClassName("Lieferant")).trigger("chosen:updated");
 			$(document.getElementsByClassName("kompArt")).trigger("chosen:updated");
 			$(document.getElementsByClassName("Raeume")).trigger("chosen:updated");
+			
 		}
