@@ -61,6 +61,11 @@ function addKomponentenToCurrentList(id){
     
         var tableRight = "table_right"+id;
         var tableLeft = "table_left"+id;
+    
+        var newCheckBox = "<div class='checkbox' >" 
+                        + " <input class='changeEditStatus' type='checkbox' value=''>"
+                        + "</div>";
+    
         var table = document.getElementById(tableRight);
     
         for(var x=1; x<table.rows.length; x++){
@@ -69,14 +74,62 @@ function addKomponentenToCurrentList(id){
             var art = table.rows[x].cells[1];
             var checkbox = table.rows[x].cells[2];
             
-           
-            
-            
-            if($("input[type=checkbox]", checkbox)[0].checked) {    
-                //$('#table_left'.id').after('<tr>...</tr><tr>...</tr>');
-                
-                $("#"+tableLeft).after("td").append("<tr><td>"+name.innerHTML+"</td><td>"+art.innerHTML+"</td><td></td></tr>");
-            }
+            if($("input[type=checkbox]", checkbox)[0].checked) {            
+                $("#"+tableLeft+" tbody:last-of-type").after("<tbody><tr><td>"+name.innerHTML+"</td><td>"+art.innerHTML+"</td><td>"+newCheckBox+"</td></tr></tbody>");
+                document.getElementById(tableRight).deleteRow(x); 
+            }     
         }  
         
+}
+
+function removeLeftFromRightOccurences(components, componentsInRoom){
+    
+    alert("asdasdasd");
+    
+     var tableRight = "table_right"+id;
+     var tableLeft = "table_left"+id;
+    
+     var newCheckBox = "<div class='checkbox' >" 
+                        + " <input class='changeEditStatus' type='checkbox' value=''>"
+                        + "</div>";
+    
+     var table = document.getElementById(tableRight);
+    
+     for(var x=1; x<table.rows.length; x++){
+         
+            var name = table.rows[x].cells[0];
+            var art = table.rows[x].cells[1];
+            var checkbox = table.rows[x].cells[2];
+            
+            if($("input[type=checkbox]", checkbox)[0].checked) {            
+                $("#"+tableLeft+" tbody:last-of-type").after("<tbody><tr><td>"+name.innerHTML+"</td><td>"+art.innerHTML+"</td><td>"+newCheckBox+"</td></tr></tbody>");
+                document.getElementById(tableRight).deleteRow(x); 
+            }     
+        }  
+    
+}
+
+function removeKomponentenToCurrentList(id){
+    
+        console.log("asdasdasd");
+    
+        var tableRight = "table_right"+id;
+        var tableLeft = "table_left"+id;
+    
+        var newCheckBox = "<div class='checkbox'>" 
+                        + " <input class='changeEditStatus' type='checkbox' value=''>"
+                        + "</div>";
+    
+        var table = document.getElementById(tableLeft);
+        for(var x=1; x<table.rows.length; x++){
+
+            var name = table.rows[x].cells[0];
+            var art = table.rows[x].cells[1];
+            var checkbox = table.rows[x].cells[2];
+            
+            if($("input[type=checkbox]", checkbox)[0].checked) {            
+                $("#"+tableRight+" tbody:last-of-type").after("<tbody><tr><td>"+name.innerHTML+"</td><td>"+art.innerHTML+"</td><td>"+newCheckBox+"</td></tr></tbody>");
+                document.getElementById(tableLeft).deleteRow(x);      
+            }
+        }   
 }
