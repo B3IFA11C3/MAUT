@@ -224,7 +224,10 @@ function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
     $curr = MastDB::mysqliCurry("INSERT INTO `".$sqltable."`(`".join("`, `", $sqlfields)."`) VALUES (?".str_repeat(", ?", $anz-1).")", $CONFIG["SQLMastDB"]);
     foreach ($sqlvalues as $value)
         $curr = is_int($value) ? $curr->int($value) : $curr->str($value);
-    return $curr->execute();
+    $curr = $curr->execute();
+    if (!$curr)
+        return false;
+    return $curr->fetch()[0];
 }
 
 function sqlassoupdate($sqltable, $asso, $sqlfilter) {
