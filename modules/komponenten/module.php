@@ -5,26 +5,26 @@ require_once("code/tablefunctions.php");
 
 function komponenten_show()
 {
-	if(isset($_POST['k_id']) && isset($_POST['btnLoesch'])){
-		Components::delete($_POST['k_id']);
-	}
-	if(isset($_POST['komp']) && isset($_POST['btnSave'])){
-		if(isset($_POST['k_id']) && $_POST["k_id"] != "")
-			Components::change($_POST['k_id'],$_POST['komp']);
-		else
-			$_POST['k_id'] = Components::add($_POST['komp']);
-	}
+	$content = '<div class="w3-container w3-teal"><h1>Komponenten</h1></div>';
+	$status = "";
+var_dump($_POST['k_id']);
+	if(isset($_POST["btnLoesch"]))
+		$status = Components::delete((int)$_POST['k_id']) ? "success" : "error";
+	else if(isset($_POST["btnSave"]))
+		$status = Components::change((int)$_POST['k_id'], $_POST['komp']) ? "success" : "error";
+	else if(isset($_POST["btnHinzu"]))
+		$status = Components::add($_POST['komp']) ? "success" : "error";
+
+	if($status == "error")
+		$content .= '<div class="alert alert-danger" role="alert" style="width: 90%; margin: 10px auto;"><center><b>Fehler!</b> Konnte nicht gespeichert werden.</center></div>';
+	else if($status == "success")
+		$content .= '<div class="alert alert-success" role="alert" style="width: 90%; margin: 10px auto;"><center><b>Erfolgreich gespeichert!</b></center></div>';
 	
 	if(isset($_POST['kat']) && isset($_POST['btnSave'])){
-		foreach($_POST['kat'] as $kat){
-		
+		foreach($_POST['kat'] as $kat){		
 			Components::setattr($_POST['k_id'], $kat['kat_id'], $kat['khkat_wert']);
 		}
 	}
-
-
-
-	$content = '<div class="w3-container w3-teal"><h1>Komponenten</h1></div>';
 	
 	$komponenten = Components::list_all();
 	$komponentenArten = Componenttypes::list_all();
@@ -42,13 +42,12 @@ function komponenten_show()
 	if(isset($_POST["btnSave"])) {
 		$hinzufuegen = array("k_name"=>"54");
 	}
-
 	
 	foreach($komponenten as $komp){
 		
 		$mask = "<div><form method=\"POST\">";
 		
-		$mask .= '<div class="card card-block" id="card-shadow">
+		$mask .= '<div class="card card-block" id="komp' . $komp['k_id'] . '">
 			<input type="hidden" name="k_id" value="'.$komp['k_id'].'"/>
 			<div class="card-title">
 			</div>
@@ -131,7 +130,7 @@ for($j =0; $j < count($raeume); $j++) {
 								</tr>
 								<tr>
 									<td><label>Lieferant:</label></td>
-									<td><select class="chosen-select feldAktivieren Lieferant" disabled id="Lieferant">';
+									<td><select class="chosen-select feldAktivieren Lieferant" disabled name="komp[l_id]">';
 	
 	for($k = 0; $k < count($lieferanten); $k++) {
 		if(	$komp["l_id"] == $lieferanten[$k]["l_id"]) {
@@ -185,7 +184,7 @@ for($j =0; $j < count($raeume); $j++) {
 
 	
 	
-	$rows[] = array("cols" => array($komp["k_name"], 0), "content" => $mask);
+	$rows[] = array("cols" => array($komp["k_name"], $komp["k_id"]), "content" => $mask);
 	}
 	
 	
@@ -212,10 +211,10 @@ for($j =0; $j < count($raeume); $j++) {
 						</div>
 						<div class="col-md-4">	
 							<label>Komponentenart:</label>
-							<select class="chosen-select feldAktivieren kompArt" id="kompArt"  >';
+							<select class="chosen-select feldAktivieren kompArt" name="komp[ka_id]" id="kompArt" >';
 							
 	for($j =0; $j < count($komponentenArten); $j++) {
-		$britney .= '<option value="'.$komponentenArten[$j]["ka_komponentenart"].'">'.$komponentenArten[$j]["ka_komponentenart"].'</option>';
+		$britney .= '<option value="'.$komponentenArten[$j]["ka_id"].'">'.$komponentenArten[$j]["ka_komponentenart"].'</option>';
 	}
 			$britney .=	'</select>
 						</div>
@@ -244,7 +243,7 @@ for($j =0; $j < count($raeume); $j++) {
 		//	$britney .= $komponentenArten[$j]["ka_komponentenart"];
 //		}
 
-			$britney .=  '<tr style="display:none;" class="'.$art['ka_komponentenart'].' displayNone">
+			$britney .=  '<tr style="display:none;" class="ka_'.$art['ka_id'].' displayNone">
 							<td>'.$att["kat_bezeichnung"].'</td>
 								<input name="kat[kat'.(string)$att['kat_id'].'][kat_id]" value="'.$att["kat_id"].'" type="hidden" />
 							<td><input name="kat[kat'.(string)$att['kat_id'].'][khkat_wert]" size="10px" class="feldAktivieren" /></td>
@@ -271,10 +270,10 @@ for($j =0; $j < count($raeume); $j++) {
 							</tr>
 							<tr>
 								<td><label>Lieferant:</label></td>
-								<td><select class="chosen-select feldAktivieren Lieferant" id="Lieferant"  >';
+								<td><select class="chosen-select feldAktivieren Lieferant" name="komp[l_id]"  >';
 	
 	for($k = 0; $k < count($lieferanten); $k++) {
-		$britney .= '<option value="'.$lieferanten[$k]["l_firmenname"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
+		$britney .= '<option value="'.$lieferanten[$k]["l_id"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
 	}
 	
 	$britney .= '</select></td>
@@ -368,13 +367,14 @@ for($j =0; $j < count($raeume); $j++) {
 			} );
 			
 		
-		  $("#kompArt_chosen").click(function(){
-			var kompArtAuswahl = $("#kompArt").chosen().val();
+		  $("#kompArt").change(function(){
+			var kompArtAuswahl = $("#kompArt", this.parentNode).chosen().val();
+			console.log(kompArtAuswahl);
 			var zuruecksetzen = document.getElementsByClassName("displayNone");
 			for (let element of zuruecksetzen) {
 				element.setAttribute("style", "display:none");
 			}
-			var anzeigen = document.getElementsByClassName(kompArtAuswahl);
+			var anzeigen = document.getElementsByClassName("ka_" + kompArtAuswahl);
 			for (let element of anzeigen) {
 				element.setAttribute("style", "display:visible");
 			}
