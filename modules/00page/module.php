@@ -14,26 +14,27 @@ function page_render($maincontent, $full=true)
 <!DOCTYPE html>
 <html style="overflow-y: scroll">
 	<head>
+		<meta http-equiv='content-type' content='text/html;charset=utf-8'>
+
 		<title>MAST</title>
 		
 		<link rel="stylesheet" href='/css/JQuery-ui.css'>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/mast.css" />
-		<link rel="stylesheet" type="text/css" href="css/w3.css" />
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="/css/mast.css" />
+		<link rel="stylesheet" type="text/css" href="/css/w3.css" />
+		<link rel='stylesheet' href='/js/chosen/chosen.css'>
+		<link rel='stylesheet' href='/css/style.css'>		
 
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/prefixfree.min.js"></script>
-		<script src="js/mast.js"></script>
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/mast.js"></script>
 
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="/js/jquery-ui.min.js"></script>
 		<script src='/js/chosen/chosen.jquery.min.js' type='text/javascript'></script>
 		<script src='/js/bootstrap.min.js' type='text/javascript'></script>
 		<script src="/js/edit.js" type='text/javascript'></script>
-        <script src="/js/editRaum.js" type='text/javascript'></script>
-        <link rel='stylesheet' href='/js/chosen/chosen.css'>
-		<link rel='stylesheet' href='/css/style.css'>		
-		<link rel='stylesheet' href='/css/bootstrap.min.css'>
+		<script src="/js/editRaum.js" type='text/javascript'></script>
+		<script src="/js/prefixfree.min.js"></script>
 	</head>
 <body>
 <?php
@@ -46,7 +47,7 @@ if($full) {
 <!-- Sidebar --> 
 <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%;">
   <h3 class="w3-bar-item" style="font-size: 40px"><nobr>
-	<img src="img/logo.png" style="vertical-align: middle; height: 50px"/>
+	<img src="/img/logo.png" style="vertical-align: middle; height: 50px"/>
 	<!--<span style="margin-left:10px; vertical-align: middle;">Men&uuml;</span>-->
 	</nobr>
   </h3>

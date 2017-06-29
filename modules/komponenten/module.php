@@ -109,10 +109,10 @@ function komponenten_show()
 						<div class="col-md-1">
 						</div>						
 						<div class="col-md-2">
-							<input name="btnBearb" type="button" class="btn btn-primary" value="Bearbeiten" onclick="clickBearbeiten();" id="bearbeiten"/>
+							<input name="btnBearb" type="button" class="btn bearbeitenDeaktivieren btn-primary" value="Bearbeiten" onclick="clickBearbeiten();" id="bearbeiten"/>
 						</div>
 						<div class="col-md-2">
-							<input name="btnSave" type="button" class="btn btn-primary" value="Speichern" onclick="clickSpeichern();" disabled id="speichern"/>
+							<input name="btnSave" type="button" class="btn feldAktivieren btn-primary" value="Speichern" onclick="clickSpeichern();" disabled id="speichern"/>
 						</div>
 						<div class="col-md-1">
 						</div>
