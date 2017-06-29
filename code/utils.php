@@ -97,7 +97,7 @@ class MastDB {
             return false;
 
 		mysqli_select_db(self::$mysqli_link, $CONFIG["SQLMastDB"]);
-        
+        mysqli_set_charset(self::$mysqli_link, "utf8"); 
         self::$mysqli_connected = true;
         
         register_shutdown_function(function() {
