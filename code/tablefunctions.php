@@ -113,7 +113,7 @@ class Rooms {
 }
 class Supplier {
     public static function list_all($cols = ["*"]) {
-		$results = sqlselect("lieferanten", $cols);
+		$results = sqlselect("lieferanten", $cols, array(array('l_geloescht', 0)));
 		
 		$result = addtoarray($results,'komponenten','select k.*, a.* from komponentenarten as a , komponenten as k  where k.l_id = ? and k.ka_id = a.ka_id','l_id');
 
@@ -135,8 +135,8 @@ class Supplier {
         return sqlassoupdate("lieferanten", $vals, [["l_id", $l_id]]);
     }
     public static function delete($l_id) {
-        return sqlupdate("lieferant", [["l_geloescht", 1]], [["l_id", $l_id]]);
-        //return sqldelete("lieferant", [["l_id", $l_id]]);
+        return sqlupdate("lieferanten", [["l_geloescht", 1]], [["l_id", $l_id]]);
+        //return sqldelete("lieferanten", [["l_id", $l_id]]);
     }
 }
 ?>

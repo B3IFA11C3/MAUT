@@ -1,5 +1,5 @@
 <?php
-function edit_lieferant_show($row = array()) {
+function edit_lieferant_show($row = array('l_id' =>"", 'l_firmenname' =>"",'komponenten' => array(),'l_strasse' =>"",'l_plz' =>"",'l_ort' =>"",'l_tel' =>"",'l_mobil' =>"",'l_fax' =>"",'l_email' =>"")) {
 	$return = '
 	<form method="post">
 	<input type="hidden" name="l_id" value="'.$row['l_id'].'"/>
@@ -84,15 +84,15 @@ $return .='					</tbody>
 					</div>
 				</div>	
 				<div class="row">
-					<div class="col-md-1">
-					</div>						
+							
 					<div class="col-md-2">
 						<input name="btnBearb" type="button" class="btn bearbeitenDeaktivieren btn-primary" value="Bearbeiten" onclick="clickBearbeiten();" id="bearbeiten"/>
 					</div>
 					<div class="col-md-2">
 						<input name="btnSave" type="submit" class="btn feldAktivieren btn-primary" value="Speichern" disabled id="speichern"/>
 					</div>
-					<div class="col-md-1">
+					<div class="col-md-2">
+						<input name="btnDel" type="submit" class="btn feldAktivieren btn-primary" value="Löschen" disabled id="speichern"/>
 					</div>
 				</div>
 			</div>
