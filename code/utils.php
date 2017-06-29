@@ -55,10 +55,14 @@ class MySQLiCurry {
         return $this->stmt->num_rows;
     }
     
+    public function insertId() {
+		return $this->stmt->insert_id;
+    }
+    
     public function fetch() {
         if ($this->stmt === NULL)
             return false;
-        
+
         mysqli_stmt_store_result($this->stmt);
         $meta = mysqli_stmt_result_metadata($this->stmt);
         $vars = array($this->stmt);
@@ -229,7 +233,8 @@ function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
     $curr = $curr->execute();
     if (!$curr)
         return false;
-    return $curr->fetch()[0];
+
+    return $curr->insertId();
 }
 
 function sqlassoupdate($sqltable, $asso, $sqlfilter) {
