@@ -15,14 +15,14 @@ function komponenten_show()
 			<div class="card-text">
 				<br/>
 				<div class="vboxLeft">
+					
 					<div class="row">
 						<div class="col-md-1">
-						</div>	
-						<div class="col-md-2">	
-							<label>Komponentenart:</label>
-						</div>	
-						<div class="col-md-2">	
-							<select class="chosen-select feldAktivieren kompArt" disabled id="kompArt" >
+						</div>
+						<div class="col-md-4">	
+							<div class="short-div">
+								<label>Komponentenart:</label>
+								<select class="chosen-select feldAktivieren kompArt" disabled id="kompArt" >
 								<option value="1">Select 1</option>
 								<option value="2">Select 2</option>
 								<option value="3">Select 3</option>
@@ -33,20 +33,9 @@ function komponenten_show()
 								<option value="8">Select 8</option>
 								<option value="9">Select 9</option>
 							</select>
-						</div>	
-						<div class="col-md-1">
-						</div>	
-						<div class="col-md-2">
-							<label>Gew&auml;hrleistungsdauer:</label>
-						</div>
-						<div class="col-md-2">
-							<input type="text" value="Gew&auml;hrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/>
-						</div> 
-					</div>
-					<div class="row">
-						<div class="col-md-1">
-						</div>
-						<div class="col-md-4">	
+							</div>
+							<div class="short-div"></div>
+							<div class="short-div" style="height:unset">
 							<table class="table table-hover" >
 								<thead>
 									<tr>
@@ -61,12 +50,26 @@ function komponenten_show()
 										<td><input name="beispiel1wert" value="15" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
 										<td>GB</td>
 									</tr>
+									<tr>
+										<td>Beispiel</td>
+										<td><input name="beispiel1wert" value="15" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
+										<td>GB</td>
+									</tr>
+									<tr>
+										<td>Beispiel</td>
+										<td><input name="beispiel1wert" value="15" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
+										<td>GB</td>
+									</tr>
 								</tbody>
 							</table>
+							</div>
 						</div>
 						<div class="col-md-1">
 						</div>	
 						<div class="col-md-2">
+							<div class="short-div">
+								<label>Gew&auml;hrleistungsdauer:</label>
+							</div>
 							<div class="short-div">
 								<label>Hersteller:</label>
 							</div>
@@ -81,6 +84,9 @@ function komponenten_show()
 							</div>
 						</div>
 						<div class="col-md-2">
+							<div class="short-div">
+								<input type="text" value="Gew&auml;hrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/>
+							</div>
 							<div class="short-div">
 								<input type="text" value="Hersteller" id="Hersteller" disabled class="feldAktivieren"/>
 							</div>
@@ -109,10 +115,10 @@ function komponenten_show()
 						<div class="col-md-1">
 						</div>						
 						<div class="col-md-2">
-							<input name="btnBearb" type="button" class="btn btn-primary" value="Bearbeiten" onclick="clickBearbeiten();" id="bearbeiten"/>
+							<input name="btnBearb" type="button" class="btn bearbeitenDeaktivieren btn-primary" value="Bearbeiten" onclick="clickBearbeiten();" id="bearbeiten"/>
 						</div>
 						<div class="col-md-2">
-							<input name="btnSave" type="button" class="btn btn-primary" value="Speichern" onclick="clickSpeichern();" disabled id="speichern"/>
+							<input name="btnSave" type="button" class="btn feldAktivieren btn-primary" value="Speichern" onclick="clickSpeichern();" disabled id="speichern"/>
 						</div>
 						<div class="col-md-1">
 						</div>
@@ -140,12 +146,11 @@ function komponenten_show()
 				<div class="vboxLeft">
 					<div class="row">
 						<div class="col-md-1">
-						</div>	
-						<div class="col-md-2">	
-							<label>Komponentenart:</label>
-						</div>	
-						<div class="col-md-2">	
-							<select class="chosen-select feldAktivieren kompArt" id="kompArt"  >
+						</div>
+						<div class="col-md-4">	
+						<div class="short-div">
+						<label>Komponentenart:</label>
+						<select class="chosen-select feldAktivieren kompArt" id="kompArt"  >
 								<option value="1">Select 1</option>
 								<option value="2">Select 2</option>
 								<option value="3">Select 3</option>
@@ -156,20 +161,15 @@ function komponenten_show()
 								<option value="8">Select 8</option>
 								<option value="9">Select 9</option>
 							</select>
-						</div>	
-						<div class="col-md-1">
-						</div>	
-						<div class="col-md-2">
-							<label>Gew&auml;hrleistungsdauer:</label>
 						</div>
-						<div class="col-md-2">
-							<input type="text" placeholder="Gew&auml;hrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/>
-						</div> 
-					</div>
-					<div class="row">
-						<div class="col-md-1">
-						</div>
-						<div class="col-md-4">	
+						<script>
+						var test = $(document.getElementsByClassName("kompArt"));
+						for(test2 in test) {
+							test2.setMaxHeight(test2.getParent().getParent().getParent().getParent().getParent().getParent().getComputedHeight()-80);
+					}
+					</script>
+						<div class="short-div"></div>
+						<div class="short-div" style="height:unset">
 							<table class="table table-hover" >
 								<thead>
 									<tr>
@@ -186,10 +186,14 @@ function komponenten_show()
 									</tr>
 								</tbody>
 							</table>
+							</div>
 						</div>
 						<div class="col-md-1">
 						</div>	
 						<div class="col-md-2">
+							<div class="short-div">
+								<label>Gew&auml;hrleistungsdauer:</label>
+							</div>
 							<div class="short-div">
 								<label>Hersteller:</label>
 							</div>
@@ -204,6 +208,9 @@ function komponenten_show()
 							</div>
 						</div>
 						<div class="col-md-2">
+							<div class="short-div">
+								<input type="text" placeholder="Gew&auml;hrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/>
+							</div>
 							<div class="short-div">
 								<input type="text" placeholder="Hersteller" id="Hersteller"  class="feldAktivieren"/>
 							</div>
@@ -302,7 +309,7 @@ function komponenten_show()
 
 page_add_menu("Komponenten", "/komponenten");
 
-mast_register_path("#komponenten$#", "komponenten_show");
+mast_register_path("#^komponenten$#", "komponenten_show");
 mast_register_path("#^\$#", "komponenten_show");
 
 return true;

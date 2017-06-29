@@ -29,7 +29,7 @@ function raeume_show()
 
 page_add_menu("Räume", "/raeume");
 
-mast_register_path("#raeume$#", "raeume_show");
+mast_register_path("#^raeume$#", "raeume_show");
 mast_register_path("#^\$#", "raeume_show");
 
 return true;
