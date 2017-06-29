@@ -50,7 +50,7 @@ tr.clickable:hover {
 	background: #f8f8f8;
 }
 
-.tbodytable * tr:last-of-type td {
+.tbodytable > * > tr:last-of-type > td {
 	padding: 0px !important;
 }
 
