@@ -101,7 +101,7 @@ function komponentenattribute_show()
 				</div></div>';
 
 	$content .= table_render(array("ID" => "int", "Name" => "string", "Typ" => "string"),
-			array_map("komponentenattribute_render_row", Componentattributes::list()),
+			array_map("komponentenattribute_render_row", Componentattributes::list_all()),
 			array("header" => "Komponentenattribut hinzuf&uuml;gen", "content" => $insert));
 
 	page_render($content);

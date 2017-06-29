@@ -57,8 +57,25 @@ class Components {
         return sqlupdate("komponentenarten", [["k_geloescht", 1]], [["k_id", $k_id]]);
         //return sqldelete("komponenten", [["k_id", $k_id]]);
     }
-    public static function changeattr($k_id, $kat_id, $khkat_wert) {
-        return sqlupdate("komponente_hat_attribute", [["khkat_wert", $khkat_wert]], [["k_id", $k_id], ["kat_id", $kat_id]]);
+    public static function setattr($k_id, $kat_id, $khkat_wert) {
+        if (!sqlselect("komponentenattribute", ["kat_einzigartig"], [["kat_id", $kat_id]])[0]["kat_einzigartig"])
+            return sqlsetattr($k_id, $kat_id, $khkat_wert);
+        $res = sqlselect("komponente_hat_attribute", ["k_id"], [["kat_id", $kat_id], ["khkat_wert", $khkat_wert]]);
+        if (!count($res))
+            return sqlsetattr($k_id, $kat_id, $khkat_wert);
+        $k_ids = array();
+        foreach ($res as $re)
+            $k_ids[] = $re["k_id"];
+        $ownkat = sqlselect("komponenten", ["ka_id"], [["k_id", $k_id]])[0]["ka_id"];
+        if (count(sqldoit(true, "SELECT DISTINCT `ka_id` FROM `komponenten` WHERE (`k_id` = ".join(" OR `k_id` = ", $k_ids).") AND `ka_id` = ".$ownkat)));
+            return false;
+        return sqlsetattr($k_id, $kat_id, $khkat_wert);
+        //return sqlupdate("komponente_hat_attribute", [["khkat_wert", $khkat_wert]], [["k_id", $k_id], ["kat_id", $kat_id]]);
+    }
+    private static function sqlsetattr($k_id, $kat_id, $khkat_wert) {
+        if (count(sqlselect("komponente_hat_attribute", ["k_id", "kat_id"], [["k_id", $k_id], ["kat_id", $kat_id]])))
+            return sqlupdate("komponente_hat_attribute", [["khkat_wert", $khkat_wert]], [["k_id", $k_id], ["kat_id", $kat_id]]);
+        return sqlinsert("komponente_hat_attribute", ["k_id", "kat_id", "khkat_wert"], [$k_id, $kat_id, $khkat_wert]);
     }
     public static function addcompinroom($k_id, $r_id) {
         $res = sqlselect("komponenten", ["ka_id"], [["k_id", $k_id]]);

@@ -1,3 +1,27 @@
+$(function() {
+  $(".filter").keyup(function() {
+    input = this.value.toLowerCase().split(" ")
+    $('.spse').each(function() {
+        returns = true;
+        cell = this
+        cell_text = this.innerText.toLowerCase()
+        $.each(input, function(i, match) {
+            tbody = $(cell).closest(".container").closest("tr").prev(".clickable").closest("tbody")
+            console.log(tbody)
+            if (cell_text.indexOf(match) !== -1 || input.length == 0) {
+              $(tbody).show()
+              returns = false;
+              return returns;
+            } else {
+              $(tbody).hide()
+            }
+        });
+        return returns;
+    });
+  });
+});
+
+
 function filterTable(table, filter)
 {
 	var words = filter.toLowerCase().split(" ");
