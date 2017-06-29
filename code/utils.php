@@ -206,13 +206,13 @@ function changepw($user, $oldpw, $newpw, $newpwwdh) {
 }
 
 function sqlassoinsert($sqltable, $asso) {
-        $keys = array_keys($asso);
-        $sqlfields = array();
-        $sqlvalues = array();
-        foreach ($keys AS $key) {
-            $sqlfields[] = $key;
-            $sqlvalues[] = $asso[$key];
-        }
+    $keys = array_keys($asso);
+    $sqlfields = array();
+    $sqlvalues = array();
+    foreach ($keys AS $key) {
+        $sqlfields[] = $key;
+        $sqlvalues[] = $asso[$key];
+    }
     return sqlinsert($sqltable, $sqlfields, $sqlvalues);
 }
 
@@ -231,11 +231,11 @@ function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
 }
 
 function sqlassoupdate($sqltable, $asso, $sqlfilter) {
-        $keys = array_keys($asso);
-        $sqlvals = array();
-        foreach ($keys AS $key) {
-            $sqlvals[] = array($key, $asso[$key]);
-        }
+    $keys = array_keys($asso);
+    $sqlvals = array();
+    foreach ($keys AS $key) {
+        $sqlvals[] = array($key, $asso[$key]);
+    }
     return sqlupdate($sqltable, $sqlvals, $sqlfilter);
 }
 
@@ -251,9 +251,9 @@ function sqlupdate($sqltable, $sqlvals, $sqlfilter) {
     }, $sqlfilter));
     $curr = MastDB::mysqliCurry("UPDATE `".$sqltable."` SET ".$sqlset." WHERE ".$sqlwhere, $CONFIG["SQLMastDB"]);
     foreach ($sqlvals as $val)
-        $curr = is_int($val) ? $curr->int($val) : $curr->str($val);
+        $curr = is_int($val[1]) ? $curr->int($val[1]) : $curr->str($val[1]);
     foreach ($sqlfilter as $filter)
-        $curr = is_int($filter) ? $curr->int($filter) : $curr->str($filter);
+        $curr = is_int($filter[1]) ? $curr->int($filter[1]) : $curr->str($filter[1]);
     return $curr->execute();
 }
 
