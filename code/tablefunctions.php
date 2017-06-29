@@ -1,5 +1,5 @@
 <?php
-require("../../../Projekt/repo/MAUT/code/utils.php");
+require("code/utils.php");
 
 class Componentattributes {
     public static function list($cols = ["*"]) {
