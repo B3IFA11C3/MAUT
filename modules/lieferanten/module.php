@@ -11,10 +11,8 @@ require_once("form_add.php");
 
 function lieferanten_show()
 {
-	var_dump($_POST);
 
 	if(isset($_POST['l_id']) && isset($_POST['btnDel'])){
-		echo 'DEL</br>';
 		supplier::delete($_POST['l_id']);
 	}
 	if(isset($_POST['lief']) && isset($_POST['btnSave'])){

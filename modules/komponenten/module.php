@@ -5,6 +5,25 @@ require_once("code/tablefunctions.php");
 
 function komponenten_show()
 {
+	if(isset($_POST['k_id']) && isset($_POST['btnLoesch'])){
+		Components::delete($_POST['k_id']);
+	}
+	if(isset($_POST['komp']) && isset($_POST['btnSave'])){
+		if(isset($_POST['k_id']) && $_POST["k_id"] != "")
+			Components::change($_POST['k_id'],$_POST['komp']);
+		else
+			$_POST['k_id'] = Components::add($_POST['komp']);
+	}
+	
+	if(isset($_POST['kat']) && isset($_POST['btnSave'])){
+		foreach($_POST['kat'] as $kat){
+		
+			Components::setattr($_POST['k_id'], $kat['kat_id'], $kat['khkat_wert']);
+		}
+	}
+
+
+
 	$content = '<div class="w3-container w3-teal"><h1>Komponenten</h1></div>';
 	
 	$komponenten = Components::list_all();
@@ -25,11 +44,12 @@ function komponenten_show()
 	}
 
 	
-	for($i =0; $i < count($komponenten); $i++) {
+	foreach($komponenten as $komp){
 		
 		$mask = "<div><form method=\"POST\">";
 		
 		$mask .= '<div class="card card-block" id="card-shadow">
+			<input type="hidden" name="k_id" value="'.$komp['k_id'].'"/>
 			<div class="card-title">
 			</div>
 			<div class="card-text">
@@ -40,22 +60,14 @@ function komponenten_show()
 						</div>
 						<div class="col-md-4">
 							<label>Name:</label>
-							<input type="text" name="komp[k_name]" value="'.$komponenten[$i]["k_name"].'" id="Name" disabled class="feldAktivieren"/>
+							<input type="text" name="komp[k_name]" value="'.$komp["k_name"].'" id="Name" disabled class="feldAktivieren"/>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-1">
 						</div>
 						<div class="col-md-4">	
-						<label>Komponentenart:</label>';
-								
-	for($j =0; $j < count($komponentenArten); $j++) {
-		if($komponentenArten[$j]["ka_id"] == $komponenten[$i]["ka_id"]) {
-			$mask .= $komponentenArten[$j]["ka_komponentenart"];
-		}
-	}
-								
-	$mask .= '
+						<label>Komponentenart:</label>'.$komp["ka_komponentenart"].'
 						</div>
 					</div>
 					<div class="row">
@@ -73,12 +85,13 @@ function komponenten_show()
 								</thead>
 								<tbody >
 									';
-	
-for($j = 0; $j < count($komponenten[$i]["komponentenattribute"]); $j++) {
+foreach($komp["komponentenattribute"] as $att) {
 	$mask .= '	<tr>
-								<td>'.$komponenten[$i]["komponentenattribute"][$j]["kat_bezeichnung"].'</td>
-								<td><input name="kat[]" value="'.$komponenten[$i]["komponentenattribute"][$j]["khkat_wert"].'" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
-								<td>'.$komponenten[$i]["komponentenattribute"][$j]["kat_einheit"].'</td>
+								<td>'.$att["kat_bezeichnung"].'</td>
+									<input name="kat[kat'.(string)$att['kat_id'].'][k_id]" value="'.$att["k_id"].'" type="hidden" />
+									<input name="kat[kat'.(string)$att['kat_id'].'][kat_id]" value="'.$att["kat_id"].'" type="hidden" />
+								<td><input name="kat[kat'.(string)$att['kat_id'].'][khkat_wert]" value="'.$att["khkat_wert"].'" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
+								<td>'.$att["kat_einheit"].'</td>
 							</tr>';
 }
 
@@ -97,16 +110,16 @@ for($j = 0; $j < count($komponenten[$i]["komponentenattribute"]); $j++) {
 										<select multiple name="raeume" class="chosen-select feldAktivieren Raeume" disabled id="Raeume">';
 for($j =0; $j < count($raeume); $j++) {
 	$vorhanden = false;
-	for($k = 0; $k < count($komponenten[$i]["raeume"]); $k++) {	
-		if($raeume[$j]["r_id"] == $komponenten[$i]["raeume"][$k]["r_id"]) {
+	for($k = 0; $k < count($komp["raeume"]); $k++) {	
+		if($raeume[$j]["r_id"] == $komp["raeume"][$k]["r_id"]) {
 			$vorhanden = true;
 		 }
 	}
 		if($vorhanden) {
-		$mask .= '<option selected value="'.$raeume[$j]["r_nr"].'"> Raum '.$raeume[$j]["r_nr"].'</option>';
+		$mask .= '<option selected value="'.$raeume[$j]["r_id"].'"> Raum '.$raeume[$j]["r_nr"].'</option>';
 		}
 		else {
-			$mask .= '<option value="'.$raeume[$j]["r_nr"].'"> Raum'.$raeume[$j]["r_nr"].'</option>';
+			$mask .= '<option value="'.$raeume[$j]["r_id"].'"> Raum'.$raeume[$j]["r_nr"].'</option>';
 		}
 }
 	
@@ -121,11 +134,11 @@ for($j =0; $j < count($raeume); $j++) {
 									<td><select class="chosen-select feldAktivieren Lieferant" disabled id="Lieferant">';
 	
 	for($k = 0; $k < count($lieferanten); $k++) {
-		if(	$komponenten[$i]["l_id"] == $lieferanten[$k]["l_id"]) {
-			$mask .= '<option selected value="'.$lieferanten[$k]["l_firmenname"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
+		if(	$komp["l_id"] == $lieferanten[$k]["l_id"]) {
+			$mask .= '<option selected value="'.$lieferanten[$k]["l_id"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
 			}
 		else {
-			$mask .= '<option value="'.$lieferanten[$k]["l_firmenname"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
+			$mask .= '<option value="'.$lieferanten[$k]["l_id"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
 		}
 	}
 	
@@ -133,15 +146,15 @@ for($j =0; $j < count($raeume); $j++) {
 								</tr>
 								<tr>
 								<td><label>Gew&auml;hrleistungsdauer:</label></td>
-								<td><input type="text" value="'.$komponenten[$i]["k_gewaehrleistung_bis"].'" id="gewaehrDauer" disabled class="feldAktivieren"/></td>
+								<td><input name="komp[k_gewaehrleistung_bis]" type="text" value="'.$komp["k_gewaehrleistung_bis"].'" id="gewaehrDauer" disabled class="feldAktivieren"/></td>
 								</tr>
 								<tr>
 								<td><label>Hersteller:</label></td>
-								<td><input type="text" value="'.$komponenten[$i]["k_hersteller"].'" id="Hersteller" disabled class="feldAktivieren"/></td>
+								<td><input name="komp[k_hersteller]" type="text" value="'.$komp["k_hersteller"].'" id="Hersteller" disabled class="feldAktivieren"/></td>
 							</tr>
 							<tr>
 								<td><label>Einkaufsdatum:</label></td>
-								<td><input type="text" class="feldAktivieren datepicker" value="'.$komponenten[$i]["k_einkaufsdatum"].'" id="datepicker" id="Einkaufsdatum" disabled /></td>
+								<td><input name="komp[k_einkaufsdatum]" type="text" class="feldAktivieren datepicker" value="'.$komp["k_einkaufsdatum"].'" id="datepicker" id="Einkaufsdatum" disabled /></td>
 							</tr>
 							</table>
 						</div>
@@ -172,7 +185,7 @@ for($j =0; $j < count($raeume); $j++) {
 
 	
 	
-	$rows[] = array("cols" => array($komponenten[$i]["k_name"], 0), "content" => $mask);
+	$rows[] = array("cols" => array($komp["k_name"], 0), "content" => $mask);
 	}
 	
 	
@@ -191,7 +204,7 @@ for($j =0; $j < count($raeume); $j++) {
 						</div>
 						<div class="col-md-4">
 							<label>Name:</label>
-							<input type="text" placeholder="Name" id="Name" class="feldAktivieren"/>
+							<input name ="komp[k_name]" type="text" placeholder="Name" id="Name" class="feldAktivieren"/>
 						</div>
 					</div>
 					<div class="row">
@@ -225,17 +238,19 @@ for($j =0; $j < count($raeume); $j++) {
 	
 
 
-	for($j =0; $j < count($komponentenArten); $j++) {
-		for($k =0; $k < count($komponentenArten[$j]["ka_spalten"]); $k++) {
+	foreach($komponentenArten as $art) {
+		foreach($art["ka_spalten"] as $att) {
 		//if($komponentenArten[$j]["ka_komponentenart"] == ) {
 		//	$britney .= $komponentenArten[$j]["ka_komponentenart"];
 //		}
-			$britney .=  '<tr style="display:none;" class="'.$komponentenArten[$j]["ka_komponentenart"].' displayNone">
-							<td>'.$komponentenArten[$j]["ka_spalten"][$k]["kat_bezeichnung"].'</td>
-										 <td><input name="beispiel1wert" size="10px" class="feldAktivieren" /></td>
-										 <td>'.$komponentenArten[$j]["ka_spalten"][$k]["kat_einheit"].'</td>
-									 </tr>';
-									 }
+
+			$britney .=  '<tr style="display:none;" class="'.$art['ka_komponentenart'].' displayNone">
+							<td>'.$att["kat_bezeichnung"].'</td>
+								<input name="kat[kat'.(string)$att['kat_id'].'][kat_id]" value="'.$att["kat_id"].'" type="hidden" />
+							<td><input name="kat[kat'.(string)$att['kat_id'].'][khkat_wert]" size="10px" class="feldAktivieren" /></td>
+							<td>'.$att["kat_einheit"].'</td>
+						</tr>';
+		}
 	}
 									
 						$britney .=		'</tbody>
@@ -266,15 +281,15 @@ for($j =0; $j < count($raeume); $j++) {
 							</tr>
 							<tr>
 								<td><label>Gew&auml;hrleistungsdauer:</label></td>
-								<td><input type="text" placeholder="Gew&auml;hrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/></td>
+								<td><input name="komp[k_gewaehrleistung_bis]" type="text" placeholder="Gew&auml;hrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/></td>
 							</tr>
 							<tr>
 								<td><label>Hersteller:</label></td>
-								<td><input type="text" placeholder="Hersteller" id="Hersteller"  class="feldAktivieren"/></td>
+								<td><input name="komp[k_hersteller]" type="text" placeholder="Hersteller" id="Hersteller"  class="feldAktivieren"/></td>
 							</tr>
 							<tr>
 								<td><label>Einkaufsdatum:</label></td>
-								<td><input type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum"  /></td>
+								<td><input name="komp[k_einkaufsdatum]" type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum"  /></td>
 							</tr>
 						</table>
 					</div>

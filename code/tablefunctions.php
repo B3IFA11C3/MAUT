@@ -43,7 +43,7 @@ class Components {
 		$result = sqldoit(true,'select k.*, a.* from komponentenarten as a , komponenten as k where k.ka_id = a.ka_id');
 		
 		$result = addtoarray($result,'lieferant','select * from lieferanten where l_id = ?','l_id');
-		$result = addtoarray($result,'komponentenattribute','select ka.* , h.* from wird_beschrieben_durch as b, komponentenattribute as ka left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ? where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
+		$result = addtoarray($result,'komponentenattribute','select ka.* , h.* , ka.kat_id from wird_beschrieben_durch as b, komponentenattribute as ka left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ? where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
 		$result = addtoarray($result,'raeume','select * from raeume as r , komponente_in_raum as i where r.r_id = i.r_id and i.k_id = ?','k_id');
         return $result;
     }
@@ -57,25 +57,25 @@ class Components {
         return sqlupdate("komponentenarten", [["k_geloescht", 1]], [["k_id", $k_id]]);
         //return sqldelete("komponenten", [["k_id", $k_id]]);
     }
+	private static function sqlsetattr($k_id, $kat_id, $khkat_wert) {
+        if (count(sqlselect("komponente_hat_attribute", ["k_id", "kat_id"], [["k_id", $k_id], ["kat_id", $kat_id]])))
+            return sqlupdate("komponente_hat_attribute", [["khkat_wert", $khkat_wert]], [["k_id", $k_id], ["kat_id", $kat_id]]);
+        return sqlinsert("komponente_hat_attribute", ["k_id", "kat_id", "khkat_wert"], [$k_id, $kat_id, $khkat_wert]);
+    }
     public static function setattr($k_id, $kat_id, $khkat_wert) {
         if (!sqlselect("komponentenattribute", ["kat_einzigartig"], [["kat_id", $kat_id]])[0]["kat_einzigartig"])
-            return sqlsetattr($k_id, $kat_id, $khkat_wert);
+            return self::sqlsetattr($k_id, $kat_id, $khkat_wert);
         $res = sqlselect("komponente_hat_attribute", ["k_id"], [["kat_id", $kat_id], ["khkat_wert", $khkat_wert], ["khkat_geloescht", 0]]);
         if (!count($res))
-            return sqlsetattr($k_id, $kat_id, $khkat_wert);
+            return self::sqlsetattr($k_id, $kat_id, $khkat_wert);
         $k_ids = array();
         foreach ($res as $re)
             $k_ids[] = $re["k_id"];
         $ownkat = sqlselect("komponenten", ["ka_id"], [["k_id", $k_id]])[0]["ka_id"];
         if (count(sqldoit(true, "SELECT DISTINCT `ka_id` FROM `komponenten` WHERE (`k_id` = ".join(" OR `k_id` = ", $k_ids).") AND `ka_id` = ".$ownkat)));
             return false;
-        return sqlsetattr($k_id, $kat_id, $khkat_wert);
+        return self::sqlsetattr($k_id, $kat_id, $khkat_wert);
         //return sqlupdate("komponente_hat_attribute", [["khkat_wert", $khkat_wert]], [["k_id", $k_id], ["kat_id", $kat_id]]);
-    }
-    private static function sqlsetattr($k_id, $kat_id, $khkat_wert) {
-        if (count(sqlselect("komponente_hat_attribute", ["k_id", "kat_id"], [["k_id", $k_id], ["kat_id", $kat_id]])))
-            return sqlupdate("komponente_hat_attribute", [["khkat_wert", $khkat_wert]], [["k_id", $k_id], ["kat_id", $kat_id]]);
-        return sqlinsert("komponente_hat_attribute", ["k_id", "kat_id", "khkat_wert"], [$k_id, $kat_id, $khkat_wert]);
     }
     public static function addcompinroom($k_id, $r_id) {
         $res = sqlselect("komponenten", ["ka_id"], [["k_id", $k_id]]);
