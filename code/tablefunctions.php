@@ -60,7 +60,7 @@ class Components {
     public static function setattr($k_id, $kat_id, $khkat_wert) {
         if (!sqlselect("komponentenattribute", ["kat_einzigartig"], [["kat_id", $kat_id]])[0]["kat_einzigartig"])
             return sqlsetattr($k_id, $kat_id, $khkat_wert);
-        $res = sqlselect("komponente_hat_attribute", ["k_id"], [["kat_id", $kat_id], ["khkat_wert", $khkat_wert]]);
+        $res = sqlselect("komponente_hat_attribute", ["k_id"], [["kat_id", $kat_id], ["khkat_wert", $khkat_wert], ["khkat_geloescht", 0]]);
         if (!count($res))
             return sqlsetattr($k_id, $kat_id, $khkat_wert);
         $k_ids = array();
