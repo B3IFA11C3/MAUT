@@ -2,7 +2,7 @@
 require_once("code/utils.php");
 
 class Componentattributes {
-    public static function list($cols = ["*"]) {
+    public static function list_all($cols = ["*"]) {
         return sqlselect("komponentenattribute", $cols);
     }
     public static function add($vals) {
@@ -16,7 +16,7 @@ class Componentattributes {
     }
 }
 class Componenttypes {
-    public static function list($cols = ["*"]) {
+    public static function list_all($cols = ["*"]) {
          $result = sqlselect("komponentenarten", $cols);
 		 $result = addtoarray($result,'ka_spalten','select ka.* from wird_beschrieben_durch b, komponentenattribute ka where b.ka_id = ? and b.kat_id = ka.kat_id ','ka_id');
 		 return $result;
@@ -39,11 +39,11 @@ class Componenttypes {
     }
 }
 class Components {
-    public static function list($cols = ["*"]) {
-        $result = sqlselect("komponenten", $cols);
+    public static function list_all($cols = ["*"]) {
+		$result = sqldoit(true,'select k.*, a.* from komponentenarten as a , komponenten as k where k.ka_id = a.ka_id');
 		
 		$result = addtoarray($result,'lieferant','select * from lieferanten where l_id = ?','l_id');
-		$result = addtoarray($result,'komponentenattribute','select ka.* , h.* from wird_beschrieben_durch as b, komponentenattribute as ka (left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ?)where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
+		$result = addtoarray($result,'komponentenattribute','select ka.* , h.* from wird_beschrieben_durch as b, komponentenattribute as ka left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ? where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
 		$result = addtoarray($result,'raeume','select * from raeume as r , komponente_in_raum as i where r.r_id = i.r_id and i.k_id = ?','k_id');
         return $result;
     }
@@ -61,11 +61,19 @@ class Components {
         return sqlupdate("komponente_hat_attribute", [["khkat_wert", $khkat_wert]], [["k_id", $k_id], ["kat_id", $kat_id]]);
     }
     public static function addcompinroom($k_id, $r_id) {
-        return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id] );
+        $res = sqlselect("komponenten", ["ka_id"], [["k_id", $k_id]]);
+        if (!count($res))
+            return false;
+        $ka_id = $res[0]["ka_id"];
+        if (!sqlselect("komponentenarten", ["ka_einmalig"], [["ka_id", $ka_id]])[0]["ka_einmalig"])
+            return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id]);
+        if (count(sqlselect("komponente_in_raum", ["*"], [["k_id", $k_id]])))
+            return false;
+        return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id]);
     }
 }
 class Rooms {
-    public static function list($cols = ["*"]) {
+    public static function list_all($cols = ["*"]) {
 		$results = sqlselect("raeume", $cols);
 		
 		$result = addtoarray($results,'komponenten','select k.*, a.* from komponentenarten as a , komponenten as k , komponente_in_raum as i where i.r_id = ? and i.k_id = k.k_id and k.ka_id = a.ka_id','r_id');
@@ -92,12 +100,33 @@ class Rooms {
         //return sqldelete("raeume", [["r_id", $r_id]]);
     }
     public static function addcompinroom($k_id, $r_id) {
-        return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id] );
+        $res = sqlselect("komponenten", ["ka_id"], [["k_id", $k_id]]);
+        if (!count($res))
+            return false;
+        $ka_id = $res[0]["ka_id"];
+        if (!sqlselect("komponentenarten", ["ka_einmalig"], [["ka_id", $ka_id]])[0]["ka_einmalig"])
+            return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id]);
+        if (count(sqlselect("komponente_in_raum", ["*"], [["k_id", $k_id]])))
+            return false;
+        return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id]);
     }
 }
 class Supplier {
-    public static function list($cols = ["*"]) {
-        return sqlselect("lieferanten", $cols);
+    public static function list_all($cols = ["*"]) {
+		$results = sqlselect("lieferanten", $cols);
+		
+		$result = addtoarray($results,'komponenten','select k.*, a.* from komponentenarten as a , komponenten as k  where k.l_id = ? and k.ka_id = a.ka_id','l_id');
+
+		foreach ($result as &$rows){
+		$row = &$rows['komponenten'];
+
+			$row = addtoarray($row,'raeume','select * from raeume as r , komponente_in_raum as i where r.r_id = i.r_id and i.k_id = ?','k_id');
+
+			$row = addtoarray($row,'komponentenattribute','select * from wird_beschrieben_durch as b, komponentenattribute as ka left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ? where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
+
+
+		}
+        return $result;
     }
     public static function add($vals) {
         return sqlassoinsert("lieferanten", $vals);
