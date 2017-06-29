@@ -40,7 +40,7 @@ class Componenttypes {
 }
 class Components {
     public static function list_all($cols = ["*"]) {
-		$result = sqldoit(true,'select k.*, a.* from komponentenarten as a , komponenten as k where k.ka_id = a.ka_id');
+		$result = sqldoit(true,'select k.*, a.* from komponentenarten as a , komponenten as k where k.ka_id = a.ka_id and k.k_geloescht = 0');
 		
 		$result = addtoarray($result,'lieferant','select * from lieferanten where l_id = ?','l_id');
 		$result = addtoarray($result,'komponentenattribute','select ka.* , h.* , ka.kat_id from wird_beschrieben_durch as b, komponentenattribute as ka left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ? where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
@@ -54,7 +54,7 @@ class Components {
         return sqlassoupdate("komponenten", $vals, [["k_id", $k_id]]);
     }
     public static function delete($k_id) {
-        return sqlupdate("komponentenarten", [["k_geloescht", 1]], [["k_id", $k_id]]);
+        return sqlupdate("komponenten", [["k_geloescht", 1]], [["k_id", $k_id]]);
         //return sqldelete("komponenten", [["k_id", $k_id]]);
     }
 	private static function sqlsetattr($k_id, $kat_id, $khkat_wert) {
