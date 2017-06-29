@@ -1,12 +1,7 @@
 <?php
 require_once("templates/details.php");
 
-function fetch_component_types() {
-
-}
-
-function fetch_components_by_type($types = array()) {
-
+function components() {
   $result = mast_query_array("SELECT k.k_id, k.k_name, l.l_firmenname, k.k_einkaufsdatum,
                                       k.k_gewaehrleistung_bis, k.k_notiz, k.k_hersteller,
                                       ka.ka_komponentenart, k.k_erstellt, k.k_geaendert
@@ -19,17 +14,17 @@ function fetch_components_by_type($types = array()) {
 
 function reporting_komponenten_show() {
   $html = '<div class="w3-container w3-teal"><h1>Reporting — Komponenten</h1></div>';
-  $columns = array("ID" => "int", "Name" => "string");
+  $columns = array("ID" => "int", "Art" => "string", "Name" => "string");
   $rows = array();
 
-  $components = fetch_components_by_type();
-
-  foreach ($components as $cmpnt) {
+  foreach (components() as $cmpnt) {
     $rows[] = array(
-      "cols"    => array($cmpnt['k_id'], $cmpnt['k_name']),
+      "cols"    => array(
+        $cmpnt['k_id'],
+        $cmpnt["ka_komponentenart"],
+        $cmpnt['k_name']),
       "content" => render_component_details($cmpnt));
   }
-
   $html .= table_render($columns, $rows);
 
   page_render($html);

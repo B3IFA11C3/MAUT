@@ -284,7 +284,8 @@ function mast_query_array($stmt) {
   if (! $resource)
     return false;
 
-  while ($result[] = $resource->fetch());
+  while ($r = $resource->fetch())
+    $result[] = $r;
   return $result;
 }
 
@@ -331,12 +332,11 @@ function addtoarray($array, $name, $curry, $column){
 			$resp = is_int($row[$column]) ? $resp->int($row[$column]) : $resp->str($row[$column]);
 		$resp = $resp->execute();
 		if($resp){
-			while($subarray[] = $resp->fetch()){
-				if($subarray)
-					$row[$name] = $subarray;
-				else 
-					$row[$name] = null;
-			}
+			$subarray = $resp->fetch();
+			if($subarray)
+			$row[$name] = $subarray;
+			else 
+			$row[$name] = null;
 		}
 	}
 	return $array;
