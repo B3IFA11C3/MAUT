@@ -23,12 +23,12 @@
 				//21
               if($elementRight["k_id"] == $elementeLeft["k_id"]){
 					$isInTable = true;
-					$asdasd[] = $elementRight;
                 }			
             }         
 			
 			if(!$isInTable){
 				$asdasd[] = $elementRight;
+				$isInTable = false;
 			}
         }
 
@@ -66,6 +66,7 @@ $str1 =
                     </div>
                     <div class='col-md-2'>
                         <input name='btnSave' onclick='clickEditRoom()' id='btnSave' type='button' class='btn changeEditStatus btnEditRoom btn-primary' style='margin-left: 5px' value='Raum bearbeiten'/>
+                        <input name='btnSave' onclick='clickEditRoom()' id='btnSave' type='button' class='btn changeEditStatus btnEditRoom btn-primary' style='margin-left: 45px' value='Raum bearbeiten'/>
                     </div>
                 </div>
 			</div>
