@@ -8,25 +8,25 @@ function komponentenattribute_render_row($komponente)
 	$content = '<div class="divslider">';
 	$content .= '<div>
 					<div>
-					<form method="POST" style="display: table; width: 100%;">
+					<form method="POST" style="width: 100%;">
 						<input type="hidden" name="kat[kat_id]" value="' . htmlentities($komponente["kat_id"]) . '"/>
-						<label style="display: table-cell">Einzigartig: ' . ($komponente["kat_einzigartig"] ? "Ja" : "Nein") . '</label>
-						<label style="display: table-cell">Einheit: ' . ($komponente["kat_einheit"] === NULL ? "<i>Keine</i>" : htmlentities($komponente["kat_einheit"])) . '</label>
-						<div class="switch">
+						<label>Einzigartig: ' . ($komponente["kat_einzigartig"] ? "Ja" : "Nein") . '</label><br>
+						<label>Einheit: ' . ($komponente["kat_einheit"] === NULL ? "<i>Keine</i>" : htmlentities($komponente["kat_einheit"])) . '</label>
+						<div>
 							<button type="submit" class="btn btn-primary" name="action" value="delete">L&ouml;schen</button>
-							<button type="button" class="btn btn-primary" onClick="divSliderShowRight(this.closest(".divslider"))">Bearbeiten</button>
+							<button type="button" class="btn btn-primary" onClick="divSliderShowRight(this.closest(\'.divslider\'))">Bearbeiten</button>
 						</div>
 					</form>
 					</div>
 				</div>';
 	$content .= '<div>
 					<div>
-					<form method="POST" style="display: table; width: 100%;">
+					<form method="POST" style="width: 100%;">
 						<input type="hidden" name="kat[kat_id]" value="' . htmlentities($komponente["kat_id"]) . '"/>
-						<label style="display: table-cell">Einzigartig: <input type="checkbox" ' . ($komponente["kat_einzigartig"] ? "checked" : "") . ' name="kat[kat_einzigartig]"/></label
-						<label style="display: table-cell">Name: <input type="text" name="kat[kat_bezeichnung]" value="' . htmlentities($komponente["kat_bezeichnung"]) . '"/></label>
-						<label style="display: table-cell">Einheit: <input type="text" name="kat[kat_einheit]" value="' . ($komponente["kat_einheit"] === NULL ? "" : htmlentities($komponente["kat_einheit"])) . '"/></label>
-						<label style="display: table-cell; padding-right: 150px">Typ: <select name="kat[kat_typ]">
+						<label>Einzigartig: <input type="checkbox" ' . ($komponente["kat_einzigartig"] ? "checked" : "") . ' name="kat[kat_einzigartig]"/></label><br>
+						<label>Name: <input type="text" name="kat[kat_bezeichnung]" value="' . htmlentities($komponente["kat_bezeichnung"]) . '"/></label><br>
+						<label>Einheit: <input type="text" name="kat[kat_einheit]" value="' . ($komponente["kat_einheit"] === NULL ? "" : htmlentities($komponente["kat_einheit"])) . '"/></label><br>
+						<label style="padding-right: 150px">Typ: <select name="kat[kat_typ]">
 								<option value="int"' . ($komponente["kat_typ"] == "int" ? " selected" : "") . '>int</option>
 								<option value="string"' . ($komponente["kat_typ"] == "string" ? " selected" : "") . '>string</option>
 								<option value="bool"' . ($komponente["kat_typ"] == "bool" ? " selected" : "") . '>bool</option>
@@ -35,9 +35,9 @@ function komponentenattribute_render_row($komponente)
 								<option value="float"' . ($komponente["kat_typ"] == "float" ? " selected" : "") . '>float</option>
 							</select>
 						</label>
-						<div class="switch">
+						<div>
 							<button class="btn btn-primary" type="submit" name="action" value="save">Speichern</button>
-							<button class="btn btn-primary" type="button" onClick="divSliderShowLeft(this.closest(".divslider"))">Zur&uuml;ck</button>
+							<button class="btn btn-primary" type="button" onClick="divSliderShowLeft(this.closest(\'.divslider\'))">Zur&uuml;ck</button>
 						</div>
 					</form>
 					</div>
