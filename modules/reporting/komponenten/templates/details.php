@@ -1,12 +1,18 @@
 <?php
 
-function fetch_component_attrs($component_id) {
+function component_attrs($component_id) {
   $result = array();
-  $result = mast_query_array("SELECT kha.khkat_wert, ko.kat_bezeichnung, ko.kat_einheit
+  $attrs = mast_query_array("SELECT kha.khkat_wert, ko.kat_bezeichnung, ko.kat_einheit
                                FROM komponente_hat_attribute kha
                                JOIN komponentenattribute ko ON kha.kat_id = ko.kat_id
                                WHERE kha.khkat_geloescht != 1
                                AND kha.k_id = ". $component_id .";");
+
+  foreach ($attrs as $attr) {
+    $result[] = array(
+      $attr["kat_bezeichnung"],
+      $attr["khkat_wert"] . " " . $attr["kat_einheit"]);
+  }
   return $result;
 }
 
@@ -26,7 +32,7 @@ function render_component_details($component) {
     . generic_table(array("Eigenschaft", "Wert"), $description)
     . '</div>'
     . '<div class="col-md-6">'
-    . generic_table(array("Eigenschaft", "Wert"), array())
+    . generic_table(array("Eigenschaft", "Wert"), component_attrs($component["k_id"]))
     . '</div>';
 
   return $html;
