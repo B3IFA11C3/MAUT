@@ -355,14 +355,13 @@ for($j =0; $j < count($raeume); $j++) {
 		
 		  $("#kompArt_chosen").click(function(){
 			var kompArtAuswahl = $("#kompArt").chosen().val();
-			console.log($("." + kompArtAuswahl));
 			var zuruecksetzen = document.getElementsByClassName("displayNone");
-			for (element in zuruecksetzen) {
-				element.style.display = "none";
+			for (let element of zuruecksetzen) {
+				element.setAttribute("style", "display:none");
 			}
 			var anzeigen = document.getElementsByClassName(kompArtAuswahl);
-			for (element in anzeigen) {
-				element.style.display = "visible";
+			for (let element of anzeigen) {
+				element.setAttribute("style", "display:visible");
 			}
 		  });		
 
