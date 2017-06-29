@@ -1,24 +1,7 @@
 <?php
     function add_raum_show($components, $components_art) {
     
-		$data_index = $rooms["r_id"];
-        $roomNr = $rooms["r_nr"];
-        $roomBezeichnung = $rooms["r_bezeichnung"];
-        $roomNotiz = $rooms["r_notiz"];  
-        
-        $currentComponents_Of_Room = $rooms["komponenten"];
-        
-        
-        $asdasd = array();
-        
-        foreach($components as $elementRight){
-            
-            foreach($currentComponents_Of_Room as $elementeLeft){
-                if($elementRight["k_id"] != $elementeLeft["k_id"]){
-                    $asdasd[] = $elementRight;
-                }
-            }         
-        }
+		$data_index = 1;
 
 $str1= "<div class='row'>
         <div class='col-md-12'>
@@ -28,8 +11,8 @@ $str1= "<div class='row'>
                     <div class='col-md-1'></div>
                     
                     <div class='col-md-4'>
-                        <input type='text' class='changeEditStatus' placeholder='Raum-Nr.' disabled name='roomnr' value='$roomNr' />
-                        <input type='text' class='changeEditStatus' placeholder='Bezeichnung' value='$roomBezeichnung' disabled name='roomdsg' />
+                        <input type='text' class='changeEditStatus' placeholder='Raum-Nr.' disabled name='roomnr' value='' />
+                        <input type='text' class='changeEditStatus' placeholder='Bezeichnung' value='' disabled name='roomdsg' />
                     </div>
                     
                     <div class='col-md-1'>
@@ -100,9 +83,9 @@ $str1= "<div class='row'>
 								</tr>
 								</thead>";
                                 $str6="";
-                                    if (!empty($asdasd)) {
+                                    if (!empty($components)) {
 
-                                            foreach ($asdasd as $komponent) {
+                                            foreach ($components as $komponent) {
                                                 
                                                 $id = $komponent['k_id'];
                                                 $name = $komponent['k_name'];
