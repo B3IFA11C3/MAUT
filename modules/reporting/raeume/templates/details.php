@@ -10,7 +10,6 @@ function room_components($room_id) {
                                   WHERE k.k_geloescht != 1
                                   AND kir.r_id = ". $room_id .";");
 
-  var_dump($components);
   if (count($components) == 0)
     return false;
 

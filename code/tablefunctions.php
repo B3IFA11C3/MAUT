@@ -28,7 +28,8 @@ class Componenttypes {
         return sqlassoupdate("komponentenarten", $vals, [["ka_id", $ka_id]]);
     }
     public static function delete($ka_id) {
-        return sqldelete("komponentenarten", [["ka_id", $ka_id]]);
+        return sqlupdate("komponentenarten", [["ka_geloescht", 1]], [["ka_id", $ka_id]]);
+        //return sqldelete("komponentenarten", [["ka_id", $ka_id]]);
     }
     public static function addattr($ka_id, $kat_id) {
         return sqlinsert("wird_beschrieben_durch", ["ka_id", "kat_id"], [$ka_id, $kat_id] );
@@ -53,7 +54,8 @@ class Components {
         return sqlassoupdate("komponenten", $vals, [["k_id", $k_id]]);
     }
     public static function delete($k_id) {
-        return sqldelete("komponenten", [["k_id", $k_id]]);
+        return sqlupdate("komponentenarten", [["k_geloescht", 1]], [["k_id", $k_id]]);
+        //return sqldelete("komponenten", [["k_id", $k_id]]);
     }
     public static function changeattr($k_id, $kat_id, $khkat_wert) {
         return sqlupdate("komponente_hat_attribute", [["khkat_wert", $khkat_wert]], [["k_id", $k_id], ["kat_id", $kat_id]]);
@@ -86,7 +88,8 @@ class Rooms {
         return sqlassoupdate("raeume", $vals, [["r_id", $r_id]]);
     }
     public static function delete($r_id) {
-        return sqldelete("raeume", [["r_id", $r_id]]);
+        return sqlupdate("raeume", [["r_geloescht", 1]], [["r_id", $r_id]]);
+        //return sqldelete("raeume", [["r_id", $r_id]]);
     }
     public static function addcompinroom($k_id, $r_id) {
         return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id] );
@@ -103,10 +106,8 @@ class Supplier {
         return sqlassoupdate("lieferanten", $vals, [["l_id", $l_id]]);
     }
     public static function delete($l_id) {
-        return sqldelete("lieferanten", [["l_id", $l_id]]);
+        return sqlupdate("lieferant", [["l_geloescht", 1]], [["l_id", $l_id]]);
+        //return sqldelete("lieferant", [["l_id", $l_id]]);
     }
 }
-
-
-
 ?>
