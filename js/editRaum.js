@@ -56,3 +56,27 @@ function clickEditRoom() {
 			$(document.getElementsByClassName("selectKoArt")).trigger("chosen:updated");
 		}
 }
+
+function addKomponentenToCurrentList(id){
+    
+        var tableRight = "table_right"+id;
+        var tableLeft = "table_left"+id;
+        var table = document.getElementById(tableRight);
+    
+        for(var x=1; x<table.rows.length; x++){
+
+            var name = table.rows[x].cells[0];
+            var art = table.rows[x].cells[1];
+            var checkbox = table.rows[x].cells[2];
+            
+           
+            
+            
+            if($("input[type=checkbox]", checkbox)[0].checked) {    
+                //$('#table_left'.id').after('<tr>...</tr><tr>...</tr>');
+                
+                $("#"+tableLeft).after("td").append("<tr><td>"+name.innerHTML+"</td><td>"+art.innerHTML+"</td><td></td></tr>");
+            }
+        }  
+        
+}

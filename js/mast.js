@@ -27,13 +27,18 @@ function filterTable(table, filter)
 
 function filterTableBySelect(table, filter)
 {
+        
 	var words = filter.toLowerCase();
 
-	for(var i = 0; i < table.rows.length; ++i)
+	for(var i = 1; i < table.rows.length; ++i)
 	{
 		var row = table.rows[i];
-		
-		var found = row.cells[1].innerText === filter; 
+		console.log(row);
+		var found = row.cells[1].innerText === filter;
+        
+        if(filter=="all"){
+            found = true;
+        }
 		
 		row.style.display = found ? "" : "none";
 	}

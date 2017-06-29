@@ -1,33 +1,16 @@
 <?php
-    function edit_raum_show() {
-    $komponenten = array(
-        0 => array(
-            "name" => "Test1",
-            "art" => "Storage"
-        ),
-        1 => array(
-            "name" => "Test2",
-            "art" => "Server"
-        ),
-        2 => array(
-            "name" => "Test3",
-            "art" => "Switch"
-        ),
-        3 => array(
-            "name" => "Test4",
-            "art" => "Client-PC"
-        )
-    );
-    $komponenten_arten = array(
-        "Storage",
-        "Server",
-        "Switch",
-        "Client-PC",
-        "Client-PC"
-    );
+    function edit_raum_show($data_index, $array_komponenten) {
+        
+        $komponenten_arten = array('0' => 'all');    
+        foreach ($array_komponenten as $komponent) {
+             $komponenten_arten[] = $komponent["art"];
+        }
+        $komponenten_arten = array_unique($komponenten_arten);   
 
 
-$str1= "<div class='row'>
+$str1=
+        "<form action=''>
+        <div class='row'>
         <div class='col-md-12'>
 		<div class='card card-block' id='card-shadow'>
 			<div class='card-title'>
@@ -45,7 +28,7 @@ $str1= "<div class='row'>
                     <div class='col-md-4'>
                         <div class='short-div'>
                             <label>Komponentenart:</label>
-                            <select disabled class='chosen-select selectKoArt' id='selectKoArt' style='width: 150px;' onchange=\"filterTableBySelect(document.getElementById('table_right'), this.value);\">";
+                            <select disabled class='chosen-select selectKoArt' id='selectKoArt' style='width: 150px;' onchange=\"filterTableBySelect(document.getElementById('table_right$data_index'), this.value);\">";
                             
                             $strA="";
                                             foreach (array_unique($komponenten_arten) as $komponent) {
@@ -75,25 +58,31 @@ $str1= "<div class='row'>
 					<div class='row'>
 						<div class='col-md-1'></div>
 						<div class='col-md-4'>	
-							<table class='table table-hover'>
+							<table id='table_left$data_index' class='table table-hover'>
 								<thead>
 								<tr>
 									<th>Name</th>
 									<th>Art</th>
+                                    <th style='width: 5px'></th>
 								</tr>
 								</thead>";
     $str2="";
     
-                                    if (!empty($komponenten)) {
+                                    if (!empty($array_komponenten)) {
                                         
-                                        foreach ($komponenten as $komponent) {
+                                        foreach ($array_komponenten as $komponent) {
                                             $name = $komponent['name'];
                                             $art = $komponent['art'];
+                                            
+                                            
                                             
                                             $str2 .= "<tbody>";
                                             $str2 .= "<tr>";
                                             $str2 .= "<td>".$name."</td>";
                                             $str2 .= "<td>".$art."</td>";
+                                            $str2 .= "<td> <div class='checkbox' >
+                                                        <input class='changeEditStatus' disabled type='checkbox' value=''>
+                                                      </div> </td>";
                                             $str2 .= "</tr>";
                                             $str2 .= "</tbody>";
                                         }
@@ -112,29 +101,33 @@ $str3 = "
                                         
                                 $str5="
 								<div class='short-div'>
-								<table id='table_right' class='table table-hover'>
-								<thead>
-								<tr>
-									<th>Name</th>
-									<th>Art</th>
-								</tr>
-								</thead>";
-                                $str6="";
-                                    if (!empty($komponenten)) {
-                                        
-                                        foreach ($komponenten as $komponent) {
-                                            $name = $komponent['name'];
-                                            $art = $komponent['art'];
-                                            
-                                            $str6.= "<tbody>";
-                                            $str6.= "<tr>";
-                                            $str6.= "<td>".$name."</td>";
-                                            $str6.= "<td>".$art."</td>";
-                                            $str6.= "</tr>";
-                                            $str6.= "</tbody>";
+								<table id='table_right$data_index' class='table table_right table-hover'>
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Art</th>
+                                        <th style='width: 5px'></th>
+                                    </tr>
+                                    </thead>";
+                                    $str6="";
+                                        if (!empty($array_komponenten)) {
+
+                                            foreach ($array_komponenten as $komponent) {
+                                                $name = $komponent['name'];
+                                                $art = $komponent['art'];
+
+                                                $str6.= "<tbody>";
+                                                $str6.= "<tr>";
+                                                $str6.= "<td>".$name."</td>";
+                                                $str6.= "<td>".$art."</td>";
+                                                $str6 .= "<td> <div class='checkbox' >
+                                                        <input class='changeEditStatus' disabled type='checkbox' value=''>
+                                                      </div> </td>";
+                                                $str6.= "</tr>";
+                                                $str6.= "</tbody>";
+                                            }
+
                                         }
-                                        
-                                    }
 						$str7="	</table>
 								</div>
 							</div>
@@ -146,9 +139,16 @@ $str3 = "
 						
                         <div class='col-md-4'></div>
 						
-							<input name='btnAdd' id='btnAdd' type='button' class='btn changeEditStatus btn-primary' disabled style='margin-left: 5px;' value='hinzufügen'/>
+							<input name='btnAdd' onclick=\"addKomponentenToCurrentList($data_index)\" id='btnAdd' type='button' class='btn changeEditStatus btn-primary' disabled style='margin-left: 5px;' value='hinzufügen'/>
 					</div>
                     <br/>
+                    <div class='row'>
+                        <div class='col-md-1'></div>
+                        
+                        <div class='col-md-9'>
+                            <textarea name='note' style='width:100%; height: 100px;' rows='2' class='changeEditStatus' disabled placeholder='Geben Sie hier Ihre Notiz ein...'></textarea>
+                        </div>
+                    </div>
                     
 				</div>
 			</div>
@@ -157,16 +157,10 @@ $str3 = "
 
 	</div>
     </div>
+    </form>
     <!-- zum initialisieren der chosen selects muss $('.chosen-select').chosen(); aufgerfen werden -->
     <script type='text/javascript'>
-        
-    
-        
-        
-
-	
-	
-		
+        $('.chosen-select').chosen();
     </script>";
         
         return $str1.$strA.$strB.$str2.$str3.$str5.$str6.$str7;
