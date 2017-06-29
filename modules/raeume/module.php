@@ -15,6 +15,7 @@ function raeume_show()
     $components = Components::list_all();   
     $components_art = Componenttypes::list_all();
     
+    
     $content_header_add = add_raum_show();
     
    
