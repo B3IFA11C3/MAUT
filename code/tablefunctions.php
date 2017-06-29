@@ -67,10 +67,14 @@ class Rooms {
 		$result = sqlselect("raeume", $cols);
 		
 		$result = addtoarray($result,'komponenten','select k.*, a.* from komponentenarten a , komponenten k , komponente_in_raum i where i.r_id = ? and i.k_id = k.k_id and k.ka_id = a.ka_id','r_id');
-		foreach ($result as &$entry){
-			foreach ($entry as &$row){
+		echo '1';
+		foreach ($result['komponenten'] as &$row){
+echo '</br></br>';
+var_dump($row);
+echo '</br></br>';
 			$row = addtoarray($row,'lieferant','select * from lieferanten where l_id = ?','l_id');
 			$row = addtoarray($row,'komponentenattribute','select * from wird_beschrieben_durch b, komponentenattribute ka (left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ?)where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
+
 		}
         return $result;
     }
@@ -89,16 +93,16 @@ class Rooms {
 }
 class Supplier {
     public static function list($cols = ["*"]) {
-        return sqlselect("lieferant", $cols);
+        return sqlselect("lieferanten", $cols);
     }
     public static function add($vals) {
-        return sqlassoinsert("lieferant", $vals);
+        return sqlassoinsert("lieferanten", $vals);
     }
     public static function change($l_id, $vals) {
-        return sqlassoupdate("lieferant", $vals, [["l_id", $l_id]]);
+        return sqlassoupdate("lieferanten", $vals, [["l_id", $l_id]]);
     }
     public static function delete($l_id) {
-        return sqldelete("lieferant", [["l_id", $l_id]]);
+        return sqldelete("lieferanten", [["l_id", $l_id]]);
     }
 }
 
