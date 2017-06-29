@@ -11,12 +11,31 @@ function raeume_show()
 	$rows = array();
     
     $content_header_add = add_raum_show();
-	$content_edit = edit_raum_show();
     
-	$rows[] = array("cols" => array("BigMacBook", 0), "content" => "<div>".$content_edit."</div>");
-	$rows[] = array("cols" => array("BigMacBook", 0), "content" => "<div>".$content_edit."</div>");
-	$rows[] = array("cols" => array("BigMacBook", 0), "content" => "<div>".$content_edit."</div>");
-	$rows[] = array("cols" => array("BigMacBook", 0), "content" => "<div>".$content_edit."</div>");
+     $komponenten = array(
+        0 => array(
+            "name" => "Test1",
+            "art" => "Storage"
+        ),
+        1 => array(
+            "name" => "Test2",
+            "art" => "Server"
+        ),
+        2 => array(
+            "name" => "Test3",
+            "art" => "Switch"
+        ),
+        3 => array(
+            "name" => "Test4",
+            "art" => "Client-PC"
+        )
+    );
+    
+    
+    for($x=1; $x<5; $x++) {
+        $content_edit = edit_raum_show($x, $komponenten);
+        $rows[] = array("cols" => array("BigMacBook", 0), "content" => "<div>".$content_edit."</div>");   
+    }
 	
     
 	$content .= table_render(array("Name" => "string", "ID" => "int"),
