@@ -291,11 +291,12 @@ function addtoarray($array, $name, $curry, $column){
 			$resp = is_int($row[$column]) ? $resp->int($row[$column]) : $resp->str($row[$column]);
 		$resp = $resp->execute();
 		if($resp){
-			$subarray = $resp->fetch();
-			if($subarray)
-			$row[$name] = $subarray;
-			else 
-			$row[$name] = null;
+			while($subarray[] = $resp->fetch()){
+				if($subarray)
+					$row[$name] = $subarray;
+				else 
+					$row[$name] = null;
+			}
 		}
 	}
 	return $array;
