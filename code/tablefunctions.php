@@ -22,18 +22,18 @@ class Componenttypes {
     public static function add($vals) {
         return sqlassoinsert("komponentenarten", $vals);
     }
-    public static function change($id, $vals) {
-        return sqlassoupdate("komponentenarten", $vals, [["kat_id", $id]]);
+    public static function change($ka_id, $vals) {
+        return sqlassoupdate("komponentenarten", $vals, [["ka_id", $ka_id]]);
     }
-    public static function delete($id) {
-        return sqldelete("komponentenarten", [["kat_id", $id]]);
+    public static function delete($ka_id) {
+        return sqldelete("komponentenarten", [["ka_id", $ka_id]]);
     }
-    /*public static function addattr($id) {
-        return sqldelete("komponentenattribute", [["kat_id", $id]]);
-    }*/
-    /*public static function deleteattr($id) {
-        return sqldelete("komponentenattribute", [["kat_id", $id]]);
-    }*/
+    public static function addattribute($ka_id, $kat_id) {
+        return sqlinsert("wird_beschrieben_durch", ["ka_id", "kat_id"], [$ka_id, $kat_id] );
+    }
+    public static function deleteattribute($ka_id, $kat_id) {
+        return sqldelete("wird_beschrieben_durch", [["ka_id", $ka_id], ["kat_id", $kat_id]]);
+    }
 }
 class Components {
     /*public static function list($cols = ["*"]) {
