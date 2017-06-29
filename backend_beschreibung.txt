@@ -82,9 +82,6 @@ Räume (raeume)
 						k_spalten=>k_werte,  
 						komponentenart=>komponentenart_wertr,
 						liefeant=>array(l_spalten=>l_wert), 
-						raeume=>array( 
-							array(r_spalten=>r_wert) 
-						),
 						komponentenattribute=>array( 
 							array(kat_spalte=>kat_wert) 
 						) 
