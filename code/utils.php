@@ -205,6 +205,17 @@ function changepw($user, $oldpw, $newpw, $newpwwdh) {
 	return !!MastDB::mysqliCurry("UPDATE `user` SET `U_Passwort` = '".crypt($newpw, "$2y$10$".uniqid(mt_rand(), true))."' WHERE `U_Benutzername` = ?", $CONFIG["SQLUserDB"])->str($user)->execute();
 }
 
+function sqlassoinsert($sqltable, $asso) {
+        $keys = array_keys($asso);
+        $sqlfields = array();
+        $sqlvalues = array();
+        foreach ($keys AS $key) {
+            $sqlfields[] = $key;
+            $sqlvalues[] = $asso[$key];
+        }
+    return sqlinsert($sqltable, $sqlfields, $sqlvalues);
+}
+
 function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
     global $CONFIG;
     $anz = count($sqlfields);
@@ -213,6 +224,33 @@ function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
     $curr = MastDB::mysqliCurry("INSERT INTO `".$sqltable."`(`".join("`, `", $sqlfields)."`) VALUES (?".str_repeat(", ?", $anz-1).")", $CONFIG["SQLMastDB"]);
     foreach ($sqlvalues as $value)
         $curr = is_int($value) ? $curr->int($value) : $curr->str($value);
+    return $curr->execute();
+}
+
+function sqlassoupdate($sqltable, $asso, $sqlfilter) {
+        $keys = array_keys($asso);
+        $sqlvals = array();
+        foreach ($keys AS $key) {
+            $sqlvals[] = array($key, $asso[$key]);
+        }
+    return sqlupdate($sqltable, $sqlvals, $sqlfilter);
+}
+
+function sqlupdate($sqltable, $sqlvals, $sqlfilter) {
+    global $CONFIG;
+    if (count($sqlvals) < 1 || count($sqlfilter) < 1)
+        return false;
+    $sqlset = join(", ", array_map(function($set){
+        return "`".$set[0]."` = ?";
+    }, $sqlvals));
+    $sqlwhere = join(" AND ", array_map(function($vergleich){
+        return "`".$vergleich[0]."` = ?";
+    }, $sqlfilter));
+    $curr = MastDB::mysqliCurry("UPDATE `".$sqltable."` SET ".$sqlset." WHERE ".$sqlwhere, $CONFIG["SQLMastDB"]);
+    foreach ($sqlvals as $val)
+        $curr = is_int($val) ? $curr->int($val) : $curr->str($val);
+    foreach ($sqlfilter as $filter)
+        $curr = is_int($filter) ? $curr->int($filter) : $curr->str($filter);
     return $curr->execute();
 }
 
