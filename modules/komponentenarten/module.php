@@ -5,43 +5,47 @@ require_once("code/tablefunctions.php");
 
 function komponentenarten_render_row($komponentenart)
 {
-	$content = '<div class="divslider">';
-	
-	$content .= '<div>
-                    <div>
-                    <form method="POST" style="display: table; width: 100%;">
-						<input type="hidden" name="ka[ka_id]" value="' . htmlentities($komponentenart["ka_id"]) . '"/>
-						<table class="table">
-						<tr><td>Einmalig:&nbsp;</td> <td>' . ($komponentenart["ka_einmalig"] ? "Ja" : "Nein") . '</td></tr>
-						<tr><td>Attribute:&nbsp;</td> <td>';
-						foreach($komponentenart['ka_spalten'] as $attr) {
-                             $content .= $attr['kat_bezeichnung'] . ' (' . $attr['kat_typ'] . ') <br>'; 
-						}
-						$content .= '
-                                </td>
-                            </tr>
-						</table>
-						<div class="switch">
-							<button type="submit" class="btn btn-primary" name="action" value="delete">L&ouml;schen</button>
-							<button type="button" class="btn btn-primary" onClick="divSliderShowRight(this.parentNode.parentNode.parentNode.parentNode.parentNode)">Bearbeiten</button>
+	$content = '<div class="divslider">
+					<div> <!-- Left side of Divslider -->
+						<div>
+						<form method="POST" style="display: table; width: 100%;">
+							<input type="hidden" name="ka[ka_id]" value="' . htmlentities($komponentenart["ka_id"]) . '"/>
+							<table class="table">
+								<tr>
+									<td>Einmalig:&nbsp;</td> 
+									<td>' . ($komponentenart["ka_einmalig"] ? "Ja" : "Nein") . '</td>
+								</tr>
+								<tr>
+									<td>Attribute:&nbsp;</td> <td>';
+										foreach($komponentenart['ka_spalten'] as $attr) {
+											$content .= $attr['kat_bezeichnung'] . ' (' . $attr['kat_typ'] . ') <br>'; 
+										}
+										$content .= '
+									</td>
+								</tr>
+							</table>
+							<div class="switch" style="position: initial;">
+								<button type="submit" class="btn btn-primary" name="action" value="delete">L&ouml;schen</button>
+								<button type="button" class="btn btn-primary" onClick="divSliderShowRight(this.closest(\'.divslider\'))">Bearbeiten</button>
+							</div>
+						</form>
 						</div>
-					</form>
+					</div>
+
+					<div> <!-- Right side of Divslider -->
+						<div>
+						<form method="POST" style="display: table; width: 100%;">
+							<input type="hidden" name="ka[ka_id]" value="' . htmlentities($komponentenart["ka_id"]) . '"/>
+							<label style="display: table-cell">Einmalig: <input type="checkbox" ' . ($komponentenart["ka_einmalig"] ? "checked" : "") . ' name="ka[ka_einmalig]"/></label>
+							<label style="display: table-cell">Name: <input type="text" name="ka[ka_komponentenart]" value="' . htmlentities($komponentenart["ka_komponentenart"]) . '"/></label>
+							<div class="switch" style="position: initial;">
+								<button class="btn btn-primary" type="submit" name="action" value="save">Speichern</button>
+								<button class="btn btn-primary" type="button" onClick="divSliderShowLeft(this.closest(\'.divslider\'))">Zur&uuml;ck</button>
+							</div>
+						</form>
+						</div>
 					</div>
 				</div>';
-	$content .= '<div>
-					<div>
-					<form method="POST" style="display: table; width: 100%;">
-						<input type="hidden" name="ka[ka_id]" value="' . htmlentities($komponentenart["ka_id"]) . '"/>
-						<label style="display: table-cell">Einmalig: <input type="checkbox" ' . ($komponentenart["ka_einmalig"] ? "checked" : "") . ' name="ka[ka_einmalig]"/></label>
-						<label style="display: table-cell">Name: <input type="text" name="ka[ka_komponentenart]" value="' . htmlentities($komponentenart["ka_komponentenart"]) . '"/></label>
-						<div class="switch">
-							<button class="btn btn-primary" type="submit" name="action" value="save">Speichern</button>
-							<button class="btn btn-primary" type="button" onClick="divSliderShowLeft(this.parentNode.parentNode.parentNode.parentNode.parentNode)">Zur&uuml;ck</button>
-						</div>
-					</form>
-					</div>
-				</div>';
-	$content .= '</div>';
 
 	return array("cols" => array($komponentenart["ka_id"], $komponentenart["ka_komponentenart"]),
 				 "content" => $content);
@@ -49,7 +53,7 @@ function komponentenarten_render_row($komponentenart)
 
 function komponentenarten_show()
 {
-	$content = '<div class="w3-container w3-teal"><h1>Komponentenattribute</h1></div>';
+	$content = '<div class="w3-container w3-teal"><h1>Komponentenarten</h1></div>';
 
 	if(isset($_POST["action"]))
 	{
@@ -89,17 +93,27 @@ function komponentenarten_show()
 	
 	$insert = '<div><div style="padding: 10.5px">
 					<form method="POST" style="display: table; width: 100%;">
-						<label style="display: block">Name: <input type="text" name="ka[ka_komponentenart]" /></label>
-						<label style="display: block">Attribute: 
-                            <select name="ka[attribute][]" class="chosen-select" multiple data-placeholder="W&auml;hle Attribute"><pre>';
-                                foreach(Componentattributes::list_all() as $attr) {
-                                    $insert .= '<option value="' . $attr['kat_id'] . '">' . htmlentities($attr['kat_bezeichnung']) . ' (' . htmlentities($attr['kat_typ']) . ')</option>';
-                                }
-                            $insert .= '    
-                            </select>
-						</label>
-						<label style="display: block">Einmalig: <input type="checkbox" checked name="ka[ka_einmalig]"/></label>
-						<div class="switch">
+						<table>
+							<tr>
+								<td>Name:&nbsp;</td> <td><input type="text" name="ka[ka_komponentenart]"/></td>
+							</tr>
+							<tr>
+								<td>Attribute:&nbsp;</td> 
+								<td>
+									<select name="ka[attribute][]" class="chosen-select" multiple data-placeholder="W&auml;hle Attribute"> ';
+										foreach(Componentattributes::list_all() as $attr) {
+											$insert .= '<option value="' . $attr['kat_id'] . '">' . htmlentities($attr['kat_bezeichnung']) . ' (' . htmlentities($attr['kat_typ']) . ')</option>';
+										}
+										$insert .= '    
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Einmalig:&nbsp</td>
+								<td><input type="checkbox" checked name="ka[ka_einmalig]"/></td>
+							</tr>
+						</table>
+						<div class="switch" style="position: initial;">
 							<button type="submit" class="btn btn-primary" name="action" value="insert">Speichern</button>
 						</div>
 					</form>

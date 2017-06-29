@@ -14,7 +14,7 @@ function komponentenattribute_render_row($komponente)
 						<label style="display: table-cell">Einheit: ' . ($komponente["kat_einheit"] === NULL ? "<i>Keine</i>" : htmlentities($komponente["kat_einheit"])) . '</label>
 						<div class="switch">
 							<button type="submit" class="btn btn-primary" name="action" value="delete">L&ouml;schen</button>
-							<button type="button" class="btn btn-primary" onClick="divSliderShowRight(this.parentNode.parentNode.parentNode.parentNode.parentNode)">Bearbeiten</button>
+							<button type="button" class="btn btn-primary" onClick="divSliderShowRight(this.closest(".divslider"))">Bearbeiten</button>
 						</div>
 					</form>
 					</div>
@@ -37,7 +37,7 @@ function komponentenattribute_render_row($komponente)
 						</label>
 						<div class="switch">
 							<button class="btn btn-primary" type="submit" name="action" value="save">Speichern</button>
-							<button class="btn btn-primary" type="button" onClick="divSliderShowLeft(this.parentNode.parentNode.parentNode.parentNode.parentNode)">Zur&uuml;ck</button>
+							<button class="btn btn-primary" type="button" onClick="divSliderShowLeft(this.closest(".divslider"))">Zur&uuml;ck</button>
 						</div>
 					</form>
 					</div>
