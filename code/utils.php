@@ -222,8 +222,10 @@ function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
     if ($anz < 1 || $anz != count($sqlvalues))
         return false;
     $curr = MastDB::mysqliCurry("INSERT INTO `".$sqltable."`(`".join("`, `", $sqlfields)."`) VALUES (?".str_repeat(", ?", $anz-1).")", $CONFIG["SQLMastDB"]);
-    foreach ($sqlvalues as $value)
-        $curr = is_int($value) ? $curr->int($value) : $curr->str($value);
+    for ($i = 0; $i < $anz; $i++)
+        $curr = is_int($sqlvalues[$i]) ? $curr->int($sqlvalues[$i]) : $curr->str($sqlvalues[$i]);
+    /*foreach ($sqlvalues as $value)
+        $curr = is_int($value) ? $curr->int($value) : $curr->str($value);*/
     $curr = $curr->execute();
     if (!$curr)
         return false;
