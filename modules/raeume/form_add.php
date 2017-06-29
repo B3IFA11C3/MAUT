@@ -34,7 +34,7 @@ $str1= "<div class='row'>
                         </div>
                     </div>
                     <div class='col-md-2'>
-                        <input name='btnSave' type='button' class='btn btn-primary' style='margin-left: 45px' value='Raum hinzufügen'/>
+                        <input name='btnSave' type='button' class='btn btn-primary' style='margin-left: 5px' value='Raum hinzufügen'/>
                     </div>
                 </div>
 			</div>
