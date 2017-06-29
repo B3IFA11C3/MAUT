@@ -1,7 +1,8 @@
 <?php
 
 require_once("code/table.php");
-require_once("form.php");
+require_once("form_add.php");
+require_once("form_edit.php");
 
 function raeume_show()
 {
@@ -9,8 +10,8 @@ function raeume_show()
 
 	$rows = array();
     
-    $content_header_add = add_show();
-	$content_edit="";
+    $content_header_add = add_raum_show();
+	$content_edit = edit_raum_show();
     
 	$rows[] = array("cols" => array("BigMacBook", 0), "content" => "<div>".$content_edit."</div>");
 	$rows[] = array("cols" => array("BigMacBook", 0), "content" => "<div>".$content_edit."</div>");
