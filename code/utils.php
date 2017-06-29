@@ -161,6 +161,7 @@ function sqldoit($wresult, $sqlquary, $sqlparam = array(), $sqldb = "SQLMastDB")
     return $resu;
 }
 
+
 function sqlselect($sqltable, $sqlfields, $sqlfilter = null) {
     global $CONFIG;
     if (count($sqlfields) < 1)
@@ -273,6 +274,45 @@ function sqldelete($sqltable, $sqlfilter) {
     foreach ($sqlfilter as $filter)
         $curr = is_int($filter[1]) ? $curr->int($filter[1]) : $curr->str($filter[1]);
     return $curr->execute();
+}
+
+function mast_query_array($stmt) {
+  $result = array();
+  $stmt = MastDB::mysqliCurry($stmt, $CONFIG["SQLMastDB"]);
+  $resource = $stmt->execute();
+
+  if (! $resource)
+    return false;
+
+  while ($result[] = $resource->fetch());
+  return $result;
+}
+
+function map_keys($resource, $mapping) {
+  $mapped = array();
+
+  foreach ($mapping as $key => $name) {
+    if (! array_key_exists($key, $resource))
+      continue;
+    $mapped[] = array($name, $resource[$key]);
+  }
+  return $mapped;
+}
+
+function generic_table($columns, $rows) {
+  $html = '<table class="table table-striped">'
+    . '<thead><tr>';
+  foreach ($columns as $column)
+    $html .= '<th>' . $column . '</th>';
+  $html .= '</tr></thead><tbody>';
+
+  foreach($rows as $row) {
+    $html .='<tr>';
+    foreach($row as $value)
+      $html .= '<td>' .  $value . '</td>';
+    $html .= '</tr>';
+  }
+  return $html . '</tbody></table>';
 }
 
 // $array ist das Array bei dem Subarrays hinzugefügt werden
