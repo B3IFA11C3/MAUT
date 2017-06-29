@@ -1,5 +1,5 @@
 <?php
-require("code/config.inc.php");
+require_once("code/config.inc.php");
 
 class MySQLiCurry {
     public function __construct($str, $db) {
@@ -122,6 +122,7 @@ class MastDB {
     public static function mysqliPrepare($str, $db) {
         if (!self::$mysqli_connected && !self::mysqliConnect())
             return false;
+        die($str);
 
 		mysqli_select_db(self::$mysqli_link, $db);
         return mysqli_prepare(self::$mysqli_link, $str);

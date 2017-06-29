@@ -1,5 +1,5 @@
 <?php
-require("code/utils.php");
+require_once("code/utils.php");
 
 class Componentattributes {
     public static function list($cols = ["*"]) {
