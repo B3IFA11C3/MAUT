@@ -40,10 +40,7 @@ class Componenttypes {
 }
 class Components {
     public static function list_all($cols = ["*"]) {
-        #$result = sqlselect("komponenten", $cols);
 		$result = sqldoit(true,'select k.*, a.* from komponentenarten as a , komponenten as k where k.ka_id = a.ka_id');
-		
-		var_dump($result);
 		
 		$result = addtoarray($result,'lieferant','select * from lieferanten where l_id = ?','l_id');
 		$result = addtoarray($result,'komponentenattribute','select ka.* , h.* from wird_beschrieben_durch as b, komponentenattribute as ka left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ? where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
