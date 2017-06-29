@@ -41,5 +41,6 @@ border-radius: 0px;
 .chosen-container {
 
 	width:205px !important;
+	overflow: unset !important;
 
 }
