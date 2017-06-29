@@ -10,18 +10,24 @@ function komponenten_show()
 	$komponentenEdit = '<div><div class="row">
 		
 		<div class="card card-block" id="card-shadow">
-			<div class="card-title"><input type="text" value="Name" id="Name" disabled class="feldAktivieren"/>
+			<div class="card-title">
 			</div>
 			<div class="card-text">
 				<br/>
 				<div class="vboxLeft">
-					
+					<div class="row">
+						<div class="col-md-1">
+						</div>
+						<div class="col-md-4">
+							<label>Name:</label>
+							<input type="text" value="Name" id="Name" disabled class="feldAktivieren"/>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-md-1">
 						</div>
 						<div class="col-md-4">	
-							<div class="short-div">
-								<label>Komponentenart:</label>
+						<label>Komponentenart:</label>
 								<select class="chosen-select feldAktivieren kompArt" disabled id="kompArt" >
 								<option value="1">Select 1</option>
 								<option value="2">Select 2</option>
@@ -33,8 +39,12 @@ function komponenten_show()
 								<option value="8">Select 8</option>
 								<option value="9">Select 9</option>
 							</select>
-							</div>
-							<div class="short-div"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-1">
+						</div>
+						<div class="col-md-4">	
 							<div class="short-div" style="height:unset">
 							<table class="table table-hover" >
 								<thead>
@@ -66,34 +76,23 @@ function komponenten_show()
 						</div>
 						<div class="col-md-1">
 						</div>	
-						<div class="col-md-2">
+						<div class="col-md-4">
 							<div class="short-div">
-								<label>Gew&auml;hrleistungsdauer:</label>
-							</div>
-							<div class="short-div">
-								<label>Hersteller:</label>
-							</div>
-							<div class="short-div">
-								<label>Seriennummer:</label>
+								<label>R&auml;ume:</label>
+								<select multiple class="chosen-select feldAktivieren Raeume" disabled id="Raeume">
+									<option value="1">Select 1</option>
+									<option value="2">Select 2</option>
+									<option value="3">Select 3</option>
+									<option value="4">Select 4</option>
+									<option value="5">Select 5</option>
+									<option value="6">Select 6</option>
+									<option value="7">Select 7</option>
+									<option value="8">Select 8</option>
+									<option value="9">Select 9</option>
+								</select>
 							</div>
 							<div class="short-div">
 								<label>Lieferant:</label>
-							</div>
-							<div class="short-div">
-								<label>Einkaufsdatum:</label>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="short-div">
-								<input type="text" value="Gew&auml;hrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
-								<input type="text" value="Hersteller" id="Hersteller" disabled class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
-								<input  type="text" value="Seriennummer" id="Seriennummer" disabled class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
 								<select class="chosen-select feldAktivieren Lieferant" disabled id="Lieferant">
 									<option value="1">Select 1</option>
 									<option value="2">Select 2</option>
@@ -107,7 +106,20 @@ function komponenten_show()
 								</select>
 							</div>
 							<div class="short-div">
-								<input type="text" class="feldAktivieren" id="datepicker" id="Einkaufsdatum" disabled />
+								<label>Gew&auml;hrleistungsdauer:</label>
+								<input type="text" value="Gew&auml;hrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/>
+							</div>
+							<div class="short-div">
+								<label>Hersteller:</label>
+								<input type="text" value="Hersteller" id="Hersteller" disabled class="feldAktivieren"/>
+							</div>
+							<div class="short-div">
+								<label>Seriennummer:</label>
+								<input  type="text" value="Seriennummer" id="Seriennummer" disabled class="feldAktivieren"/>
+							</div>
+							<div class="short-div">
+								<label>Einkaufsdatum:</label>
+								<input type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum" disabled />
 							</div>
 						</div>
 					</div>	
@@ -139,7 +151,7 @@ function komponenten_show()
 			array("header" => "HINZUFÜGEN", "content" => '<div><div class="row">
 		
 		<div class="card card-block" id="card-shadow">
-			<div class="card-title"><input type="text" placeholder="Name" id="Name"  class="feldAktivieren"/>
+			<div class="card-title">
 			</div>
 			<div class="card-text">
 				<br/>
@@ -147,10 +159,17 @@ function komponenten_show()
 					<div class="row">
 						<div class="col-md-1">
 						</div>
+						<div class="col-md-4">
+							<label>Name:</label>
+							<input type="text" value="Name" id="Name" disabled class="feldAktivieren"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-1">
+						</div>
 						<div class="col-md-4">	
-						<div class="short-div">
-						<label>Komponentenart:</label>
-						<select class="chosen-select feldAktivieren kompArt" id="kompArt"  >
+							<label>Komponentenart:</label>
+							<select class="chosen-select feldAktivieren kompArt" id="kompArt"  >
 								<option value="1">Select 1</option>
 								<option value="2">Select 2</option>
 								<option value="3">Select 3</option>
@@ -162,14 +181,18 @@ function komponenten_show()
 								<option value="9">Select 9</option>
 							</select>
 						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-1">
+						</div>
+						<div class="col-md-4">	
 						<script>
 						var test = $(document.getElementsByClassName("kompArt"));
 						for(test2 in test) {
 							test2.setMaxHeight(test2.getParent().getParent().getParent().getParent().getParent().getParent().getComputedHeight()-80);
 					}
 					</script>
-						<div class="short-div"></div>
-						<div class="short-div" style="height:unset">
+						<div class="short-div">
 							<table class="table table-hover" >
 								<thead>
 									<tr>
@@ -190,34 +213,23 @@ function komponenten_show()
 						</div>
 						<div class="col-md-1">
 						</div>	
-						<div class="col-md-2">
-							<div class="short-div">
-								<label>Gew&auml;hrleistungsdauer:</label>
-							</div>
-							<div class="short-div">
-								<label>Hersteller:</label>
-							</div>
-							<div class="short-div">
-								<label>Seriennummer:</label>
+						<div class="col-md-4">
+							<div class="short-div" >
+								<label>R&auml;ume:</label>
+								<select multiple class="chosen-select feldAktivieren Raeume" id="Raeume"  >
+									<option value="1">Select 1</option>
+									<option value="2">Select 2</option>
+									<option value="3">Select 3</option>
+									<option value="4">Select 4</option>
+									<option value="5">Select 5</option>
+									<option value="6">Select 6</option>
+									<option value="7">Select 7</option>
+									<option value="8">Select 8</option>
+									<option value="9">Select 9</option>
+								</select>
 							</div>
 							<div class="short-div">
 								<label>Lieferant:</label>
-							</div>
-							<div class="short-div">
-								<label>Einkaufsdatum:</label>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="short-div">
-								<input type="text" placeholder="Gew&auml;hrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
-								<input type="text" placeholder="Hersteller" id="Hersteller"  class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
-								<input  type="text" placeholder="Seriennummer" id="Seriennummer"  class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
 								<select class="chosen-select feldAktivieren Lieferant" id="Lieferant"  >
 									<option value="1">Select 1</option>
 									<option value="2">Select 2</option>
@@ -231,7 +243,21 @@ function komponenten_show()
 								</select>
 							</div>
 							<div class="short-div">
-								<input type="text" class="feldAktivieren" id="datepicker" id="Einkaufsdatum"  />
+								<label>Gew&auml;hrleistungsdauer:</label>
+								<input type="text" placeholder="Gew&auml;hrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/>
+							</div>
+							<div class="short-div">
+								<label>Hersteller:</label>
+								<input type="text" placeholder="Hersteller" id="Hersteller"  class="feldAktivieren"/>
+							</div>
+							<div class="short-div">
+								<label>Seriennummer:</label>
+								<input  type="text" placeholder="Seriennummer" id="Seriennummer"  class="feldAktivieren"/>
+							</div>
+							
+							<div class="short-div">
+								<label>Einkaufsdatum:</label>
+								<input type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum"  />
 							</div>
 						</div>
 					</div>
@@ -267,7 +293,7 @@ function komponenten_show()
 												<option value="9">Select 9</option>
 											</select>
 										</td>	
-										<td><input type="text" class="feldAktivieren" id="datepicker" id="Einkaufsdatum"  /></td>											
+										<td><input type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum"  /></td>											
 									</tr>
 									<tr>
 										<td rowspan="5"><input type="button" class="btn btn-primary" ></td>
@@ -297,9 +323,10 @@ function komponenten_show()
 	
 	$content .= '<!-- zum initialisieren der chosen selects muss $(".chosen-select").chosen(); aufgerfen werden -->
     <script type="text/javascript">
+
         $(".chosen-select").chosen();		
 			$( function() {
-				$( "#datepicker" ).datepicker();
+				$( ".datepicker" ).datepicker();
 			} );			
 	</script>';
 
