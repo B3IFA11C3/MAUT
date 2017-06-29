@@ -94,14 +94,14 @@ for($j =0; $j < count($raeume); $j++) {
 								</tr>
 								<tr>
 									<td><label>Lieferant:</label></td>
-									<td><select class="chosen-select feldAktivieren Lieferant" disabled id="Lieferant">';
+									<td><select class="chosen-select feldAktivieren Lieferant" disabled name="komp[l_id]">';
 	
 	for($k = 0; $k < count($lieferanten); $k++) {
 		if(	$komponenten[$i]["l_id"] == $lieferanten[$k]["l_id"]) {
-			$return .= '<option selected value="'.$lieferanten[$k]["l_firmenname"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
+			$return .= '<option selected value="'.$lieferanten[$k]["l_id"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
 			}
 		else {
-			$return .= '<option value="'.$lieferanten[$k]["l_firmenname"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
+			$return .= '<option value="'.$lieferanten[$k]["l_id"].'">'.$lieferanten[$k]["l_firmenname"].'</option>';
 		}
 	}
 	

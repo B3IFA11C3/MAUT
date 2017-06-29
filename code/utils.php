@@ -45,6 +45,7 @@ class MySQLiCurry {
         
         if (mysqli_stmt_execute($this->stmt) === FALSE) {
             $this->stmt = NULL;
+            var_dump(mysqli_error(MastDB::mysqliLink()));
             return false;
         } else
             return $this;
