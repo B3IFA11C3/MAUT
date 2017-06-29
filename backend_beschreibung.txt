@@ -1,18 +1,18 @@
 Attribut (komponentenattribute)
-    Attribute auflisten ()
+    Attribute auflisten
         params: array(spalten) (default alle)
         returns: array( array(kat_spalten=>kat_werte) )
-    Attribut löschen ()
+    Attribut löschen
         params: kat_id
         returns: success
-    Attribut ändern ()
+    Attribut ändern
         params: kat_id, array(kat_spalten=>wert)
         returns: success
-    Attribut einfügen ()
+    Attribut einfügen
         params: array(kat_spalten=>wert)
         returns: kat_id
 Komponenten Arten (komponentenarten)
-    Komponentenarten auflisten ()
+    Komponentenarten auflisten
         params: array(spalten) (default alle)
         returns: 
             array( 
@@ -33,9 +33,6 @@ Komponenten Arten (komponentenarten)
     Komponentenart löschen
         params: ka_id
         returns: success
-        Note: 
-            alle zugehörigen Komponenten löschen -> alle zu den Komponenten gehörigen khkats löschen
-            nur als Admin ausführbar
     Attribut hinzufügen
         params: kat_id, ka_id
         returns: success
@@ -87,10 +84,35 @@ Räume (raeume)
                 r_spalten=>r_wert
                 komponenten=>array(
                     array(
-                        k_spalten=>k_werte
+                        k_spalten=>k_werte, 
+                        komponentenart=>array(
+                            ka_spalten=>ka_werte, 
+                            array( 
+                                array(kat_spalten=>values) 
+                            ) 
+                        ),
+                        liefeant=>array(l_spalten=>l_wert),
+                        komponentenattribute=>array( 
+                            array(kat_spalte=>kat_wert) 
+                        ) 
                     )
-                )
+                ) //im grunde das gleiche wie bei get komponenten, bloß ohne räume
             )
+    Raum hinzufügen
+        params: array(r_spalten=>r_werte)
+        returns: r_id
+    Raum ändern 
+        params: r_id, array(r_spalten, r_werte)
+        returns: success
+    Raum löschen:
+        params: r_id
+        returns: success
+    Komponente in raum
+        params: k_id, r_id
+        returns: success
+        
+        
+            
         
         
     

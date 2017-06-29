@@ -267,4 +267,30 @@ function sqldelete($sqltable, $sqlfilter) {
         $curr = is_int($filter[1]) ? $curr->int($filter[1]) : $curr->str($filter[1]);
     return $curr->execute();
 }
+
+// $array ist das Array bei dem Subarrays hinzugefügt werden
+//unter dem Wert $name
+// $curry ist die Querry mit
+// $column die Spalte(n) die im $array für die Querry benutzt werden
+function addtoarray($array, $name, $curry, $column){
+	global $CONFIG;
+	foreach ($array as &$row){
+		$subarray = null;
+		$resp = MastDB::mysqliCurry($curry, $CONFIG["SQLMastDB"]);
+		if(is_array($column))
+			foreach ($column as $param)
+				$resp = is_int($row[$param]) ? $resp->int($row[$param]) : $resp->str($row[$param]);
+		else
+			$resp = is_int($row[$column]) ? $resp->int($row[$column]) : $resp->str($row[$column]);
+		$resp = $resp->execute();
+		if($resp){
+			$subarray = $resp->fetch();
+			if($subarray)
+			$row[$name] = $subarray;
+			else 
+			$row[$name] = null;
+		}
+	}
+	return $array;
+}
 ?>
