@@ -61,7 +61,15 @@ class Components {
         return sqlupdate("komponente_hat_attribute", [["khkat_wert", $khkat_wert]], [["k_id", $k_id], ["kat_id", $kat_id]]);
     }
     public static function addcompinroom($k_id, $r_id) {
-        return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id] );
+        $res = sqlselect("komponenten", ["ka_id"], [["k_id", $k_id]]);
+        if (!count($res))
+            return false;
+        $ka_id = $res[0]["ka_id"];
+        if (!sqlselect("komponentenarten", ["ka_einmalig"], [["ka_id", $ka_id]])[0]["ka_einmalig"])
+            return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id]);
+        if (count(sqlselect("komponente_in_raum", ["*"], [["k_id", $k_id]])))
+            return false;
+        return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id]);
     }
 }
 class Rooms {
@@ -92,7 +100,15 @@ class Rooms {
         //return sqldelete("raeume", [["r_id", $r_id]]);
     }
     public static function addcompinroom($k_id, $r_id) {
-        return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id] );
+        $res = sqlselect("komponenten", ["ka_id"], [["k_id", $k_id]]);
+        if (!count($res))
+            return false;
+        $ka_id = $res[0]["ka_id"];
+        if (!sqlselect("komponentenarten", ["ka_einmalig"], [["ka_id", $ka_id]])[0]["ka_einmalig"])
+            return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id]);
+        if (count(sqlselect("komponente_in_raum", ["*"], [["k_id", $k_id]])))
+            return false;
+        return sqlinsert("komponente_in_raum", ["k_id", "r_id"], [$k_id, $r_id]);
     }
 }
 class Supplier {
