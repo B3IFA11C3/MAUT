@@ -1,7 +1,7 @@
 <?php
     function add_raum_show($components, $components_art) {
     
-		$data_index = 1;
+		$data_index = 0;
 
 $str1= "<div class='row'>
         <div class='col-md-12'>
@@ -11,8 +11,8 @@ $str1= "<div class='row'>
                     <div class='col-md-1'></div>
                     
                     <div class='col-md-4'>
-                        <input type='text' class='changeEditStatus' placeholder='Raum-Nr.' disabled name='roomnr' value='' />
-                        <input type='text' class='changeEditStatus' placeholder='Bezeichnung' value='' disabled name='roomdsg' />
+                        <input type='text' class='' placeholder='Raum-Nr.'  name='roomnr' value='' />
+                        <input type='text' class='' placeholder='Bezeichnung' value=''  name='roomdsg' />
                     </div>
                     
                     <div class='col-md-1'>
@@ -21,7 +21,7 @@ $str1= "<div class='row'>
                     <div class='col-md-4'>
                         <div class='short-div'>
                             <label>Komponentenart:</label>
-                            <select disabled class='chosen-select selectKoArt' id='selectKoArt' style='width: 150px;' onchange=\"filterTableBySelect(document.getElementById('table_right$data_index'), this.value);\">";
+                            <select  class='chosen-select ' id='selectKoArt' style='width: 150px;' onchange=\"filterTableBySelect(document.getElementById('table_right$data_index'), this.value);\">";
                             
                             $strA="";
                                            $strA.= "<option value='all'>all</option>";
@@ -59,7 +59,7 @@ $str1= "<div class='row'>
 									<th>Art</th>
                                     <th style='width: 5px'></th>
 								</tr>
-								</thead>";
+								</thead><tbody></tbody>";
     $str2="";
     
                 
@@ -81,7 +81,7 @@ $str1= "<div class='row'>
                                         <th>Art</th>
                                         <th style='width: 5px'></th>
 								</tr>
-								</thead>";
+								</thead><tbody></tbody>";
                                 $str6="";
                                     if (!empty($components)) {
 
@@ -97,7 +97,7 @@ $str1= "<div class='row'>
                                                 $str6.= "<td>".$name."</td>";
                                                 $str6.= "<td>".$art."</td>";
                                                 $str6 .= "<td> <div class='checkbox' >
-                                                        <input class='changeEditStatus' disabled type='checkbox' value=''>
+                                                        <input class=''  type='checkbox' value=''>
                                                       </div> </td>";
                                                 $str6.= "</tr>";
                                                 $str6.= "</tbody>";
@@ -111,11 +111,11 @@ $str1= "<div class='row'>
 					<div class='row'>
 						<div class='col-md-4'></div>
 						
-							<input name='btnRem' id='btnRem' onclick='removeKomponentenToCurrentList($data_index)' type='button' class='btn changeEditStatus btn-primary' disabled value='entfernen'/>
+							<input name='btnRem' id='btnRem' onclick='removeKomponentenToCurrentList($data_index)' type='button' class='btn  btn-primary'  value='entfernen'/>
 						
                         <div class='col-md-4'></div>
 						
-							<input name='btnAdd' onclick=\"addKomponentenToCurrentList($data_index)\" id='btnAdd' type='button' class='btn changeEditStatus btn-primary' disabled style='margin-left: 5px;' value='hinzufügen'/>
+							<input name='btnAdd' onclick='addKomponentenToCurrentList($data_index)' id='btnAdd' type='button' class='btn  btn-primary'  style='margin-left: 5px;' value='hinzufügen'/>
 					</div>
                     <br/>
                     <div class='row'>

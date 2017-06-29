@@ -91,7 +91,7 @@ $str1 =
                                     <th style='width: 5px'></th>
 								</tr>
 								</thead>";
-    $str2="";
+    $str2="<tbody></tbody>";
     
                                     if (!empty($currentComponents_Of_Room)) {
 
@@ -115,6 +115,10 @@ $str1 =
                                         }
                                         
                                     }
+									else {
+										$str2 .= "<tbody></tbody>";
+										
+									}
                                 
 $str3 = "
                             </table>
@@ -132,7 +136,7 @@ $str3 = "
                                         <th>Art</th>
                                         <th style='width: 5px'></th>
                                     </tr>
-                                    </thead>";
+                                    </thead><tbody></tbody>";
                                     $str6="";
                                         if (!empty($asdasd)) {
 
@@ -155,6 +159,9 @@ $str3 = "
                                             }
 
                                         }
+										else {
+											$str6 .= "<tbody></tbody>";
+											}
 						$str7="	</table>
 								</div>
 							</div>
