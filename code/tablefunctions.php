@@ -17,8 +17,8 @@ class Componentattributes {
 }
 class Componenttypes {
     public static function list_all($cols = ["*"]) {
-         $result = sqlselect("komponentenarten", $cols);
-		 $result = addtoarray($result,'ka_spalten','select ka.* from wird_beschrieben_durch b, komponentenattribute ka where b.ka_id = ? and b.kat_id = ka.kat_id ','ka_id');
+         $result = sqlselect("komponentenarten", $cols, [["ka_geloescht", 0]]);
+		 $result = addtoarray($result,'ka_spalten','select ka.* from wird_beschrieben_durch b, komponentenattribute ka where b.ka_id = ? and b.kat_id = ka.kat_id','ka_id');
 		 return $result;
 	}
     public static function add($vals) {
