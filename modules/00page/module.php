@@ -63,7 +63,7 @@ if($full) {
 			echo '<div class="w3-hide w3-white w3-card-2">';
 
 			foreach($submenu as $subtext => $link)
-				echo '<a href="' . htmlentities($link) . '" class="w3-bar-item w3-button">' . htmlentities($subtext) . '</a>';
+				echo '<a href="' . htmlentities($link) . '" class="w3-bar-item w3-button w3-sub">' . htmlentities($subtext) . '</a>';
 			
 			echo '</div>';
 		}
