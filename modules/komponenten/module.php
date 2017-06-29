@@ -11,7 +11,11 @@ function komponenten_show()
 	if(isset($_POST["btnLoesch"]))
 		$status = Components::delete((int)$_POST['k_id']) ? "success" : "error";
 	else if(isset($_POST["btnSave"]))
+	{
 		$status = Components::change((int)$_POST['k_id'], $_POST['komp']) ? "success" : "error";
+		foreach($_POST['kat'] as $kat)
+			Components::setattr($_POST['k_id'], $kat['kat_id'], $kat['khkat_wert']);
+	}
 	else if(isset($_POST["btnHinzu"]))
 	{
 		$status = "error";
@@ -28,12 +32,6 @@ function komponenten_show()
 		$content .= '<div class="alert alert-danger" role="alert" style="width: 90%; margin: 10px auto;"><center><b>Fehler!</b> Konnte nicht gespeichert werden.</center></div>';
 	else if($status == "success")
 		$content .= '<div class="alert alert-success" role="alert" style="width: 90%; margin: 10px auto;"><center><b>Erfolgreich gespeichert!</b></center></div>';
-	
-	if(isset($_POST['kat']) && isset($_POST['btnSave'])){
-		foreach($_POST['kat'] as $kat){		
-			Components::setattr($_POST['k_id'], $kat['kat_id'], $kat['khkat_wert']);
-		}
-	}
 	
 	$komponenten = Components::list_all();
 	$komponentenArten = Componenttypes::list_all();
