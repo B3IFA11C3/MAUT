@@ -18,7 +18,6 @@
 --
 -- Table structure for table `komponente_hat_attribute`
 --
-USE mast;
 
 DROP TABLE IF EXISTS `komponente_hat_attribute`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -28,7 +27,7 @@ CREATE TABLE `komponente_hat_attribute` (
   `kat_id` int(11) NOT NULL,
   `khkat_wert` varchar(45) DEFAULT NULL,
   `khkat_erstellt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `khkat_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `khkat_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `khkat_geloescht` tinyint(1) NOT NULL,
   PRIMARY KEY (`k_id`,`kat_id`),
   KEY `fk_komponenten_has_komponentenattribute_komponentenattribute1` (`kat_id`),
@@ -90,7 +89,7 @@ CREATE TABLE `komponenten` (
   `k_hersteller` varchar(45) DEFAULT NULL,
   `ka_id` int(11) NOT NULL,
   `k_erstellt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `k_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `k_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `k_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`k_id`),
   KEY `fk_komponenten_haendler` (`l_id`),
@@ -121,7 +120,7 @@ CREATE TABLE `komponentenarten` (
   `ka_komponentenart` varchar(45) DEFAULT NULL,
   `ka_einmalig` tinyint(1) NOT NULL DEFAULT '1',
   `ka_erstellt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ka_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ka_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ka_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ka_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
@@ -182,10 +181,10 @@ CREATE TABLE `lieferanten` (
   `l_fax` varchar(20) DEFAULT NULL,
   `l_email` varchar(45) DEFAULT NULL,
   `l_erstellt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `l_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `l_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `l_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`l_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +193,7 @@ CREATE TABLE `lieferanten` (
 
 LOCK TABLES `lieferanten` WRITE;
 /*!40000 ALTER TABLE `lieferanten` DISABLE KEYS */;
-INSERT INTO `lieferanten` VALUES (1,'Dl More Ram. GmbH','Münchner Str. 123','90471','Nürnberg','09111235864','01575896485','0911235865','support@dlmoreram.de','2017-06-28 07:04:47','2017-06-28 07:04:47',0),(2,'Spinn Netz werk AG','Bodenbacher Str. 43','90766','Fürth','09116546783','01774558648','09116546784','spiderman@web.de','2017-06-28 07:04:47','2017-06-28 07:04:47',0),(3,'Skynet software LTD','17th D Main Road 2','12345','Bangalore, Indien','+91576894884',NULL,NULL,'t800@sky.net','2017-06-28 07:09:16','2017-06-28 07:09:16',0);
+INSERT INTO `lieferanten` VALUES (1,'Dl More Ram. GmbH','Münchner Str. 123','90471','Nürnberg','09111235864','01575896485','0911235865','support@dlmoreram.de','2017-06-28 07:04:47','2017-06-28 07:04:47',0),(2,'Spinn Netz werk AG','Bodenbacher Str. 43','90766','Fürth','09116546783','01774558648','09116546784','spiderman@web.de','2017-06-28 07:04:47','2017-06-28 07:04:47',0),(3,'Skynet software LTD','17th D Main Road 4','12345','Bangalore, Indien','+91576894884',NULL,NULL,'t800@sky.net','2017-06-28 07:09:16','2017-06-29 08:53:23',0),(4,'Evil Corp','3027 West 12th Street, Coney Island',NULL,'New York',NULL,NULL,NULL,'tyrell.willick@ecorp.com','2017-06-29 08:59:20','2017-06-29 08:59:20',0);
 /*!40000 ALTER TABLE `lieferanten` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +210,7 @@ CREATE TABLE `raeume` (
   `r_bezeichnung` varchar(45) DEFAULT NULL COMMENT 'z.B. Werkstatt, Lager,...',
   `r_notiz` varchar(1024) DEFAULT NULL,
   `r_erstellt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `r_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `r_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `r_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`r_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
@@ -264,4 +263,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-28 11:05:16
+-- Dump completed on 2017-06-29 11:56:41
