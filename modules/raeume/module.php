@@ -21,10 +21,10 @@ function raeume_show()
    
     for($x=0; $x<count($rooms); $x++){
         $content_edit = edit_raum_show($rooms[$x], $components,$components_art);
-        $rows[] = array("cols" => array("BigMacBook", 0), "content" => "<div>".$content_edit."</div>");   
+	$rows[] =  array("cols" => array($rooms[$x]["r_id"],$rooms[$x]["r_nr"], $rooms[$x]["r_bezeichnung"]), "content" => "<div>".$content_edit."</div>");   
     }
        
-	$content .= table_render(array("Name" => "string", "ID" => "int"),
+	$content .= table_render(array( "ID" => "int", "Raumname" => "string", "Bezeichnung" => "string", ),
 			$rows,
 			array("header" => "<b>+</b>", "content" => "<div>".$content_header_add."</div>"));
 

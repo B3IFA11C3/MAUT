@@ -8,16 +8,28 @@
         
         $currentComponents_Of_Room = $rooms["komponenten"];
         
+	
         
         $asdasd = array();
-        
+		
+		
+		$isInTable = false;
+		
         foreach($components as $elementRight){
-            
+			$isInTable = false;
+            // 12
             foreach($currentComponents_Of_Room as $elementeLeft){
-                if($elementRight["k_id"] != $elementeLeft["k_id"]){
-                    $asdasd[] = $elementRight;
-                }
+				
+				//21
+              if($elementRight["k_id"] == $elementeLeft["k_id"]){
+					$isInTable = true;
+					$asdasd[] = $elementRight;
+                }			
             }         
+			
+			if(!$isInTable){
+				$asdasd[] = $elementRight;
+			}
         }
 
 $str1 =
