@@ -82,7 +82,7 @@ function komponentenattribute_show()
 	
 	$insert = '<div><div style="padding: 10.5px">
 					<form method="POST" style="display: table; width: 100%;">
-						<label style="display: table-cell">Einzigartig: <input type="checkbox" name="kat[kat_einzigartig]"/></label
+						<label style="display: table-cell">Einzigartig: <input type="checkbox" name="kat[kat_einzigartig]"/></label>
 						<label style="display: table-cell">Name: <input type="text" name="kat[kat_bezeichnung]" /></label>
 						<label style="display: table-cell">Einheit: <input type="text" name="kat[kat_einheit]"/></label>
 						<label style="display: table-cell; padding-right: 150px">Typ: <select name="kat[kat_typ]">
