@@ -40,7 +40,7 @@ function komponenten_show()
 						</div>
 						<div class="col-md-4">
 							<label>Name:</label>
-							<input type="text" name=name" value="'.$komponenten[$i]["k_name"].'" id="Name" disabled class="feldAktivieren"/>
+							<input type="text" name="komp[k_name]" value="'.$komponenten[$i]["k_name"].'" id="Name" disabled class="feldAktivieren"/>
 						</div>
 					</div>
 					<div class="row">
@@ -77,7 +77,7 @@ function komponenten_show()
 for($j = 0; $j < count($komponenten[$i]["komponentenattribute"]); $j++) {
 	$mask .= '	<tr>
 								<td>'.$komponenten[$i]["komponentenattribute"][$j]["kat_bezeichnung"].'</td>
-								<td><input name="beispiel1wert" value="'.$komponenten[$i]["komponentenattribute"][$j]["khkat_wert"].'" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
+								<td><input name="kat[]" value="'.$komponenten[$i]["komponentenattribute"][$j]["khkat_wert"].'" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
 								<td>'.$komponenten[$i]["komponentenattribute"][$j]["kat_einheit"].'</td>
 							</tr>';
 }
