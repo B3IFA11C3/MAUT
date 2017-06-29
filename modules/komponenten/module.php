@@ -2,9 +2,20 @@
 
 require_once("code/table.php");
 
+/*class Components {
+	public static function list($spalten=array())
+	{
+		return array(
+				array("k_id" => 0, "k_name" => "asdf", "l_id" => array("0"=>"1", "1"=>"5"), "k_einkaufsdatum"=>"13.06.17", "k_gewaehrleistung_bis"=>"25.10.25", "k_notiz"=>"test", "k_hersteller"=>"bla", "ka_id"=>array("Kackstift"=>array("name"=>"bla"))),
+				array("id" => 1, "name" => "jklö", "komponenten" => array("="=>"2")));
+	}
+}*/
+
 function komponenten_show()
 {
 	$content = '<div class="w3-container w3-teal"><h1>Komponenten</h1></div>';
+	
+	//$komponenten = Components::list();
 
 	$rows = array();	
 	$komponentenEdit = '<div><div class="row">
@@ -46,7 +57,7 @@ function komponenten_show()
 						</div>
 						<div class="col-md-4">	
 							<div class="short-div" style="height:unset">
-							<table class="table table-hover" >
+							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th>Attribut</th>
@@ -77,9 +88,26 @@ function komponenten_show()
 						<div class="col-md-1">
 						</div>	
 						<div class="col-md-4">
-							<div class="short-div">
-								<label>R&auml;ume:</label>
-								<select multiple class="chosen-select feldAktivieren Raeume" disabled id="Raeume">
+							<table class="table table-hover">
+								<tr>
+									<td><label>R&auml;ume:</label></td>
+									<td>
+										<select multiple class="chosen-select feldAktivieren Raeume" disabled id="Raeume">
+											<option value="1">Select 1</option>
+											<option value="2">Select 2</option>
+											<option value="3">Select 3</option>
+											<option value="4">Select 4</option>
+											<option value="5">Select 5</option>
+											<option value="6">Select 6</option>
+											<option value="7">Select 7</option>
+											<option value="8">Select 8</option>
+											<option value="9">Select 9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td><label>Lieferant:</label></td>
+									<td><select class="chosen-select feldAktivieren Lieferant" disabled id="Lieferant">
 									<option value="1">Select 1</option>
 									<option value="2">Select 2</option>
 									<option value="3">Select 3</option>
@@ -89,38 +117,25 @@ function komponenten_show()
 									<option value="7">Select 7</option>
 									<option value="8">Select 8</option>
 									<option value="9">Select 9</option>
-								</select>
-							</div>
-							<div class="short-div">
-								<label>Lieferant:</label>
-								<select class="chosen-select feldAktivieren Lieferant" disabled id="Lieferant">
-									<option value="1">Select 1</option>
-									<option value="2">Select 2</option>
-									<option value="3">Select 3</option>
-									<option value="4">Select 4</option>
-									<option value="5">Select 5</option>
-									<option value="6">Select 6</option>
-									<option value="7">Select 7</option>
-									<option value="8">Select 8</option>
-									<option value="9">Select 9</option>
-								</select>
-							</div>
-							<div class="short-div">
-								<label>Gew&auml;hrleistungsdauer:</label>
-								<input type="text" value="Gew&auml;hrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
-								<label>Hersteller:</label>
-								<input type="text" value="Hersteller" id="Hersteller" disabled class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
-								<label>Seriennummer:</label>
-								<input  type="text" value="Seriennummer" id="Seriennummer" disabled class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
-								<label>Einkaufsdatum:</label>
-								<input type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum" disabled />
-							</div>
+									</select></td>
+								</tr>
+								<tr>
+								<td><label>Gew&auml;hrleistungsdauer:</label></td>
+								<td><input type="text" value="Gew&auml;hrleistungsdauer" id="gewaehrDauer" disabled class="feldAktivieren"/></td>
+								</tr>
+								<tr>
+								<td><label>Hersteller:</label></td>
+								<td><input type="text" value="Hersteller" id="Hersteller" disabled class="feldAktivieren"/></td>
+							</tr>
+							<tr>
+								<td><label>Seriennummer:</label></td>
+								<td><input  type="text" value="Seriennummer" id="Seriennummer" disabled class="feldAktivieren"/></td>
+							</tr>
+							<tr>
+								<td><label>Einkaufsdatum:</label></td>
+								<td><input type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum" disabled /></td>
+							</tr>
+							</table>
 						</div>
 					</div>	
 					<div class="row">
@@ -193,7 +208,7 @@ function komponenten_show()
 					}
 					</script>
 						<div class="short-div">
-							<table class="table table-hover" >
+							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th>Attribut</th>
@@ -214,9 +229,10 @@ function komponenten_show()
 						<div class="col-md-1">
 						</div>	
 						<div class="col-md-4">
-							<div class="short-div" >
-								<label>R&auml;ume:</label>
-								<select multiple class="chosen-select feldAktivieren Raeume" id="Raeume"  >
+							<table class="table table-hover">
+								<tr>
+								<td><label>R&auml;ume:</label></td>
+								<td><select multiple class="chosen-select feldAktivieren Raeume" id="Raeume"  >
 									<option value="1">Select 1</option>
 									<option value="2">Select 2</option>
 									<option value="3">Select 3</option>
@@ -226,11 +242,11 @@ function komponenten_show()
 									<option value="7">Select 7</option>
 									<option value="8">Select 8</option>
 									<option value="9">Select 9</option>
-								</select>
-							</div>
-							<div class="short-div">
-								<label>Lieferant:</label>
-								<select class="chosen-select feldAktivieren Lieferant" id="Lieferant"  >
+								</select></td>
+							</tr>
+							<tr>
+								<td><label>Lieferant:</label></td>
+								<td><select class="chosen-select feldAktivieren Lieferant" id="Lieferant"  >
 									<option value="1">Select 1</option>
 									<option value="2">Select 2</option>
 									<option value="3">Select 3</option>
@@ -240,26 +256,27 @@ function komponenten_show()
 									<option value="7">Select 7</option>
 									<option value="8">Select 8</option>
 									<option value="9">Select 9</option>
-								</select>
-							</div>
-							<div class="short-div">
-								<label>Gew&auml;hrleistungsdauer:</label>
-								<input type="text" placeholder="Gew&auml;hrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
-								<label>Hersteller:</label>
-								<input type="text" placeholder="Hersteller" id="Hersteller"  class="feldAktivieren"/>
-							</div>
-							<div class="short-div">
-								<label>Seriennummer:</label>
-								<input  type="text" placeholder="Seriennummer" id="Seriennummer"  class="feldAktivieren"/>
-							</div>
+								</select></td>
+							</tr>
+							<tr>
+								<td><label>Gew&auml;hrleistungsdauer:</label></td>
+								<td><input type="text" placeholder="Gew&auml;hrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/></td>
+							</tr>
+							<tr>
+								<td><label>Hersteller:</label></td>
+								<td><input type="text" placeholder="Hersteller" id="Hersteller"  class="feldAktivieren"/></td>
+							</tr>
+							<tr>
+								<td><label>Seriennummer:</label></td>
+								<td><input  type="text" placeholder="Seriennummer" id="Seriennummer"  class="feldAktivieren"/></td>
+							</tr>
 							
-							<div class="short-div">
-								<label>Einkaufsdatum:</label>
-								<input type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum"  />
-							</div>
-						</div>
+							<tr>
+								<td><label>Einkaufsdatum:</label></td>
+								<td><input type="text" class="feldAktivieren datepicker" id="datepicker" id="Einkaufsdatum"  /></td>
+							</tr>
+						</table>
+					</div>
 					</div>
 					<div class="row" id="popUpTable" style="display:none">
 						<div class="col-md-1">
