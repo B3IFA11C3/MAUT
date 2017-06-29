@@ -309,7 +309,7 @@ function komponenten_show()
 
 page_add_menu("Komponenten", "/komponenten");
 
-mast_register_path("#komponenten$#", "komponenten_show");
+mast_register_path("#^komponenten$#", "komponenten_show");
 mast_register_path("#^\$#", "komponenten_show");
 
 return true;
