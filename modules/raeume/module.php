@@ -16,7 +16,7 @@ function raeume_show()
     $components_art = Componenttypes::list_all();
     
     
-    $content_header_add = add_raum_show();
+    $content_header_add = add_raum_show($components,$components_art);
     
    
     for($x=0; $x<count($rooms); $x++){
