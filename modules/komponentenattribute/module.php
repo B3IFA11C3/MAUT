@@ -26,7 +26,7 @@ function komponentenattribute_render_row($komponente)
 						<label style="display: table-cell">Einzigartig: <input type="checkbox" ' . ($komponente["kat_einzigartig"] ? "checked" : "") . ' name="kat[kat_einzigartig]"/></label
 						<label style="display: table-cell">Name: <input type="text" name="kat[kat_bezeichnung]" value="' . htmlentities($komponente["kat_bezeichnung"]) . '"/></label>
 						<label style="display: table-cell">Einheit: <input type="text" name="kat[kat_einheit]" value="' . ($komponente["kat_einheit"] === NULL ? "" : htmlentities($komponente["kat_einheit"])) . '"/></label>
-						<label style="display: table-cell; padding-right: 20%">Typ: <select name="kat[kat_typ]">
+						<label style="display: table-cell; padding-right: 10%">Typ: <select name="kat[kat_typ]">
 								<option value="int"' . ($komponente["kat_typ"] == "int" ? " selected" : "") . '>int</option>
 								<option value="string"' . ($komponente["kat_typ"] == "string" ? " selected" : "") . '>string</option>
 								<option value="bool"' . ($komponente["kat_typ"] == "bool" ? " selected" : "") . '>bool</option>
@@ -61,8 +61,17 @@ function komponentenattribute_show()
 		else if($_POST["action"] == "save")
 		{
 			$value = array("kat_bezeichnung" => $_POST["kat"]["kat_bezeichnung"], "kat_typ" => $_POST["kat"]["kat_typ"],
-						   "kat_einzigartig" => ($_POST["kat"]["kat_einzigartig"] == "on" ? 1 : 0));
+						   "kat_einheit" => ($_POST["kat"]["kat_einheit"] == "" ? 0 : $_POST["kat"]["kat_einheit"]),
+						   "kat_einzigartig" => (isset($_POST["kat"]["kat_einzigartig"]) ? 1 : 0));
 			$success = Componentattributes::change((int)$_POST["kat"]["kat_id"], $value);
+		}
+		else if($_POST["action"] == "insert")
+		{
+			$value = array("kat_bezeichnung" => $_POST["kat"]["kat_bezeichnung"], "kat_typ" => $_POST["kat"]["kat_typ"],
+						   "kat_einheit" => ($_POST["kat"]["kat_einheit"] == "" ? 0 : $_POST["kat"]["kat_einheit"]),
+						   "kat_einzigartig" => (isset($_POST["kat"]["kat_einzigartig"]) ? 1 : 0));
+
+			$success = Componentattributes::add($value);
 		}
 
 		if(!$success)
@@ -70,10 +79,30 @@ function komponentenattribute_show()
 		else
 			$content .= '<div class="alert alert-success" role="alert" style="width: 90%; margin: 10px auto;"><center><b>Erfolgreich gespeichert!</b></center></div>';
 	}
+	
+	$insert = '<div>
+					<form method="POST" style="display: table; width: 100%;">
+						<label style="display: table-cell">Einzigartig: <input type="checkbox" name="kat[kat_einzigartig]"/></label
+						<label style="display: table-cell">Name: <input type="text" name="kat[kat_bezeichnung]" /></label>
+						<label style="display: table-cell">Einheit: <input type="text" name="kat[kat_einheit]"/></label>
+						<label style="display: table-cell; padding-right: 10%">Typ: <select name="kat[kat_typ]">
+								<option value="int">int</option>
+								<option value="string">string</option>
+								<option value="bool">bool</option>
+								<option value="date">date</option>
+								<option value="datetime">datetime</option>
+								<option value="float">float</option>
+							</select>
+						</label>
+						<div class="switch">
+							<button type="submit" name="action" value="insert">Speichern</button>
+						</div>
+					</form>
+				</div>';
 
 	$content .= table_render(array("ID" => "int", "Name" => "string", "Typ" => "string"),
 			array_map("komponentenattribute_render_row", Componentattributes::list()),
-			array("header" => "HINZUFÜGEN", "content" => '<div></div>'));
+			array("header" => "Komponentenattribut hinzuf&uuml;gen", "content" => $insert));
 
 	page_render($content);
 	return true;
