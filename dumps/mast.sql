@@ -34,7 +34,7 @@ CREATE TABLE `komponente_hat_attribute` (
   KEY `fk_komponenten_has_komponentenattribute_komponenten1` (`k_id`),
   CONSTRAINT `fk_komponenten_has_komponentenattribute_komponenten1` FOREIGN KEY (`k_id`) REFERENCES `komponenten` (`k_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_komponenten_has_komponentenattribute_komponentenattribute1` FOREIGN KEY (`kat_id`) REFERENCES `komponentenattribute` (`kat_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +60,7 @@ CREATE TABLE `komponente_in_raum` (
   KEY `r_id` (`r_id`),
   CONSTRAINT `komponente_in_raum_ibfk_1` FOREIGN KEY (`r_id`) REFERENCES `raeume` (`r_id`),
   CONSTRAINT `komponente_in_raum_ibfk_2` FOREIGN KEY (`k_id`) REFERENCES `komponenten` (`k_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `komponenten` (
   KEY `fk_komponenten_komponentenarten1` (`ka_id`),
   CONSTRAINT `fk_komponenten_haendler` FOREIGN KEY (`l_id`) REFERENCES `lieferanten` (`l_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_komponenten_komponentenarten1` FOREIGN KEY (`ka_id`) REFERENCES `komponentenarten` (`ka_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +123,7 @@ CREATE TABLE `komponentenarten` (
   `ka_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ka_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ka_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +150,7 @@ CREATE TABLE `komponentenattribute` (
   `kat_einzigartig` tinyint(1) NOT NULL DEFAULT '0',
   `kat_bezeichnung` varchar(25) NOT NULL,
   PRIMARY KEY (`kat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +184,7 @@ CREATE TABLE `lieferanten` (
   `l_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `l_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`l_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +213,7 @@ CREATE TABLE `raeume` (
   `r_geaendert` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `r_geloescht` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`r_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +241,7 @@ CREATE TABLE `wird_beschrieben_durch` (
   KEY `fk_komponentenarten_has_komponentenattribute_komponentenarten1` (`ka_id`),
   CONSTRAINT `fk_komponentenarten_has_komponentenattribute_komponentenarten1` FOREIGN KEY (`ka_id`) REFERENCES `komponentenarten` (`ka_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_komponentenarten_has_komponentenattribute_komponentenattri1` FOREIGN KEY (`kat_id`) REFERENCES `komponentenattribute` (`kat_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

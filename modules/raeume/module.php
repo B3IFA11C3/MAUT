@@ -3,6 +3,7 @@
 require_once("code/table.php");
 require_once("form_add.php");
 require_once("form_edit.php");
+require_once("code/tablefunctions.php");
 
 function raeume_show()
 {
@@ -10,34 +11,19 @@ function raeume_show()
 
 	$rows = array();
     
+    $rooms = Rooms::list_all();   
+    $components = Components::list_all();   
+    $components_art = Componenttypes::list_all();
+    
+    
     $content_header_add = add_raum_show();
     
-     $komponenten = array(
-        0 => array(
-            "name" => "Test1",
-            "art" => "Storage"
-        ),
-        1 => array(
-            "name" => "Test2",
-            "art" => "Server"
-        ),
-        2 => array(
-            "name" => "Test3",
-            "art" => "Switch"
-        ),
-        3 => array(
-            "name" => "Test4",
-            "art" => "Client-PC"
-        )
-    );
-    
-    
-    for($x=1; $x<5; $x++) {
-        $content_edit = edit_raum_show($x, $komponenten);
+   
+    for($x=0; $x<count($rooms); $x++){
+        $content_edit = edit_raum_show($rooms[$x], $components,$components_art);
         $rows[] = array("cols" => array("BigMacBook", 0), "content" => "<div>".$content_edit."</div>");   
     }
-	
-    
+       
 	$content .= table_render(array("Name" => "string", "ID" => "int"),
 			$rows,
 			array("header" => "<b>+</b>", "content" => "<div>".$content_header_add."</div>"));
