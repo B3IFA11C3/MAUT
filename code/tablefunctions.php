@@ -60,7 +60,7 @@ class Components {
 	private static function sqlsetattr($k_id, $kat_id, $khkat_wert) {
         if (count(sqlselect("komponente_hat_attribute", ["k_id", "kat_id"], [["k_id", $k_id], ["kat_id", $kat_id]])))
             return sqlupdate("komponente_hat_attribute", [["khkat_wert", $khkat_wert]], [["k_id", $k_id], ["kat_id", $kat_id]]);
-        return sqlinsert("komponente_hat_attribute", ["k_id", "kat_id", "khkat_wert"], [$k_id, $kat_id, $khkat_wert]);
+        return sqlinsert("komponente_hat_attribute", ["k_id", "kat_id", "khkat_wert", "khkat_geloescht"], [$k_id, $kat_id, $khkat_wert, 0]);
     }
     public static function setattr($k_id, $kat_id, $khkat_wert) {
         if (!sqlselect("komponentenattribute", ["kat_einzigartig"], [["kat_id", $kat_id]])[0]["kat_einzigartig"])

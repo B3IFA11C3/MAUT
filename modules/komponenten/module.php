@@ -13,7 +13,16 @@ function komponenten_show()
 	else if(isset($_POST["btnSave"]))
 		$status = Components::change((int)$_POST['k_id'], $_POST['komp']) ? "success" : "error";
 	else if(isset($_POST["btnHinzu"]))
-		$status = Components::add($_POST['komp']) ? "success" : "error";
+	{
+		$status = "error";
+		$id = Components::add($_POST['komp']);
+		if($id !== FALSE)
+		{
+			$status = "success";
+			foreach($_POST["kat"] as $kat)
+				Components::setattr($id, $kat["kat_id"], $kat["khkat_wert"]);
+		}
+	}
 
 	if($status == "error")
 		$content .= '<div class="alert alert-danger" role="alert" style="width: 90%; margin: 10px auto;"><center><b>Fehler!</b> Konnte nicht gespeichert werden.</center></div>';
@@ -87,9 +96,9 @@ function komponenten_show()
 foreach($komp["komponentenattribute"] as $att) {
 	$mask .= '	<tr>
 								<td>'.$att["kat_bezeichnung"].'</td>
-									<input name="kat[kat'.(string)$att['kat_id'].'][k_id]" value="'.$att["k_id"].'" type="hidden" />
-									<input name="kat[kat'.(string)$att['kat_id'].'][kat_id]" value="'.$att["kat_id"].'" type="hidden" />
-								<td><input name="kat[kat'.(string)$att['kat_id'].'][khkat_wert]" value="'.$att["khkat_wert"].'" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
+									<input name="kat['.(string)$att['kat_id'].'][k_id]" value="'.$att["k_id"].'" type="hidden" />
+									<input name="kat['.(string)$att['kat_id'].'][kat_id]" value="'.$att["kat_id"].'" type="hidden" />
+								<td><input name="kat['.(string)$att['kat_id'].'][khkat_wert]" value="'.$att["khkat_wert"].'" size="10px" id="durchnummerieren" class="feldAktivieren" disabled /></td>
 								<td>'.$att["kat_einheit"].'</td>
 							</tr>';
 }
@@ -144,7 +153,7 @@ for($j =0; $j < count($raeume); $j++) {
 	$mask .= '</select></td>
 								</tr>
 								<tr>
-								<td><label>Gew&auml;hrleistungsdauer:</label></td>
+								<td><label>Gew&auml;hrleistungende:</label></td>
 								<td><input name="komp[k_gewaehrleistung_bis]" type="text" value="'.$komp["k_gewaehrleistung_bis"].'" id="gewaehrDauer" disabled class="feldAktivieren"/></td>
 								</tr>
 								<tr>
@@ -245,8 +254,8 @@ for($j =0; $j < count($raeume); $j++) {
 
 			$britney .=  '<tr style="display:none;" class="ka_'.$art['ka_id'].' displayNone">
 							<td>'.$att["kat_bezeichnung"].'</td>
-								<input name="kat[kat'.(string)$att['kat_id'].'][kat_id]" value="'.$att["kat_id"].'" type="hidden" />
-							<td><input name="kat[kat'.(string)$att['kat_id'].'][khkat_wert]" size="10px" class="feldAktivieren" /></td>
+								<input name="kat['.(string)$att['kat_id'].'][kat_id]" value="'.$att["kat_id"].'" type="hidden" />
+							<td><input name="kat['.(string)$att['kat_id'].'][khkat_wert]" size="10px" class="feldAktivieren" /></td>
 							<td>'.$att["kat_einheit"].'</td>
 						</tr>';
 		}
@@ -279,8 +288,8 @@ for($j =0; $j < count($raeume); $j++) {
 	$britney .= '</select></td>
 							</tr>
 							<tr>
-								<td><label>Gew&auml;hrleistungsdauer:</label></td>
-								<td><input name="komp[k_gewaehrleistung_bis]" type="text" placeholder="Gew&auml;hrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/></td>
+								<td><label>Gew&auml;hrleistungsende:</label></td>
+								<td><input name="komp[k_gewaehrleistung_bis]" type="text" placeholder="Gew&auml;hrleistungsende" id="gewaehrDauer"  class="feldAktivieren"/></td>
 							</tr>
 							<tr>
 								<td><label>Hersteller:</label></td>
@@ -302,7 +311,7 @@ for($j =0; $j < count($raeume); $j++) {
 									<tr>
 										<th>Seriennummer</th>
 										<th>Hersteller</th>
-										<th>Gew&auml;hrleistungsdauer</th>
+										<th>Gew&auml;hrleistungsende</th>
 										<th>Lieferant</th>
 										<th>Einkaufsdatum</th>
 									</tr>
@@ -311,7 +320,7 @@ for($j =0; $j < count($raeume); $j++) {
 									<tr>
 										<td><input  type="text" placeholder="Seriennummer"/></td>
 										<td><input type="text" placeholder="Hersteller"/></td>
-										<td><input type="text" placeholder="Gewaehrleistungsdauer" id="gewaehrDauer"  class="feldAktivieren"/></td>
+										<td><input type="text" placeholder="Gewaehrleistungsende" id="gewaehrDauer"  class="feldAktivieren"/></td>
 										<td>
 											<select class="chosen-select feldAktivieren Lieferant" id="Lieferant"  >
 												<option value="1">Select 1</option>
@@ -372,10 +381,12 @@ for($j =0; $j < count($raeume); $j++) {
 			console.log(kompArtAuswahl);
 			var zuruecksetzen = document.getElementsByClassName("displayNone");
 			for (let element of zuruecksetzen) {
+				$("input", element).each(function(i, e) { e.setAttribute("disabled", "disabled"); });
 				element.setAttribute("style", "display:none");
 			}
 			var anzeigen = document.getElementsByClassName("ka_" + kompArtAuswahl);
 			for (let element of anzeigen) {
+				$("input", element).each(function(i, e) { e.removeAttribute("disabled"); });
 				element.setAttribute("style", "display:visible");
 			}
 		  });		
