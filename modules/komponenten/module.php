@@ -18,7 +18,7 @@ function komponenten_show()
 	//$komponenten = Components::list();
 
 	$rows = array();	
-	$komponentenEdit = '<div><div class="row">
+	$komponentenEdit = '<div>
 		
 		<div class="card card-block" id="card-shadow">
 			<div class="card-title">
@@ -154,7 +154,7 @@ function komponenten_show()
 			</div>
 		</div>
 		
-	</div></div>';
+	</div>';
 	
 	$rows[] = array("cols" => array("BigMacBook", 0), "content" => $komponentenEdit);
 	$rows[] = array("cols" => array("Keine Ahnung", 1));
@@ -163,7 +163,7 @@ function komponenten_show()
 	
 	$content .= table_render(array("Name" => "string", "ID" => "int"),
 			$rows,
-			array("header" => "HINZUFÜGEN", "content" => '<div><div class="row">
+			array("header" => "HINZUFÜGEN", "content" => '<div>
 		
 		<div class="card card-block" id="card-shadow">
 			<div class="card-title">
@@ -336,7 +336,7 @@ function komponenten_show()
 				</div>
 			</div>
 		</div>
-	</div></div>'));
+	</div>'));
 	
 	$content .= '<!-- zum initialisieren der chosen selects muss $(".chosen-select").chosen(); aufgerfen werden -->
     <script type="text/javascript">
