@@ -97,7 +97,20 @@ class Rooms {
 }
 class Supplier {
     public static function list($cols = ["*"]) {
-        return sqlselect("lieferanten", $cols);
+		$results = sqlselect("lieferanten", $cols);
+		
+		$result = addtoarray($results,'komponenten','select k.*, a.* from komponentenarten as a , komponenten as k  where k.l_id = ? and k.ka_id = a.ka_id','l_id');
+
+		foreach ($result as &$rows){
+		$row = &$rows['komponenten'];
+
+			$row = addtoarray($row,'raeume','select * from raeume as r , komponente_in_raum as i where r.r_id = i.r_id and i.k_id = ?','k_id');
+
+			$row = addtoarray($row,'komponentenattribute','select * from wird_beschrieben_durch as b, komponentenattribute as ka left join komponente_hat_attribute h on h.kat_id = ka.kat_id and h.k_id = ? where b.ka_id = ? and b.kat_id = ka.kat_id ',array('k_id','ka_id'));
+
+
+		}
+        return $result;
     }
     public static function add($vals) {
         return sqlassoinsert("lieferanten", $vals);
