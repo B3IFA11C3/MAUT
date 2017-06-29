@@ -31,7 +31,7 @@ function table_render($columns, $contents, $addcontent=NULL)
 					</td>
 				</tr>';
 
-		$content .= '<tr><td colspan="2">' . $addcontent["content"] . "</td></tr>";
+		$content .= '<tr><td colspan="' . count($columns) . '">' . $addcontent["content"] . "</td></tr>";
 	}
 	
 	$content .= '</thead>';

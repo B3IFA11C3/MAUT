@@ -56,26 +56,33 @@ tr.clickable:hover {
 
 .tbodytable * tr:last-of-type td > div {
 	transition: max-height 0.2s ease-out;
-	
 	overflow: hidden;
+	max-height: 9000px;
 }
 
-.tbodytable *.accordion tr:last-of-type td div {
+.tbodytable *.accordion tr:last-of-type td > div {
 	max-height: 0px;
 }
 
-.divslider div {
+.divslider > div {
+	transition: max-height 0.2s ease-out;
 	width: 100%;
 	position: relative;
+	overflow: hidden;
+	max-height: 9000px;
 }
 
-.divslider div .switch {
+.divslider > div > div{
+	padding: 10.5px;
+}
+
+.divslider > div .switch {
 	position: absolute;
 	top: 12px;
 	right: 12px;
 }
 
-.tbodytable * tr:last-of-type td div.divslider div:last-of-type {
+div.divslider > div:last-of-type {
 	max-height: 0px;
 }
 

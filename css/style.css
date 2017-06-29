@@ -30,6 +30,17 @@ border-radius: 0px;
 }
 
 .short-div {
-	height: 32px;
+	/*height: 32px;*/
 }
-	
+
+.chosen-container .chosen-results {
+    	
+	max-height:140px;
+}
+
+.chosen-container {
+
+	width:205px !important;
+	overflow: unset !important;
+
+}

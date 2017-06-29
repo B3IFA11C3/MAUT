@@ -1,5 +1,5 @@
 <?php
-require("code/config.inc.php");
+require_once("code/config.inc.php");
 
 class MySQLiCurry {
     public function __construct($str, $db) {
@@ -55,10 +55,14 @@ class MySQLiCurry {
         return $this->stmt->num_rows;
     }
     
+    public function insertId() {
+		return $this->stmt->insert_id;
+    }
+    
     public function fetch() {
         if ($this->stmt === NULL)
             return false;
-        
+
         mysqli_stmt_store_result($this->stmt);
         $meta = mysqli_stmt_result_metadata($this->stmt);
         $vars = array($this->stmt);
@@ -207,13 +211,13 @@ function changepw($user, $oldpw, $newpw, $newpwwdh) {
 }
 
 function sqlassoinsert($sqltable, $asso) {
-        $keys = array_keys($asso);
-        $sqlfields = array();
-        $sqlvalues = array();
-        foreach ($keys AS $key) {
-            $sqlfields[] = $key;
-            $sqlvalues[] = $asso[$key];
-        }
+    $keys = array_keys($asso);
+    $sqlfields = array();
+    $sqlvalues = array();
+    foreach ($keys AS $key) {
+        $sqlfields[] = $key;
+        $sqlvalues[] = $asso[$key];
+    }
     return sqlinsert($sqltable, $sqlfields, $sqlvalues);
 }
 
@@ -223,17 +227,23 @@ function sqlinsert($sqltable, $sqlfields, $sqlvalues) {
     if ($anz < 1 || $anz != count($sqlvalues))
         return false;
     $curr = MastDB::mysqliCurry("INSERT INTO `".$sqltable."`(`".join("`, `", $sqlfields)."`) VALUES (?".str_repeat(", ?", $anz-1).")", $CONFIG["SQLMastDB"]);
-    foreach ($sqlvalues as $value)
-        $curr = is_int($value) ? $curr->int($value) : $curr->str($value);
-    return $curr->execute();
+    for ($i = 0; $i < $anz; $i++)
+        $curr = is_int($sqlvalues[$i]) ? $curr->int($sqlvalues[$i]) : $curr->str($sqlvalues[$i]);
+    /*foreach ($sqlvalues as $value)
+        $curr = is_int($value) ? $curr->int($value) : $curr->str($value);*/
+    $curr = $curr->execute();
+    if (!$curr)
+        return false;
+
+    return $curr->insertId();
 }
 
 function sqlassoupdate($sqltable, $asso, $sqlfilter) {
-        $keys = array_keys($asso);
-        $sqlvals = array();
-        foreach ($keys AS $key) {
-            $sqlvals[] = array($key, $asso[$key]);
-        }
+    $keys = array_keys($asso);
+    $sqlvals = array();
+    foreach ($keys AS $key) {
+        $sqlvals[] = array($key, $asso[$key]);
+    }
     return sqlupdate($sqltable, $sqlvals, $sqlfilter);
 }
 
@@ -249,9 +259,9 @@ function sqlupdate($sqltable, $sqlvals, $sqlfilter) {
     }, $sqlfilter));
     $curr = MastDB::mysqliCurry("UPDATE `".$sqltable."` SET ".$sqlset." WHERE ".$sqlwhere, $CONFIG["SQLMastDB"]);
     foreach ($sqlvals as $val)
-        $curr = is_int($val) ? $curr->int($val) : $curr->str($val);
+        $curr = is_int($val[1]) ? $curr->int($val[1]) : $curr->str($val[1]);
     foreach ($sqlfilter as $filter)
-        $curr = is_int($filter) ? $curr->int($filter) : $curr->str($filter);
+        $curr = is_int($filter[1]) ? $curr->int($filter[1]) : $curr->str($filter[1]);
     return $curr->execute();
 }
 
@@ -265,7 +275,6 @@ function sqldelete($sqltable, $sqlfilter) {
         $curr = is_int($filter[1]) ? $curr->int($filter[1]) : $curr->str($filter[1]);
     return $curr->execute();
 }
-
 
 function mast_query_array($stmt) {
   $result = array();
@@ -306,4 +315,29 @@ function generic_table($columns, $rows) {
   return $html . '</tbody></table>';
 }
 
+// $array ist das Array bei dem Subarrays hinzugefügt werden
+//unter dem Wert $name
+// $curry ist die Querry mit
+// $column die Spalte(n) die im $array für die Querry benutzt werden
+function addtoarray($array, $name, $curry, $column){
+	global $CONFIG;
+	foreach ($array as &$row){
+		$subarray = null;
+		$resp = MastDB::mysqliCurry($curry, $CONFIG["SQLMastDB"]);
+		if(is_array($column))
+			foreach ($column as $param)
+				$resp = is_int($row[$param]) ? $resp->int($row[$param]) : $resp->str($row[$param]);
+		else
+			$resp = is_int($row[$column]) ? $resp->int($row[$column]) : $resp->str($row[$column]);
+		$resp = $resp->execute();
+		if($resp){
+			$subarray = $resp->fetch();
+			if($subarray)
+			$row[$name] = $subarray;
+			else 
+			$row[$name] = null;
+		}
+	}
+	return $array;
+}
 ?>
