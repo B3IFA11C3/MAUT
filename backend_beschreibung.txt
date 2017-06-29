@@ -110,6 +110,19 @@ Räume (raeume)
     Komponente in raum
         params: k_id, r_id
         returns: success
+Lieferanten (lieferanten)
+    Lieferanten auflisten
+        params: array(spalten) (default alle)
+        returns: array( array(l_spalten=>l_werte) )
+    Lieferant löschen
+        params: l_id
+        returns: success
+    Lieferant ändern
+        params: l_id, array(l_spalten=>wert)
+        returns: success
+    Lieferant einfügen
+        params: array(l_spalten=>wert)
+        returns: l_id
         
         
             
