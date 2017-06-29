@@ -7,7 +7,7 @@ function komponenten_show()
 {
 	$content = '<div class="w3-container w3-teal"><h1>Komponenten</h1></div>';
 	$status = "";
-var_dump($_POST['k_id']);
+
 	if(isset($_POST["btnLoesch"]))
 		$status = Components::delete((int)$_POST['k_id']) ? "success" : "error";
 	else if(isset($_POST["btnSave"]))
