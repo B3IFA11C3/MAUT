@@ -29,7 +29,7 @@ function lieferanten_show()
     $content_header_add = edit_lieferant_show();#add_lieferant_show();
 	
 	
-	
+	$rows = array();
 	foreach($rowed as $row){
 	
 		
