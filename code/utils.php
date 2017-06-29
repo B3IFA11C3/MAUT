@@ -277,6 +277,7 @@ function sqldelete($sqltable, $sqlfilter) {
 }
 
 function mast_query_array($stmt) {
+  global $CONFIG;
   $result = array();
   $stmt = MastDB::mysqliCurry($stmt, $CONFIG["SQLMastDB"]);
   $resource = $stmt->execute();
@@ -309,8 +310,9 @@ function generic_table($columns, $rows) {
 
   foreach($rows as $row) {
     $html .='<tr>';
-    foreach($row as $value)
-      $html .= '<td>' .  $value . '</td>';
+    for($i = 0; $i < count($row); $i++) {
+      $html .= '<td '. ($columns[$i] == "Art" ? 'class="spse"' : "") . '>' .  $row[$i] . '</td>';
+    }
     $html .= '</tr>';
   }
   return $html . '</tbody></table>';
