@@ -38,7 +38,7 @@ function komponentenarten_render_row($komponentenart)
 								<td><input name="ka[ka_einmalig]" type="checkbox" class="edit_' . $komponentenart['ka_id'] . '" disabled="true" ' . ($komponentenart["ka_einmalig"]?"checked":"") . '/></td>
 							</tr>
 						</tbody></table>
-						<div>
+						<div style="margin: 10px;">
 							<button type="submit" class="btn btn-primary" name="action" value="delete">L&ouml;schen</button>
 							<button type="button" class="btn btn-primary" onclick="toggleEditing(' . $komponentenart['ka_id'] . ');">Bearbeiten</button>
 							<button type="submit" class="btn btn-primary edit_' . $komponentenart['ka_id'] . '" disabled="true" name="action" value="save">Speichern</button>
@@ -139,35 +139,7 @@ function komponentenarten_show()
 								} 
 							} );
 					}
-				</script>
-				<style>
-					.editable_edit_table {
-						border: none;
-					}
-
-					.editable_edit_table > tbody > tr {
-						border: none;
-						border-top: 1px solid grey;
-					}
-
-					.editable_edit_table > tbody > tr:first-child {
-						border-top: none;
-					}
-
-					.editable_edit_table > tbody > tr > td {
-						border: none;
-						border-left: 1px solid grey;
-						padding: 5px;
-					}
-
-					.editable_edit_table > tbody > tr > td:first-child {
-						border-left: none;
-						border-right: 2px solid grey;	
-						text-align: right;					
-					}				
-
-					
-				</style>';
+				</script>';
 
 	page_render($content);
 	return true;
